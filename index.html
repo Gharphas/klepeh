@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Klepeh - E-Wallet Digital Modern</title>
+    <meta name="description" content="Aplikasi E-Wallet Digital Modern - Kelola Saldo, Transfer, Top Up, dan Tagihan PPOB secara cepat dan aman.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- RemixIcon for rich UI icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation (Desktop) / Bottom Nav (Mobile) -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon">
+                    <i class="ri-wallet-3-line"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>My Klepeh</h2>
+                    <span>E-Wallet Premium</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#dashboard" class="nav-link active" data-tab="dashboard">
+                    <i class="ri-dashboard-3-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#transactions" class="nav-link" data-tab="transactions">
+                    <i class="ri-file-list-3-line"></i>
+                    <span>Riwayat</span>
+                </a>
+                <a href="#ppob" class="nav-link" data-tab="ppob">
+                    <i class="ri-grid-fill"></i>
+                    <span>Layanan</span>
+                </a>
+                <a href="#vaults" class="nav-link" data-tab="vaults">
+                    <i class="ri-safe-2-line"></i>
+                    <span>Kantong Impian</span>
+                </a>
+                <a href="#analytics" class="nav-link" data-tab="analytics">
+                    <i class="ri-pie-chart-line"></i>
+                    <span>Analistik</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-card-mini" id="sidebarUserCard">
+                    <img src="sasuke.jpg" alt="Avatar" class="avatar-img" id="sidebarAvatar">
+                    <div class="user-info">
+                        <span class="user-name" id="sidebarUserName">M Ikhsan Anggara</span>
+                        <span class="user-status"><i class="ri-checkbox-circle-fill"></i> Verified Premier</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn-icon theme-toggle-btn" id="themeToggleBtn" title="Ganti Tema">
+                        <i class="ri-sun-line light-icon"></i>
+                        <i class="ri-moon-line dark-icon"></i>
+                    </button>
+                    <button class="btn-icon logout-trigger" id="logoutBtn" title="Keluar dari Akun" style="background: rgba(244, 63, 94, 0.15); color: var(--primary-rose); border: 1px solid rgba(244, 63, 94, 0.3);">
+                        <i class="ri-logout-box-r-line"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="top-header">
+                <div class="header-search">
+                    <i class="ri-search-line"></i>
+                    <input type="text" id="globalSearchInput" placeholder="Cari transaksi, layanan, atau kontak...">
+                </div>
+
+                <div class="header-actions">
+                    <button class="btn-icon theme-toggle-btn" id="headerThemeToggleBtn" title="Ganti Tema">
+                        <i class="ri-sun-line light-icon"></i>
+                        <i class="ri-moon-line dark-icon"></i>
+                    </button>
+                    <button class="btn-icon notification-btn" id="notifBtn" title="Notifikasi">
+                        <i class="ri-notification-3-line"></i>
+                        <span class="badge-dot" id="notifBadge"></span>
+                    </button>
+                    <button class="btn-icon logout-trigger" id="headerLogoutBtn" title="Keluar dari Akun" style="background: rgba(244, 63, 94, 0.15); color: var(--primary-rose); border: 1px solid rgba(244, 63, 94, 0.3);">
+                        <i class="ri-logout-box-r-line"></i>
+                    </button>
+                    <div class="profile-dropdown-wrapper">
+                        <div class="quick-profile" id="quickProfileBtn" role="button" tabindex="0" title="Menu Profil & Akun">
+                            <img src="sasuke.jpg" alt="Profile" class="avatar-img-sm" id="headerAvatar">
+                            <span class="profile-name">M Ikhsan Anggara</span>
+                            <i class="ri-arrow-down-s-line profile-chevron"></i>
+                        </div>
+
+                        <!-- Dropdown Menu -->
+                        <div class="profile-dropdown-menu" id="profileDropdown">
+                            <div class="dropdown-user-header">
+                                <img src="sasuke.jpg" alt="Profile" class="avatar-img" id="dropdownAvatar">
+                                <div class="dropdown-user-info">
+                                    <h4 id="dropdownUserName">M Ikhsan Anggara</h4>
+                                    <span class="dropdown-phone" id="dropdownUserPhone">0812-9887-3411</span>
+                                    <span class="user-status"><i class="ri-checkbox-circle-fill"></i> Verified Premier</span>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-balance-info">
+                                <span class="label">Total Saldo:</span>
+                                <strong class="dropdown-balance-text" id="dropdownBalance">Rp 12.850.000</strong>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-items">
+                                <button class="dropdown-item" id="dropdownThemeToggle">
+                                    <i class="ri-sun-line"></i>
+                                    <span>Ganti Mode Tema</span>
+                                </button>
+                                <a href="login.html" class="dropdown-item" id="dropdownSwitchAccount">
+                                    <i class="ri-user-shared-line"></i>
+                                    <span>Ganti Akun</span>
+                                </a>
+                                <button class="dropdown-item dropdown-logout-btn logout-trigger" id="dropdownLogoutBtn">
+                                    <i class="ri-logout-box-r-line"></i>
+                                    <span>Keluar dari Akun</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <div class="view-content active" id="viewDashboard">
+                <!-- Welcome & Banner -->
+                <section class="welcome-section">
+                    <div class="welcome-text">
+                        <h1>Selamat Datang Kembali, <span class="highlight">M Ikhsan Anggara</span> 👋</h1>
+                        <p>Kelola keuangan digitalmu lebih cerdas dan fleksibel hari ini.</p>
+                    </div>
+                    <div class="promo-badge">
+                        <i class="ri-gift-line"></i>
+                        <span>Cashback 60% QRIS Resto</span>
+                    </div>
+                </section>
+
+                <!-- Wallet Card & Digital Debit Card Showcase -->
+                <section class="wallet-showcase">
+                    <!-- Saldo & Main Card -->
+                    <div class="balance-card">
+                        <div class="balance-header">
+                            <div>
+                                <span class="label">Total Saldo Aktif</span>
+                                <div class="balance-amount-wrapper">
+                                    <h2 class="balance-amount" id="userBalance">Rp 12.850.000</h2>
+                                    <button class="btn-icon-ghost toggle-balance-btn" id="toggleBalanceBtn" title="Sembunyikan Saldo">
+                                        <i class="ri-eye-line" id="eyeIcon"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="wallet-type-badge">
+                                <i class="ri-vip-crown-fill"></i> My klepeh Premier
+                            </div>
+                        </div>
+
+                        <!-- Card Details Preview -->
+                        <div class="card-details-row">
+                            <div class="detail-item">
+                                <span class="sub-label">Nomor Akun E-Wallet</span>
+                                <span class="val-text" id="userAccountNum">0831-1210-0096 <i class="ri-file-copy-line copy-icon" id="copyAccBtn"></i></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="sub-label">Batas Transaksi Harian</span>
+                                <span class="val-text">Rp 50.000.000</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="quick-actions-grid">
+                            <button class="action-btn action-topup" id="btnOpenTopUp">
+                                <div class="icon-box"><i class="ri-add-circle-line"></i></div>
+                                <span>Isi Saldo</span>
+                            </button>
+                            <button class="action-btn action-transfer" id="btnOpenTransfer">
+                                <div class="icon-box"><i class="ri-send-plane-line"></i></div>
+                                <span>Transfer</span>
+                            </button>
+                            <button class="action-btn action-qris" id="btnOpenQRIS">
+                                <div class="icon-box"><i class="ri-qr-code-line"></i></div>
+                                <span>Bayar QRIS</span>
+                            </button>
+                            <button class="action-btn action-withdraw" id="btnOpenWithdraw">
+                                <div class="icon-box"><i class="ri-bank-card-line"></i></div>
+                                <span>Tarik Tunai</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Digital Debit Visual Card -->
+                    <div class="virtual-card-container">
+                        <div class="debit-card">
+                            <div class="card-top">
+                                <span class="card-brand">My Klepeh <small>PLATINUM</small></span>
+                                <i class="ri-wireless-charging-line paywave-icon"></i>
+                            </div>
+                            <div class="card-chip">
+                                <div class="chip-graphic"></div>
+                            </div>
+                            <div class="card-number" id="cardDisplayNum">4532 •••• •••• 8892</div>
+                            <div class="card-bottom">
+                                <div class="card-holder">
+                                    <span class="lbl">PEMEGANG KARTU</span>
+                                    <span class="name" id="cardHolderName">M IKHSAN ANGGARA</span>
+                                </div>
+                                <div class="card-exp">
+                                    <span class="lbl">BERLAKU S.D</span>
+                                    <span class="exp">08/29</span>
+                                </div>
+                                <div class="vendor-logo">
+                                    <i class="ri-visa-line"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PPOB & Services Section -->
+                <section class="section-container">
+                    <div class="section-header">
+                        <h3><i class="ri-apps-2-line"></i> Layanan Favorit & Tagihan</h3>
+                        <a href="#ppob" class="view-all-link" data-tab="ppob">Lihat Semua</a>
+                    </div>
+                    <div class="services-grid">
+                        <div class="service-item" data-service="pulsa">
+                            <div class="service-icon bg-blue"><i class="ri-smartphone-line"></i></div>
+                            <span>Pulsa & Data</span>
+                        </div>
+                        <div class="service-item" data-service="pln">
+                            <div class="service-icon bg-yellow"><i class="ri-flashlight-line"></i></div>
+                            <span>Listrik PLN</span>
+                        </div>
+                        <div class="service-item" data-service="pdam">
+                            <div class="service-icon bg-cyan"><i class="ri-drop-line"></i></div>
+                            <span>Air PDAM</span>
+                        </div>
+                        <div class="service-item" data-service="bpjs">
+                            <div class="service-icon bg-green"><i class="ri-heart-pulse-line"></i></div>
+                            <span>BPJS Kesehatan</span>
+                        </div>
+                        <div class="service-item" data-service="games">
+                            <div class="service-icon bg-purple"><i class="ri-gamepad-line"></i></div>
+                            <span>Voucher Game</span>
+                        </div>
+                        <div class="service-item" data-service="emoney">
+                            <div class="service-icon bg-orange"><i class="ri-bank-card-2-line"></i></div>
+                            <span>E-Money</span>
+                        </div>
+                        <div class="service-item" data-service="internet">
+                            <div class="service-icon bg-indigo"><i class="ri-wifi-line"></i></div>
+                            <span>Internet & TV</span>
+                        </div>
+                        <div class="service-item" data-service="more">
+                            <div class="service-icon bg-slate"><i class="ri-more-fill"></i></div>
+                            <span>Lainnya</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Kantong Impian Preview & Recent Transactions Grid -->
+                <div class="dashboard-dual-grid">
+                    <!-- Kantong Impian Quick Showcase -->
+                    <section class="section-container vault-quick-card">
+                        <div class="section-header">
+                            <h3><i class="ri-safe-2-line"></i> Kantong Impian</h3>
+                            <button class="btn-sm-primary" id="btnCreateVaultQuick">+ Kantong</button>
+                        </div>
+                        <div class="vault-list-mini" id="vaultListMini">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </section>
+
+                    <!-- Financial Summary Mini Chart Card -->
+                    <section class="section-container analytics-quick-card">
+                        <div class="section-header">
+                            <h3><i class="ri-pie-chart-2-line"></i> Pengeluaran Bulan Ini</h3>
+                            <span class="month-tag">Agustus 2026</span>
+                        </div>
+                        <div class="spending-overview">
+                            <div class="spending-stat">
+                                <span class="stat-lbl">Total Pengeluaran</span>
+                                <h4 class="stat-val text-danger" id="dashTotalExpense">Rp 3.420.000</h4>
+                            </div>
+                            <div class="spending-stat">
+                                <span class="stat-lbl">Total Pemasukan</span>
+                                <h4 class="stat-val text-success" id="dashTotalIncome">Rp 8.500.000</h4>
+                            </div>
+                        </div>
+                        <div class="progress-bar-stacked" id="spendingProgressBar">
+                            <div class="bar-segment bar-food" style="width: 35%" title="Makanan: 35%"></div>
+                            <div class="bar-segment bar-bills" style="width: 25%" title="Tagihan: 25%"></div>
+                            <div class="bar-segment bar-shop" style="width: 20%" title="Belanja: 20%"></div>
+                            <div class="bar-segment bar-other" style="width: 20%" title="Lainnya: 20%"></div>
+                        </div>
+                        <div class="spending-legend">
+                            <span><i class="dot dot-food"></i> Makanan (35%)</span>
+                            <span><i class="dot dot-bills"></i> Tagihan (25%)</span>
+                            <span><i class="dot dot-shop"></i> Belanja (20%)</span>
+                            <span><i class="dot dot-other"></i> Lainnya (20%)</span>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Recent Transactions -->
+                <section class="section-container">
+                    <div class="section-header">
+                        <h3><i class="ri-history-line"></i> Transaksi Terakhir</h3>
+                        <a href="#transactions" class="view-all-link" data-tab="transactions">Lihat Semua Riwayat</a>
+                    </div>
+                    <div class="recent-tx-list" id="recentTxList">
+                        <!-- Rendered by script.js -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- Transactions Full View -->
+            <div class="view-content" id="viewTransactions">
+                <div class="page-title-box">
+                    <h2><i class="ri-file-list-3-line"></i> Riwayat Transaksi Lengkap</h2>
+                    <p>Cari, filter, dan unduh bukti transaksi digital Anda.</p>
+                </div>
+
+                <div class="tx-filter-bar">
+                    <div class="search-input-wrapper">
+                        <i class="ri-search-line"></i>
+                        <input type="text" id="txSearchInput" placeholder="Cari berdasarkan nama, merchant, atau nominal...">
+                    </div>
+                    <div class="filter-pills" id="txCategoryPills">
+                        <button class="pill-btn active" data-category="all">Semua</button>
+                        <button class="pill-btn" data-category="topup">Top Up</button>
+                        <button class="pill-btn" data-category="transfer">Transfer</button>
+                        <button class="pill-btn" data-category="payment">Pembayaran</button>
+                        <button class="pill-btn" data-category="cashback">Cashback</button>
+                    </div>
+                </div>
+
+                <div class="full-tx-table-container">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Tanggal & Waktu</th>
+                                <th>Jenis / Merchant</th>
+                                <th>Kategori</th>
+                                <th>Metode / Penerima</th>
+                                <th>Jumlah</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fullTxTableBody">
+                            <!-- Rendered by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PPOB & Services View -->
+            <div class="view-content" id="viewPpob">
+                <div class="page-title-box">
+                    <h2><i class="ri-grid-fill"></i> Layanan & Pembayaran Tagihan (PPOB)</h2>
+                    <p>Bayar listrik, pulsa, air, hingga voucher game dalam satu klik.</p>
+                </div>
+
+                <div class="ppob-categories">
+                    <div class="ppob-card" id="cardPulsa">
+                        <div class="card-icon bg-blue"><i class="ri-smartphone-line"></i></div>
+                        <h4>Pulsa & Paket Data</h4>
+                        <p>Isi ulang pulsa & kuota semua operator HP.</p>
+                        <button class="btn-outline-primary btn-ppob-action" data-type="Pulsa">Beli Sekarang</button>
+                    </div>
+
+                    <div class="ppob-card" id="cardPLN">
+                        <div class="card-icon bg-yellow"><i class="ri-flashlight-line"></i></div>
+                        <h4>Token & Tagihan PLN</h4>
+                        <p>Bayar tagihan pascabayar & isi token listrik.</p>
+                        <button class="btn-outline-primary btn-ppob-action" data-type="PLN">Bayar Listrik</button>
+                    </div>
+
+                    <div class="ppob-card" id="cardPDAM">
+                        <div class="card-icon bg-cyan"><i class="ri-drop-line"></i></div>
+                        <h4>Air PDAM</h4>
+                        <p>Cek dan bayar tagihan air PDAM daerahmu.</p>
+                        <button class="btn-outline-primary btn-ppob-action" data-type="PDAM">Bayar PDAM</button>
+                    </div>
+
+                    <div class="ppob-card" id="cardBPJS">
+                        <div class="card-icon bg-green"><i class="ri-heart-pulse-line"></i></div>
+                        <h4>BPJS Kesehatan</h4>
+                        <p>Iuran bulanan BPJS keluarga tepat waktu.</p>
+                        <button class="btn-outline-primary btn-ppob-action" data-type="BPJS">Bayar BPJS</button>
+                    </div>
+
+                    <div class="ppob-card" id="cardGames">
+                        <div class="card-icon bg-purple"><i class="ri-gamepad-line"></i></div>
+                        <h4>Voucher Game</h4>
+                        <p>Topup Diamond Mobile Legends, Valorant, Free Fire.</p>
+                        <button class="btn-outline-primary btn-ppob-action" data-type="Voucher Game">Top Up Game</button>
+                    </div>
+
+                    <div class="ppob-card" id="cardEMoney">
+                        <div class="card-icon bg-orange"><i class="ri-bank-card-2-line"></i></div>
+                        <h4>Topup E-Money</h4>
+                        <p>Top up saldo e-toll, Flazz, TapCash, & ShopeePay.</p>
+                        <button class="btn-outline-primary btn-ppob-action" data-type="E-Money">Isi E-Money</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vaults View -->
+            <div class="view-content" id="viewVaults">
+                <div class="page-title-box">
+                    <div class="title-with-action">
+                        <div>
+                            <h2><i class="ri-safe-2-line"></i> Kantong Impian (Savings Vaults)</h2>
+                            <p>Pisahkan saldo dompetmu untuk berbagai impian dan target keuangan masa depan.</p>
+                        </div>
+                        <button class="btn-primary" id="btnCreateVaultMain"><i class="ri-add-line"></i> Buat Kantong Baru</button>
+                    </div>
+                </div>
+
+                <div class="vaults-grid" id="fullVaultsGrid">
+                    <!-- Dynamic rendering by JS -->
+                </div>
+            </div>
+
+            <!-- Analytics View -->
+            <div class="view-content" id="viewAnalytics">
+                <div class="page-title-box">
+                    <h2><i class="ri-pie-chart-line"></i> Analisis Keuangan</h2>
+                    <p>Pantau arus kas masuk dan keluar secara mendalam.</p>
+                </div>
+
+                <div class="analytics-wrapper">
+                    <div class="analytics-metrics-cards">
+                        <div class="metric-card border-green">
+                            <span class="m-title">Total Pemasukan (Bulan Ini)</span>
+                            <h3 class="m-val text-success" id="analyticIncome">Rp 8.500.000</h3>
+                            <span class="m-sub"><i class="ri-arrow-up-line"></i> +12% dibanding bulan lalu</span>
+                        </div>
+                        <div class="metric-card border-red">
+                            <span class="m-title">Total Pengeluaran (Bulan Ini)</span>
+                            <h3 class="m-val text-danger" id="analyticExpense">Rp 3.420.000</h3>
+                            <span class="m-sub"><i class="ri-arrow-down-line"></i> -5% hemat dari target</span>
+                        </div>
+                        <div class="metric-card border-blue">
+                            <span class="m-title">Sisa Saldo Bersih</span>
+                            <h3 class="m-val text-blue" id="analyticNet">Rp 5.080.000</h3>
+                            <span class="m-sub"><i class="ri-checkbox-circle-line"></i> Arus kas sehat</span>
+                        </div>
+                    </div>
+
+                    <!-- Visual Breakdown Progress Cards -->
+                    <div class="breakdown-card">
+                        <h3>Rincian Pengeluaran per Kategori</h3>
+                        <div class="category-breakdown-list" id="categoryBreakdownList">
+                            <!-- Generated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL POPUPS -->
+
+    <!-- Modal 1: Top Up Saldo -->
+    <div class="modal-overlay" id="modalTopUp">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="ri-add-circle-line"></i> Isi Saldo (Top Up)</h3>
+                <button class="modal-close" data-close="modalTopUp">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Pilih Nominal Cepat</label>
+                    <div class="quick-amounts-grid">
+                        <button class="btn-chip" data-amount="50000">Rp 50.000</button>
+                        <button class="btn-chip" data-amount="100000">Rp 100.000</button>
+                        <button class="btn-chip active" data-amount="250000">Rp 250.000</button>
+                        <button class="btn-chip" data-amount="500000">Rp 500.000</button>
+                        <button class="btn-chip" data-amount="1000000">Rp 1.000.000</button>
+                        <button class="btn-chip" data-amount="2000000">Rp 2.000.000</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="topUpAmountInput">Atau Masukkan Nominal Kustom (Rp)</label>
+                    <input type="number" id="topUpAmountInput" placeholder="Contoh: 150000" value="250000">
+                </div>
+
+                <div class="form-group">
+                    <label>Metode Pembayaran / Virtual Account</label>
+                    <select id="topUpMethodSelect" class="custom-select">
+                        <option value="VA BCA">Virtual Account BCA</option>
+                        <option value="VA Mandiri">Virtual Account Mandiri</option>
+                        <option value="VA BRI">Virtual Account BRI</option>
+                        <option value="Indomaret / Alfamart">Gerai Retail (Indomaret/Alfamart)</option>
+                        <option value="Kartu Kredit / Debit">Kartu Kredit / Debit Instant</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" data-close="modalTopUp">Batal</button>
+                <button class="btn-primary" id="btnSubmitTopUp">Proses Top Up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Transfer -->
+    <div class="modal-overlay" id="modalTransfer">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="ri-send-plane-line"></i> Kirim / Transfer Saldo</h3>
+                <button class="modal-close" data-close="modalTransfer">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Kontak Sering Dihubungi</label>
+                    <div class="recent-contacts-row">
+                        <div class="contact-pill" data-phone="081299887766" data-name="Budi Santoso">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=80" alt="Budi">
+                            <span>Budi</span>
+                        </div>
+                        <div class="contact-pill" data-phone="085711223344" data-name="Siti Rahma">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=80" alt="Siti">
+                            <span>Siti</span>
+                        </div>
+                        <div class="contact-pill" data-phone="081344556677" data-name="Dewi Lestari">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=80" alt="Dewi">
+                            <span>Dewi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="transferPhoneInput">Nomor HP / Rekening Tujuan</label>
+                    <input type="text" id="transferPhoneInput" placeholder="08xx-xxxx-xxxx atau No. Rekening">
+                </div>
+
+                <div class="form-group">
+                    <label for="transferNameInput">Nama Penerima</label>
+                    <input type="text" id="transferNameInput" placeholder="Contoh: Budi Santoso">
+                </div>
+
+                <div class="form-group">
+                    <label for="transferAmountInput">Nominal Transfer (Rp)</label>
+                    <input type="number" id="transferAmountInput" placeholder="Minimum Rp 10.000">
+                </div>
+
+                <div class="form-group">
+                    <label for="transferNoteInput">Catatan (Opsional)</label>
+                    <input type="text" id="transferNoteInput" placeholder="Contoh: Bayar Makanan / Utang">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" data-close="modalTransfer">Batal</button>
+                <button class="btn-primary" id="btnProceedTransfer">Lanjutkan Ke PIN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Bayar QRIS (QR Code Scanner Simulator) -->
+    <div class="modal-overlay" id="modalQRIS">
+        <div class="modal-box modal-qris-box">
+            <div class="modal-header">
+                <h3><i class="ri-qr-code-line"></i> Pemindai QRIS Merchant</h3>
+                <button class="modal-close" data-close="modalQRIS">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="qris-viewfinder">
+                    <div class="laser-line"></div>
+                    <div class="corner top-left"></div>
+                    <div class="corner top-right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="corner bottom-right"></div>
+                    <i class="ri-qr-scan-2-line bg-icon"></i>
+                </div>
+                <p class="qris-hint">Arahkan kamera ke Kode QRIS Merchant (Resto, Minimarket, dll.)</p>
+                <div class="qris-sim-actions">
+                    <button class="btn-secondary-sm" id="btnSimulateScan">Simulasi Scan QR Resto (Rp 75.000)</button>
+                </div>
+
+                <div class="qris-checkout-form hidden" id="qrisCheckoutForm">
+                    <hr class="divider">
+                    <div class="merchant-badge">
+                        <i class="ri-store-2-fill"></i>
+                        <div>
+                            <h4 id="qrisMerchantName">Kopi Kenangan Mantan - Mall Central</h4>
+                            <span>NMID: ID1020394857112</span>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="qrisAmountInput">Total Pembayaran (Rp)</label>
+                        <input type="number" id="qrisAmountInput" value="75000">
+                    </div>
+                    <button class="btn-primary w-100" id="btnPayQRIS">Bayar Sekarang</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Security PIN Verification -->
+    <div class="modal-overlay" id="modalPin">
+        <div class="modal-box modal-pin-box">
+            <div class="modal-header">
+                <h3><i class="ri-lock-password-line"></i> Verifikasi PIN Keamanan</h3>
+                <button class="modal-close" data-close="modalPin">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Masukkan 6-digit PIN My Klepeh Anda untuk konfirmasi transaksi</p>
+                <div class="pin-dots-wrapper" id="pinDots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <div class="pin-keypad" id="pinKeypad">
+                    <button class="key-btn" data-key="1">1</button>
+                    <button class="key-btn" data-key="2">2</button>
+                    <button class="key-btn" data-key="3">3</button>
+                    <button class="key-btn" data-key="4">4</button>
+                    <button class="key-btn" data-key="5">5</button>
+                    <button class="key-btn" data-key="6">6</button>
+                    <button class="key-btn" data-key="7">7</button>
+                    <button class="key-btn" data-key="8">8</button>
+                    <button class="key-btn" data-key="9">9</button>
+                    <button class="key-btn btn-dummy"></button>
+                    <button class="key-btn" data-key="0">0</button>
+                    <button class="key-btn key-backspace" data-key="del"><i class="ri-backspace-line"></i></button>
+                </div>
+                <small class="text-muted hint-text">PIN Default Demo: <b>451441</b></small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 5: Receipt / Struk Transaksi -->
+    <div class="modal-overlay" id="modalReceipt">
+        <div class="modal-box modal-receipt-box">
+            <div class="modal-header">
+                <h3>Resi Bukti Transaksi</h3>
+                <button class="modal-close" data-close="modalReceipt">&times;</button>
+            </div>
+            <div class="modal-body" id="receiptBody">
+                <!-- Dynamic receipt content -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" data-close="modalReceipt">Tutup</button>
+                <button class="btn-primary" id="btnPrintReceipt"><i class="ri-download-line"></i> Cetak / Unduh Struk</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 6: PPOB Payment Checkout -->
+    <div class="modal-overlay" id="modalPpobCheckout">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="ppobModalTitle"><i class="ri-flashlight-line"></i> Pembayaran Tagihan</h3>
+                <button class="modal-close" data-close="modalPpobCheckout">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="ppobNumberInput" id="ppobNumLabel">Nomor Pelanggan / ID PLN</label>
+                    <input type="text" id="ppobNumberInput" placeholder="Masukkan Nomor...">
+                </div>
+
+                <div class="form-group">
+                    <label for="ppobNominalSelect">Pilih Paket / Nominal</label>
+                    <select id="ppobNominalSelect" class="custom-select">
+                        <option value="20000">Nominal Rp 20.000 (Harga Rp 21.500)</option>
+                        <option value="50000" selected>Nominal Rp 50.000 (Harga Rp 51.500)</option>
+                        <option value="100000">Nominal Rp 100.000 (Harga Rp 101.500)</option>
+                        <option value="200000">Nominal Rp 200.000 (Harga Rp 201.500)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" data-close="modalPpobCheckout">Batal</button>
+                <button class="btn-primary" id="btnSubmitPpob">Bayar Tagihan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 7: Create Vault Modal -->
+    <div class="modal-overlay" id="modalCreateVault">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="ri-safe-2-line"></i> Buat Kantong Impian Baru</h3>
+                <button class="modal-close" data-close="modalCreateVault">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="vaultNameInput">Nama Target Kantong</label>
+                    <input type="text" id="vaultNameInput" placeholder="Contoh: Beli iPhone 17 / Liburan Bali">
+                </div>
+                <div class="form-group">
+                    <label for="vaultTargetInput">Target Total Dana (Rp)</label>
+                    <input type="number" id="vaultTargetInput" placeholder="Contoh: 15000000">
+                </div>
+                <div class="form-group">
+                    <label for="vaultIconSelect">Pilih Ikon</label>
+                    <select id="vaultIconSelect" class="custom-select">
+                        <option value="ri-flight-takeoff-line">✈️ Liburan & Travel</option>
+                        <option value="ri-macbook-line">💻 Gadget & Elektronik</option>
+                        <option value="ri-car-line">🚗 Kendaraan</option>
+                        <option value="ri-home-4-line">🏠 Rumah & Properti</option>
+                        <option value="ri-shield-flash-line">🛡️ Dana Darurat</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" data-close="modalCreateVault">Batal</button>
+                <button class="btn-primary" id="btnSubmitCreateVault">Buat Kantong</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Drawer Overlay -->
+    <div class="drawer-overlay" id="drawerNotif">
+        <div class="drawer-box">
+            <div class="drawer-header">
+                <h3><i class="ri-notification-3-line"></i> Notifikasi</h3>
+                <button class="btn-icon-ghost" id="closeNotifDrawer">&times;</button>
+            </div>
+            <div class="notif-list" id="notifList">
+                <!-- Populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 8: Logout Confirmation Dialog -->
+    <div class="modal-overlay" id="modalLogoutConfirm">
+        <div class="modal-box modal-logout-box">
+            <div class="modal-header">
+                <div class="logout-modal-badge">
+                    <i class="ri-logout-circle-r-line"></i>
+                </div>
+                <button class="modal-close" data-close="modalLogoutConfirm">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <h3 class="logout-modal-title">Keluar dari Akun?</h3>
+                <p class="logout-modal-desc">
+                    Apakah Anda yakin ingin keluar dari akun <strong id="logoutUserNameModal">M Ikhsan Anggara</strong>? Anda dapat masuk kembali kapan saja menggunakan nomor ponsel atau biometrik.
+                </p>
+                <div class="logout-user-preview">
+                    <img src="sasuke.jpg" alt="Avatar" class="avatar-img-sm" id="logoutAvatarModal">
+                    <div class="user-preview-info">
+                        <span class="preview-name" id="logoutUserPhoneModal">0812-9887-3411</span>
+                        <span class="preview-status"><i class="ri-shield-check-line"></i> Sesi Aktif Akan Ditutup</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer logout-modal-footer">
+                <button class="btn-ghost" data-close="modalLogoutConfirm">Batal</button>
+                <button class="btn-primary" id="btnConfirmLogout" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); border: 1px solid rgba(244, 63, 94, 0.4); box-shadow: 0 4px 15px rgba(244, 63, 94, 0.35);">
+                    <i class="ri-logout-box-r-line"></i> Ya, Keluar Akun
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+                              <!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - My Klepeh E-Wallet Premium</title>
+    <meta name="description" content="Halaman Login Aman E-Wallet My Klepeh - Akses akun dompet digital kamu dengan PIN, Biometrik QR, atau OTP.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- RemixIcon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <!-- Background Ambient Glow Orbs -->
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="glow-orb glow-orb-3"></div>
+
+        <!-- Floating Theme Toggle Button -->
+        <button class="auth-theme-toggle" id="authThemeToggle" title="Ganti Tema (Gelap/Terang)">
+            <i class="ri-sun-line light-icon" style="display: none;"></i>
+            <i class="ri-moon-line dark-icon"></i>
+        </button>
+
+        <!-- Main Auth Card -->
+        <div class="auth-card">
+            <!-- Top Security Header -->
+            <div class="auth-header">
+                <div class="security-badge-top">
+                    <i class="ri-shield-check-fill"></i> 256-Bit SSL Secured & Biometric Ready
+                </div>
+                
+                <div class="auth-brand">
+                    <div class="logo-icon">
+                        <i class="ri-wallet-3-line"></i>
+                    </div>
+                    <div class="auth-brand-text">
+                        <h1>My Klepeh</h1>
+                        <span>E-Wallet Premium</span>
+                    </div>
+                </div>
+                <h2>Selamat Datang Kembali</h2>
+                <p>Silakan memilih metode autentikasi pilihanmu untuk masuk.</p>
+            </div>
+
+            <!-- Quick Account Switcher Chips -->
+            <div class="account-switcher-section">
+                <div class="account-switcher-label">
+                    <span>Pilih Akun Tersimpan</span>
+                    <i class="ri-user-shared-line"></i>
+                </div>
+                <div class="account-chips" id="accountChips">
+                    <div class="account-chip active" data-phone="0895-3254-80299" data-name="M Ikhsan Anggara" data-avatar="sasuke.jpg">
+                        <img src="sasuke.jpg" alt="Ikhsan">
+                        <span>Ikhsan Anggara</span>
+                    </div>
+                    <div class="account-chip" data-phone="0895-0221-6262" data-name="Alisa Muthmaina" data-avatar="alisa2.jpg">
+                        <img src="alisa2.jpg" alt="Alisa">
+                        <span>Alisa Muthmaina alam</span>
+                    </div>
+                    <div class="account-chip" data-phone="0831-1210-0096" data-name="Bella Anggraeni" data-avatar="bella.jpeg">
+                        <img src="bella.jpeg" alt="Bella">
+                        <span>Bella Anggraeni</span>
+                    </div>
+                    <div class="account-chip" data-phone="0838-3934-7001" data-name="Rizky" data-avatar="sasuke.jpg">
+                        <img src="sasuke.jpg" alt="Rizky">
+                        <span>Rizky</span>
+                    </div>
+                    <div class="account-chip" data-phone="" data-name="Akun Lain" data-avatar="">
+                        <i class="ri-add-line" style="font-size: 1rem; color: var(--primary-cyan);"></i>
+                        <span>Ganti Akun</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Auth Mode Navigation Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="pane-pin">
+                    <i class="ri-lock-password-line"></i> PIN Keamanan
+                </button>
+                <button class="auth-tab" data-tab="pane-qr">
+                    <i class="ri-qr-code-line"></i> QR Biometrik
+                </button>
+                <button class="auth-tab" data-tab="pane-otp">
+                    <i class="ri-cellphone-line"></i> OTP Instan
+                </button>
+            </div>
+
+            <!-- PANE 1: Standard Login Form (Nomor HP + PIN Keamanan) -->
+            <div class="auth-pane active" id="pane-pin">
+                <form id="loginPinForm" onsubmit="return false;">
+                    <div class="auth-form-group">
+                        <label class="auth-label">Nomor Ponsel Terdaftar</label>
+                        <div class="input-icon-wrapper">
+                            <input type="tel" id="inputPhone" class="auth-input" placeholder="0812-xxxx-xxxx" value="0812-9887-3411" required>
+                            <i class="ri-phone-line left-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="auth-form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem;">
+                            <label class="auth-label" style="margin-bottom: 0;">6-Digit PIN Transaksi</label>
+                            <button type="button" class="forgot-link" id="toggleVirtualKeypadBtn" style="font-size: 0.775rem; background: transparent; border: none; cursor: pointer;">
+                                <i class="ri-keyboard-box-line"></i> Toggle Keypad Layar
+                            </button>
+                        </div>
+                        
+                        <!-- PIN Visual Dots Display -->
+                        <div class="pin-display-box" id="pinDisplayBox">
+                            <div class="pin-dots" id="pinDots">
+                                <div class="pin-dot"></div>
+                                <div class="pin-dot"></div>
+                                <div class="pin-dot"></div>
+                                <div class="pin-dot"></div>
+                                <div class="pin-dot"></div>
+                                <div class="pin-dot"></div>
+                            </div>
+                            <i class="ri-shield-keyhole-line" style="color: var(--primary-cyan); font-size: 1.2rem;"></i>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Virtual Keypad Container -->
+                    <div class="virtual-keypad-container" id="virtualKeypad">
+                        <div class="keypad-header">
+                            <span>Keypad Keamanan Anti-Keylogger</span>
+                            <button type="button" id="scrambleKeypadBtn" style="background: transparent; border: none; color: var(--primary-cyan); cursor: pointer; font-size: 0.75rem; font-weight: 600;">
+                                <i class="ri-shuffle-line"></i> Acak Posisi
+                            </button>
+                        </div>
+                        <div class="keypad-grid" id="keypadGrid">
+                            <button type="button" class="keypad-btn" data-key="1">1</button>
+                            <button type="button" class="keypad-btn" data-key="2">2</button>
+                            <button type="button" class="keypad-btn" data-key="3">3</button>
+                            <button type="button" class="keypad-btn" data-key="4">4</button>
+                            <button type="button" class="keypad-btn" data-key="5">5</button>
+                            <button type="button" class="keypad-btn" data-key="6">6</button>
+                            <button type="button" class="keypad-btn" data-key="7">7</button>
+                            <button type="button" class="keypad-btn" data-key="8">8</button>
+                            <button type="button" class="keypad-btn" data-key="9">9</button>
+                            <button type="button" class="keypad-btn keypad-action" id="keypadClearBtn">Clear</button>
+                            <button type="button" class="keypad-btn" data-key="0">0</button>
+                            <button type="button" class="keypad-btn keypad-action" id="keypadBackspaceBtn"><i class="ri-backspace-line"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="auth-row-options">
+                        <label class="remember-checkbox">
+                            <input type="checkbox" id="rememberMeCheckbox" checked>
+                            <span>Ingat Sesi Saya</span>
+                        </label>
+                        <a href="#" class="forgot-link" id="forgotPinLink">Lupa PIN?</a>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn" id="submitPinLoginBtn">
+                        <i class="ri-login-circle-line"></i> Masuk Sekarang
+                    </button>
+                </form>
+            </div>
+
+            <!-- PANE 2: Biometric QR Scanner Login -->
+            <div class="auth-pane" id="pane-qr">
+                <div class="qr-scanner-wrapper">
+                    <div class="qr-box-container">
+                        <!-- Corner Accent Lines -->
+                        <div class="qr-corner corner-tl"></div>
+                        <div class="qr-corner corner-tr"></div>
+                        <div class="qr-corner corner-bl"></div>
+                        <div class="qr-corner corner-br"></div>
+                        
+                        <!-- Animated Scanning Laser Sweep Line -->
+                        <div class="qr-laser-line"></div>
+                        
+                        <!-- Generated QR Image SVG -->
+                        <svg class="qr-image-placeholder" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0,0 h35 v35 h-35 z M10,10 v15 h15 v-15 z" fill="#0f172a"/>
+                            <path d="M65,0 h35 v35 h-35 z M75,10 v15 h15 v-15 z" fill="#0f172a"/>
+                            <path d="M0,65 h35 v35 h-35 z M10,75 v15 h15 v-15 z" fill="#0f172a"/>
+                            <rect x="40" y="5" width="8" height="8" fill="#0284c7"/>
+                            <rect x="48" y="20" width="10" height="10" fill="#0f172a"/>
+                            <rect x="15" y="42" width="12" height="12" fill="#0284c7"/>
+                            <rect x="40" y="40" width="20" height="20" fill="#0d9488"/>
+                            <rect x="70" y="42" width="15" height="10" fill="#0f172a"/>
+                            <rect x="42" y="70" width="12" height="12" fill="#0284c7"/>
+                            <rect x="68" y="68" width="15" height="15" fill="#0f172a"/>
+                            <rect x="85" y="85" width="10" height="10" fill="#0d9488"/>
+                        </svg>
+                    </div>
+
+                    <p class="qr-instructions">
+                        Buka aplikasi mobile <strong>My Klepeh E-Wallet</strong> di ponselmu, lalu pindai Kode QR di atas menggunakan pemindai bawaan.
+                    </p>
+
+                    <div class="qr-timer-badge">
+                        <i class="ri-time-line"></i> Kode diperbarui dalam <span id="qrCountdownSec">45</span>s
+                    </div>
+
+                    <button type="button" class="auth-submit-btn" id="simulatedQrApproveBtn" style="margin-top: 1.25rem; background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
+                        <i class="ri-fingerprint-line"></i> Simulasi Scan Biometrik (Disetujui HP)
+                    </button>
+                </div>
+            </div>
+
+            <!-- PANE 3: Passwordless OTP Login -->
+            <div class="auth-pane" id="pane-otp">
+                <form id="loginOtpForm" onsubmit="return false;">
+                    <div class="auth-form-group">
+                        <label class="auth-label">Nomor WhatsApp / SMS</label>
+                        <div class="input-icon-wrapper">
+                            <input type="tel" id="inputOtpPhone" class="auth-input" placeholder="0812-xxxx-xxxx" value="0812-9887-3411" required>
+                            <i class="ri-whatsapp-line left-icon" style="color: var(--primary-emerald);"></i>
+                        </div>
+                    </div>
+
+                    <div class="qr-instructions" style="text-align: left; margin-bottom: 1.25rem;">
+                        <i class="ri-information-line" style="color: var(--primary-cyan);"></i> Kode verifikasi 6-digit akan dikirim secara aman via pesan instan tanpa perlu mengingat PIN.
+                    </div>
+
+                    <button type="button" class="auth-submit-btn" id="requestOtpBtn">
+                        <i class="ri-send-plane-fill"></i> Kirim Kode OTP Verifikasi
+                    </button>
+                </form>
+            </div>
+
+            <div class="auth-footer-text">
+                Belum memiliki akun PayPulse? <a href="#" id="registerLink">Daftar Akun Gratis</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP Verification Modal Container -->
+    <div class="modal-overlay" id="otpModal">
+        <div class="otp-card">
+            <div class="otp-icon">
+                <i class="ri-shield-flash-line"></i>
+            </div>
+            <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem;">Verifikasi OTP Instant</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                Masukkan 6-digit kode verifikasi yang dikirimkan ke <strong id="modalOtpPhoneDisplay">0812-9887-3411</strong>
+            </p>
+
+            <div class="otp-input-group" id="otpBoxGroup">
+                <input type="text" maxlength="1" class="otp-box" data-index="0" autofocus>
+                <input type="text" maxlength="1" class="otp-box" data-index="1">
+                <input type="text" maxlength="1" class="otp-box" data-index="2">
+                <input type="text" maxlength="1" class="otp-box" data-index="3">
+                <input type="text" maxlength="1" class="otp-box" data-index="4">
+                <input type="text" maxlength="1" class="otp-box" data-index="5">
+            </div>
+
+            <button type="button" class="forgot-link" id="autoFillOtpBtn" style="font-size: 0.8rem; background: transparent; border: none; cursor: pointer; margin-bottom: 1rem;">
+                <i class="ri-magic-line"></i> Simulasi Auto-Fill Kode OTP (888999)
+            </button>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                Tidak menerima kode? <span id="resendOtpTimer" style="color: var(--primary-cyan); font-weight: 600;">Kirim ulang (45s)</span>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem;">
+                <button type="button" class="auth-submit-btn" id="cancelOtpBtn" style="background: rgba(255,255,255,0.08); box-shadow: none; flex: 1;">
+                    Batal
+                </button>
+                <button type="button" class="auth-submit-btn" id="submitOtpVerifyBtn" style="flex: 2;">
+                    Verifikasi & Masuk
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sound & Logic JS -->
+    <script src="login.js"></script>
+</body>
+</html>
