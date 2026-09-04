@@ -1,0 +1,43 @@
+{
+  "name": "my-klepeh-ewallet",
+  "version": "1.0.0",
+  "description": "Aplikasi Desktop Premium E-Wallet My Klepeh",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "build:portable": "electron-builder -w portable"
+  },
+  "keywords": [
+    "ewallet",
+    "klepeh",
+    "desktop",
+    "electron"
+  ],
+  "author": "My Klepeh",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^34.5.8",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.myklepeh.ewallet",
+    "productName": "My Klepeh E-Wallet",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "portable",
+        "nsis"
+      ],
+      "icon": "alisa2.jpg"
+    },
+    "files": [
+      "**/*",
+      "!dist/**/*",
+      "!node_modules/**/*"
+    ]
+  }
+}

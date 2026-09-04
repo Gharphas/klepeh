@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build & Dist Outputs
+build/
+*.spec
+dist/*.exe
+!dist/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+env/
+
+# OS / Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
