@@ -2,7 +2,8 @@
 <html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0369a1">
     <title>My Klepeh - E-Wallet Digital Modern</title>
     <meta name="description" content="Aplikasi E-Wallet Digital Modern - Kelola Saldo, Transfer, Top Up, dan Tagihan PPOB secara cepat dan aman.">
     <!-- Google Fonts -->
@@ -575,25 +576,59 @@
         </div>
     </div>
 
-    <!-- Modal 3: Bayar QRIS (QR Code Scanner Simulator) -->
+    <!-- Modal 3: Bayar QRIS (QR Code Scanner & Live Camera) -->
     <div class="modal-overlay" id="modalQRIS">
         <div class="modal-box modal-qris-box">
             <div class="modal-header">
-                <h3><i class="ri-qr-code-line"></i> Pemindai QRIS Merchant</h3>
+                <h3><i class="ri-qr-code-line"></i> Pindai QRIS Merchant</h3>
                 <button class="modal-close" data-close="modalQRIS">&times;</button>
             </div>
             <div class="modal-body text-center">
-                <div class="qris-viewfinder">
-                    <div class="laser-line"></div>
-                    <div class="corner top-left"></div>
-                    <div class="corner top-right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="corner bottom-right"></div>
-                    <i class="ri-qr-scan-2-line bg-icon"></i>
+                <!-- Camera Status Badge -->
+                <div class="camera-live-badge" id="cameraLiveBadge">
+                    <span class="pulse-dot"></span> <span id="cameraBadgeText">Kamera Langsung Aktif</span>
                 </div>
-                <p class="qris-hint">Arahkan kamera ke Kode QRIS Merchant (Resto, Minimarket, dll.)</p>
+
+                <!-- Live Camera Viewfinder -->
+                <div class="qris-viewfinder" id="qrisViewfinder" title="Arahkan ke QR Code atau Ketuk untuk Simulasi Pindai">
+                    <video id="qrisVideoFeed" class="qris-video-feed hidden" autoplay playsinline muted></video>
+                    
+                    <div class="qris-scanner-overlay">
+                        <div class="laser-line"></div>
+                        <div class="corner top-left"></div>
+                        <div class="corner top-right"></div>
+                        <div class="corner bottom-left"></div>
+                        <div class="corner bottom-right"></div>
+                        <div class="qris-target-reticle"></div>
+                    </div>
+
+                    <div class="qris-camera-placeholder" id="qrisCameraPlaceholder">
+                        <i class="ri-camera-lens-line bg-icon"></i>
+                        <span class="camera-status-text" id="cameraStatusText">Mengakses Kamera Handphone...</span>
+                    </div>
+                </div>
+
+                <!-- Camera Controls Toolbar -->
+                <div class="qris-camera-toolbar" id="qrisCameraToolbar">
+                    <button class="btn-cam-tool" id="btnToggleTorch" type="button" title="Hidupkan / Matikan Senter">
+                        <i class="ri-flashlight-line"></i>
+                        <span>Senter</span>
+                    </button>
+                    <button class="btn-cam-tool" id="btnSwitchCamera" type="button" title="Ganti Kamera Depan / Belakang">
+                        <i class="ri-camera-switch-line"></i>
+                        <span>Ganti Kamera</span>
+                    </button>
+                    <button class="btn-cam-tool" id="btnUploadQRImage" type="button" title="Pindai QR dari Galeri Foto">
+                        <i class="ri-image-line"></i>
+                        <span>Galeri QR</span>
+                    </button>
+                    <input type="file" id="qrisFileInput" accept="image/*" class="hidden">
+                </div>
+
+                <p class="qris-hint">Arahkan kamera ke Kode QRIS Merchant (Resto, Toko UMKM, Minimarket, dll.)</p>
+                
                 <div class="qris-sim-actions">
-                    <button class="btn-secondary-sm" id="btnSimulateScan">Simulasi Scan QR Resto (Rp 75.000)</button>
+                    <button class="btn-secondary-sm" id="btnSimulateScan"><i class="ri-scan-2-line"></i> Simulasi Scan QR Resto (Rp 75.000)</button>
                 </div>
 
                 <div class="qris-checkout-form hidden" id="qrisCheckoutForm">
@@ -609,7 +644,7 @@
                         <label for="qrisAmountInput">Total Pembayaran (Rp)</label>
                         <input type="number" id="qrisAmountInput" value="75000">
                     </div>
-                    <button class="btn-primary w-100" id="btnPayQRIS">Bayar Sekarang</button>
+                    <button class="btn-primary w-100" id="btnPayQRIS"><i class="ri-shield-check-line"></i> Lanjutkan Pembayaran (PIN)</button>
                 </div>
             </div>
         </div>

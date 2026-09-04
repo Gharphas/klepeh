@@ -590,12 +590,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // ----------------------------------------------------------------------
     function openModal(modalId) {
         const modal = document.getElementById(modalId);
-        if (modal) modal.classList.add('active');
+        if (modal) {
+            modal.classList.add('active');
+            if (modalId === 'modalQRIS') {
+                startQRISCamera();
+            }
+        }
     }
 
     function closeModal(modalId) {
         const modal = document.getElementById(modalId);
-        if (modal) modal.classList.remove('active');
+        if (modal) {
+            modal.classList.remove('active');
+            if (modalId === 'modalQRIS') {
+                stopQRISCamera();
+            }
+        }
     }
 
     document.querySelectorAll('[data-close]').forEach(btn => {
@@ -607,7 +617,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) overlay.classList.remove('active');
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+                if (overlay.id === 'modalQRIS') {
+                    stopQRISCamera();
+                }
+            }
         });
     });
 
@@ -750,9 +765,212 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal('modalPin');
     });
 
+    // ----------------------------------------------------------------------
+    // 6D. LIVE QRIS CAMERA & SCANNER SYSTEM
+    // ----------------------------------------------------------------------
+    let qrisMediaStream = null;
+    let qrisFacingMode = 'environment';
+    let isTorchActive = false;
+    let qrScanInterval = null;
+
+    async function startQRISCamera() {
+        const videoEl = document.getElementById('qrisVideoFeed');
+        const placeholderEl = document.getElementById('qrisCameraPlaceholder');
+        const statusText = document.getElementById('cameraStatusText');
+        const badgeEl = document.getElementById('cameraLiveBadge');
+        const badgeText = document.getElementById('cameraBadgeText');
+        const torchBtn = document.getElementById('btnToggleTorch');
+
+        if (statusText) statusText.textContent = 'Mengakses Kamera Handphone...';
+        if (badgeText) badgeText.textContent = 'Menghubungkan Kamera...';
+        if (placeholderEl) placeholderEl.classList.remove('hidden');
+        if (videoEl) videoEl.classList.add('hidden');
+
+        stopQRISCamera();
+
+        try {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                throw new Error('WebRTC / Kamera tidak didukung pada browser ini.');
+            }
+
+            const constraints = {
+                video: {
+                    facingMode: { ideal: qrisFacingMode },
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                },
+                audio: false
+            };
+
+            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            qrisMediaStream = stream;
+
+            if (videoEl) {
+                videoEl.srcObject = stream;
+                await videoEl.play();
+                videoEl.classList.remove('hidden');
+            }
+
+            if (placeholderEl) placeholderEl.classList.add('hidden');
+            if (badgeEl) badgeEl.style.display = 'inline-flex';
+            if (badgeText) {
+                const isBack = qrisFacingMode === 'environment';
+                badgeText.textContent = `Kamera ${isBack ? 'Belakang' : 'Depan'} Aktif`;
+            }
+
+            // Check torch support
+            const track = stream.getVideoTracks()[0];
+            const capabilities = track.getCapabilities ? track.getCapabilities() : {};
+            if (torchBtn) {
+                if (capabilities.torch) {
+                    torchBtn.style.display = 'flex';
+                } else {
+                    torchBtn.style.opacity = '0.5';
+                }
+            }
+
+            // Start scanning detection
+            startQRScanningLoop();
+
+        } catch (err) {
+            console.warn('QRIS Camera Access Notice:', err);
+            if (placeholderEl) placeholderEl.classList.remove('hidden');
+            if (videoEl) videoEl.classList.add('hidden');
+            if (statusText) {
+                statusText.innerHTML = 'Kamera tidak dapat diakses langsung.<br><small style="opacity:0.85">Gunakan Simulasi Scan atau Unggah QR dari Galeri di bawah.</small>';
+            }
+            if (badgeText) badgeText.textContent = 'Simulasi Scanner Siap';
+        }
+    }
+
+    function stopQRISCamera() {
+        if (qrisMediaStream) {
+            qrisMediaStream.getTracks().forEach(track => {
+                try { track.stop(); } catch (e) {}
+            });
+            qrisMediaStream = null;
+        }
+
+        if (qrScanInterval) {
+            clearInterval(qrScanInterval);
+            qrScanInterval = null;
+        }
+
+        const videoEl = document.getElementById('qrisVideoFeed');
+        if (videoEl) {
+            videoEl.srcObject = null;
+            videoEl.classList.add('hidden');
+        }
+
+        isTorchActive = false;
+        const torchBtn = document.getElementById('btnToggleTorch');
+        if (torchBtn) torchBtn.classList.remove('active');
+    }
+
+    function startQRScanningLoop() {
+        if (qrScanInterval) clearInterval(qrScanInterval);
+
+        if ('BarcodeDetector' in window) {
+            try {
+                const detector = new BarcodeDetector({ formats: ['qr_code'] });
+                const videoEl = document.getElementById('qrisVideoFeed');
+
+                qrScanInterval = setInterval(async () => {
+                    if (!videoEl || videoEl.readyState < 2 || !qrisMediaStream) return;
+                    try {
+                        const barcodes = await detector.detect(videoEl);
+                        if (barcodes && barcodes.length > 0) {
+                            handleQRScannedSuccess('Merchant QRIS Resmi Terverifikasi', 75000);
+                        }
+                    } catch (e) {}
+                }, 400);
+                return;
+            } catch (e) {}
+        }
+    }
+
+    function handleQRScannedSuccess(merchantName = 'Kopi Kenangan Mantan - Mall Central', defaultNominal = 75000) {
+        if (qrScanInterval) {
+            clearInterval(qrScanInterval);
+            qrScanInterval = null;
+        }
+
+        playSuccessSound();
+        const formEl = document.getElementById('qrisCheckoutForm');
+        const merchantEl = document.getElementById('qrisMerchantName');
+        const inputEl = document.getElementById('qrisAmountInput');
+
+        if (merchantEl) merchantEl.textContent = merchantName;
+        if (inputEl) inputEl.value = defaultNominal;
+        if (formEl) {
+            formEl.classList.remove('hidden');
+            formEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        showToast(`QR Merchant "${merchantName}" Berhasil Terpindai!`, 'success');
+    }
+
+    // Toggle Torch / Flashlight
+    document.getElementById('btnToggleTorch')?.addEventListener('click', async () => {
+        if (!qrisMediaStream) {
+            showToast('Nyalakan kamera terlebih dahulu.', 'warning');
+            return;
+        }
+
+        const track = qrisMediaStream.getVideoTracks()[0];
+        if (!track) return;
+
+        try {
+            const capabilities = track.getCapabilities ? track.getCapabilities() : {};
+            if (!capabilities.torch) {
+                showToast('Fitur lampu senter/flash tidak didukung pada kamera perangkat ini.', 'info');
+                return;
+            }
+
+            isTorchActive = !isTorchActive;
+            await track.applyConstraints({ advanced: [{ torch: isTorchActive }] });
+            const torchBtn = document.getElementById('btnToggleTorch');
+            if (torchBtn) torchBtn.classList.toggle('active', isTorchActive);
+            showToast(`Lampu senter ${isTorchActive ? 'dinyalakan' : 'dimatikan'}`, 'success');
+        } catch (err) {
+            showToast('Tidak dapat mengubah status lampu senter.', 'error');
+        }
+    });
+
+    // Switch Camera (Front <-> Back)
+    document.getElementById('btnSwitchCamera')?.addEventListener('click', () => {
+        qrisFacingMode = qrisFacingMode === 'environment' ? 'user' : 'environment';
+        startQRISCamera();
+        showToast(`Beralih ke kamera ${qrisFacingMode === 'environment' ? 'belakang' : 'depan'}...`, 'info');
+    });
+
+    // Upload QR Code Image from Gallery
+    const qrisFileInput = document.getElementById('qrisFileInput');
+    document.getElementById('btnUploadQRImage')?.addEventListener('click', () => {
+        qrisFileInput?.click();
+    });
+
+    qrisFileInput?.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            showToast('Memproses gambar QR Code dari galeri...', 'info');
+            setTimeout(() => {
+                handleQRScannedSuccess('Resto Padang Sederhana - QRIS UMKM', 50000);
+            }, 700);
+        }
+    });
+
+    // Viewfinder click trigger
+    document.getElementById('qrisViewfinder')?.addEventListener('click', () => {
+        const formEl = document.getElementById('qrisCheckoutForm');
+        if (formEl && formEl.classList.contains('hidden')) {
+            handleQRScannedSuccess('Kopi Kenangan Mantan - Mall Central', 75000);
+        }
+    });
+
     // QRIS SCAN SIMULATOR
     document.getElementById('btnSimulateScan')?.addEventListener('click', () => {
-        document.getElementById('qrisCheckoutForm').classList.remove('hidden');
+        handleQRScannedSuccess('Kopi Kenangan Mantan - Mall Central', 75000);
     });
 
     document.getElementById('btnPayQRIS')?.addEventListener('click', () => {
@@ -762,15 +980,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const merchantName = document.getElementById('qrisMerchantName')?.textContent || 'Merchant QRIS';
+
         pendingTx = {
-            title: 'Kopi Kenangan - Mall Central',
+            title: merchantName,
             category: 'payment',
             type: 'debit',
             amount: amount,
             method: 'QRIS Scan Merchant',
-            note: 'Pembayaran QRIS'
+            note: 'Pembayaran QRIS Merchant'
         };
 
+        stopQRISCamera();
         closeModal('modalQRIS');
         resetPinDots();
         openModal('modalPin');
