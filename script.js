@@ -1547,6 +1547,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const serviceKey = item.getAttribute('data-service');
             if (serviceKey === 'more') {
                 switchTab('ppob');
+            } else if (serviceKey === 'invest') {
+                switchTab('invest');
             } else {
                 openPpobModal(serviceKey);
             }
@@ -3272,6 +3274,598 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('hotelLocationInput')?.addEventListener('change', renderTravelResults);
     document.getElementById('travelClassInput')?.addEventListener('change', renderTravelResults);
 
+    // ----------------------------------------------------------------------
+    // 14. INVESTASI SAHAM IDX & REKSA DANA (BIBIT INTEGRATION HUB)
+    // ----------------------------------------------------------------------
+    const INVEST_DATA = {
+        stocks: [
+            {
+                id: 'ST-BBCA',
+                ticker: 'BBCA',
+                name: 'Bank Central Asia Tbk',
+                sector: 'Perbankan (Bluechip)',
+                type: 'stock',
+                iconClass: 'stock-bank',
+                iconLetter: 'BCA',
+                price: 10250,
+                changeAmt: 185,
+                changePercent: 1.84,
+                isUp: true,
+                per: '21.4x',
+                pbv: '4.8x',
+                dividendYield: '2.8%',
+                marketCap: 'Rp 1.263 T',
+                lotMin: 1
+            },
+            {
+                id: 'ST-BBRI',
+                ticker: 'BBRI',
+                name: 'Bank Rakyat Indonesia Tbk',
+                sector: 'Perbankan Mikro & UMKM',
+                type: 'stock',
+                iconClass: 'stock-bank',
+                iconLetter: 'BRI',
+                price: 5250,
+                changeAmt: 125,
+                changePercent: 2.44,
+                isUp: true,
+                per: '13.5x',
+                pbv: '2.4x',
+                dividendYield: '5.8%',
+                marketCap: 'Rp 795 T',
+                lotMin: 1
+            },
+            {
+                id: 'ST-BMRI',
+                ticker: 'BMRI',
+                name: 'Bank Mandiri (Persero) Tbk',
+                sector: 'Perbankan BUMN',
+                type: 'stock',
+                iconClass: 'stock-bank',
+                iconLetter: 'BMRI',
+                price: 6850,
+                changeAmt: 75,
+                changePercent: 1.11,
+                isUp: true,
+                per: '11.2x',
+                pbv: '2.1x',
+                dividendYield: '4.9%',
+                marketCap: 'Rp 639 T',
+                lotMin: 1
+            },
+            {
+                id: 'ST-TLKM',
+                ticker: 'TLKM',
+                name: 'Telkom Indonesia Tbk',
+                sector: 'Telekomunikasi & Digital Infra',
+                type: 'stock',
+                iconClass: 'stock-telecom',
+                iconLetter: 'TLK',
+                price: 3120,
+                changeAmt: 30,
+                changePercent: 0.97,
+                isUp: true,
+                per: '14.8x',
+                pbv: '2.3x',
+                dividendYield: '5.2%',
+                marketCap: 'Rp 309 T',
+                lotMin: 1
+            },
+            {
+                id: 'ST-ASII',
+                ticker: 'ASII',
+                name: 'Astra International Tbk',
+                sector: 'Otomotif & Konglomerasi',
+                type: 'stock',
+                iconClass: 'stock-consumer',
+                iconLetter: 'ASI',
+                price: 5050,
+                changeAmt: 75,
+                changePercent: 1.51,
+                isUp: true,
+                per: '7.2x',
+                pbv: '1.0x',
+                dividendYield: '8.4%',
+                marketCap: 'Rp 204 T',
+                lotMin: 1
+            },
+            {
+                id: 'ST-ICBP',
+                ticker: 'ICBP',
+                name: 'Indofood CBP Sukses Makmur',
+                sector: 'Consumer Goods & F&B',
+                type: 'stock',
+                iconClass: 'stock-consumer',
+                iconLetter: 'ICB',
+                price: 11450,
+                changeAmt: 75,
+                changePercent: 0.66,
+                isUp: true,
+                per: '15.0x',
+                pbv: '2.8x',
+                dividendYield: '3.1%',
+                marketCap: 'Rp 133 T',
+                lotMin: 1
+            },
+            {
+                id: 'ST-GOTO',
+                ticker: 'GOTO',
+                name: 'GoTo Gojek Tokopedia Tbk',
+                sector: 'Teknologi & On-Demand',
+                type: 'stock',
+                iconClass: 'stock-tech',
+                iconLetter: 'GTO',
+                price: 65,
+                changeAmt: 4,
+                changePercent: 6.56,
+                isUp: true,
+                per: 'N/A',
+                pbv: '0.8x',
+                dividendYield: '0.0%',
+                marketCap: 'Rp 78 T',
+                lotMin: 1
+            },
+            {
+                id: 'ST-AMMN',
+                ticker: 'AMMN',
+                name: 'Amman Mineral Internasional',
+                sector: 'Pertambangan Tembaga & Emas',
+                type: 'stock',
+                iconClass: 'stock-energy',
+                iconLetter: 'AMM',
+                price: 9800,
+                changeAmt: 300,
+                changePercent: 3.16,
+                isUp: true,
+                per: '32.1x',
+                pbv: '5.6x',
+                dividendYield: '1.2%',
+                marketCap: 'Rp 710 T',
+                lotMin: 1
+            },
+            {
+                id: 'ST-BREN',
+                ticker: 'BREN',
+                name: 'Barito Renewables Energy',
+                sector: 'Energi Terbarukan (Geothermal)',
+                type: 'stock',
+                iconClass: 'stock-energy',
+                iconLetter: 'BRE',
+                price: 8950,
+                changeAmt: 250,
+                changePercent: 2.87,
+                isUp: true,
+                per: '84.0x',
+                pbv: '18.2x',
+                dividendYield: '0.9%',
+                marketCap: 'Rp 1.197 T',
+                lotMin: 1
+            }
+        ],
+        mutualfunds: [
+            {
+                id: 'MF-SUCOR-PU',
+                ticker: 'SUCOR-PU',
+                name: 'Sucorinvest Sharia Money Market Fund',
+                sector: 'Reksa Dana Pasar Uang (Syariah)',
+                type: 'mutualfund',
+                iconClass: 'stock-energy',
+                iconLetter: 'SPU',
+                price: 1540,
+                cagr: '+6.45% / thn',
+                riskLevel: 'Rendah (Paling Aman)',
+                aum: 'Rp 3.8 Triliun',
+                minBuy: 10000,
+                isUp: true
+            },
+            {
+                id: 'MF-MANULIFE-OBL',
+                ticker: 'MANU-OBL',
+                name: 'Manulife Obligasi Unggulan Kelas A',
+                sector: 'Reksa Dana Pendapatan Tetap',
+                type: 'mutualfund',
+                iconClass: 'stock-bank',
+                iconLetter: 'MOU',
+                price: 3280,
+                cagr: '+8.82% / thn',
+                riskLevel: 'Sedang (Stabil Menguntungkan)',
+                aum: 'Rp 5.2 Triliun',
+                minBuy: 50000,
+                isUp: true
+            },
+            {
+                id: 'MF-BATAVIA-EQ',
+                ticker: 'BATAV-EQ',
+                name: 'Batavia Dana Saham Optimal',
+                sector: 'Reksa Dana Saham (Equity)',
+                type: 'mutualfund',
+                iconClass: 'stock-tech',
+                iconLetter: 'BDS',
+                price: 4920,
+                cagr: '+14.20% / thn',
+                riskLevel: 'Tinggi (Pertumbuhan Maksimal)',
+                aum: 'Rp 2.4 Triliun',
+                minBuy: 100000,
+                isUp: true
+            },
+            {
+                id: 'MF-BNP-SYARIAH',
+                ticker: 'BNP-SYR',
+                name: 'BNP Paribas Pesona Syariah',
+                sector: 'Reksa Dana Saham Syariah',
+                type: 'mutualfund',
+                iconClass: 'stock-consumer',
+                iconLetter: 'BPS',
+                price: 2750,
+                cagr: '+12.75% / thn',
+                riskLevel: 'Tinggi (Prinsip Syariah)',
+                aum: 'Rp 1.9 Triliun',
+                minBuy: 50000,
+                isUp: true
+            }
+        ],
+        robo: [
+            {
+                id: 'ROBO-AGGRESSIVE',
+                ticker: 'ROBO-8',
+                name: 'Portofolio Robo Bibit - Profil Agresif',
+                sector: 'Alokasi Cerdas Otomatis (Skor 8/10)',
+                type: 'robo',
+                iconClass: 'stock-tech',
+                iconLetter: 'R-8',
+                price: 100000,
+                cagr: '+13.50% / thn',
+                allocation: 'Saham 60% • Obligasi 30% • Pasar Uang 10%',
+                riskLevel: 'Pertumbuhan Agresif Jangka Panjang',
+                minBuy: 100000,
+                isUp: true
+            },
+            {
+                id: 'ROBO-MODERATE',
+                ticker: 'ROBO-5',
+                name: 'Portofolio Robo Bibit - Profil Moderat',
+                sector: 'Alokasi Cerdas Otomatis (Skor 5/10)',
+                type: 'robo',
+                iconClass: 'stock-bank',
+                iconLetter: 'R-5',
+                price: 100000,
+                cagr: '+9.25% / thn',
+                allocation: 'Obligasi 50% • Saham 30% • Pasar Uang 20%',
+                riskLevel: 'Keseimbangan Risiko & Imbal Hasil',
+                minBuy: 50000,
+                isUp: true
+            },
+            {
+                id: 'ROBO-CONSERVATIVE',
+                ticker: 'ROBO-3',
+                name: 'Portofolio Robo Bibit - Profil Konservatif',
+                sector: 'Alokasi Cerdas Otomatis (Skor 3/10)',
+                type: 'robo',
+                iconClass: 'stock-energy',
+                iconLetter: 'R-3',
+                price: 100000,
+                cagr: '+6.80% / thn',
+                allocation: 'Pasar Uang 60% • Obligasi 35% • Saham 5%',
+                riskLevel: 'Prioritas Keamanan Dana',
+                minBuy: 10000,
+                isUp: true
+            }
+        ]
+    };
+
+    let currentInvestCategory = 'stocks';
+    let currentInvestSelectedItem = null;
+
+    function renderInvestCards() {
+        const container = document.getElementById('investCardsContainer');
+        if (!container) return;
+
+        const items = INVEST_DATA[currentInvestCategory] || [];
+        if (items.length === 0) {
+            container.innerHTML = `<div class="empty-state">Tidak ada instrumen investasi tersedia.</div>`;
+            return;
+        }
+
+        container.innerHTML = items.map(item => {
+            if (currentInvestCategory === 'stocks') {
+                return `
+                    <div class="stock-card">
+                        <div>
+                            <div class="stock-card-top">
+                                <div class="stock-brand-meta">
+                                    <div class="stock-icon-avatar ${item.iconClass}">${item.iconLetter}</div>
+                                    <div class="stock-title-info">
+                                        <h4>${item.ticker}</h4>
+                                        <span>${item.name}</span>
+                                    </div>
+                                </div>
+                                <span class="stock-sector-tag">${item.sector.split(' ')[0]}</span>
+                            </div>
+
+                            <div class="stock-price-box mt-3">
+                                <div>
+                                    <span class="price-lbl">Harga / Lembar</span>
+                                    <div class="stock-price-val">${formatRupiah(item.price)}</div>
+                                </div>
+                                <div class="stock-change-badge text-success">
+                                    <i class="ri-arrow-up-line"></i> +${formatRupiah(item.changeAmt)} (+${item.changePercent}%)
+                                </div>
+                            </div>
+
+                            <div class="stock-stats-row mt-3">
+                                <div class="stock-stats-item">
+                                    <span>P/E Ratio</span>
+                                    <strong>${item.per}</strong>
+                                </div>
+                                <div class="stock-stats-item">
+                                    <span>P/B Ratio</span>
+                                    <strong>${item.pbv}</strong>
+                                </div>
+                                <div class="stock-stats-item">
+                                    <span>Div. Yield</span>
+                                    <strong class="text-success">${item.dividendYield}</strong>
+                                </div>
+                                <div class="stock-stats-item">
+                                    <span>Market Cap</span>
+                                    <strong>${item.marketCap}</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary btn-buy-invest mt-3" onclick="window.openInvestOrderModal('${item.id}', 'stocks')">
+                            <i class="ri-shopping-cart-2-line"></i> Beli Saham (${item.ticker})
+                        </button>
+                    </div>
+                `;
+            } else if (currentInvestCategory === 'mutualfunds') {
+                return `
+                    <div class="stock-card">
+                        <div>
+                            <div class="stock-card-top">
+                                <div class="stock-brand-meta">
+                                    <div class="stock-icon-avatar ${item.iconClass}"><i class="ri-funds-box-line"></i></div>
+                                    <div class="stock-title-info">
+                                        <h4>${item.name}</h4>
+                                        <span>${item.sector}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stock-price-box mt-3">
+                                <div>
+                                    <span class="price-lbl">Imbal Hasil 1 Thn</span>
+                                    <div class="stock-price-val text-success font-weight-bold">${item.cagr}</div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="price-lbl">NAV / Unit</span>
+                                    <strong class="text-primary">${formatRupiah(item.price)}</strong>
+                                </div>
+                            </div>
+
+                            <div class="stock-stats-row mt-3">
+                                <div class="stock-stats-item">
+                                    <span>Tingkat Risiko</span>
+                                    <strong>${item.riskLevel}</strong>
+                                </div>
+                                <div class="stock-stats-item">
+                                    <span>Dana Kelolaan (AUM)</span>
+                                    <strong>${item.aum}</strong>
+                                </div>
+                                <div class="stock-stats-item" style="grid-column: span 2;">
+                                    <span>Min. Pembelian</span>
+                                    <strong class="text-primary">${formatRupiah(item.minBuy)}</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary btn-buy-invest mt-3" onclick="window.openInvestOrderModal('${item.id}', 'mutualfunds')">
+                            <i class="ri-leaf-line"></i> Beli Reksa Dana Bibit
+                        </button>
+                    </div>
+                `;
+            } else {
+                // Robo-Advisor Cards
+                return `
+                    <div class="stock-card">
+                        <div>
+                            <div class="stock-card-top">
+                                <div class="stock-brand-meta">
+                                    <div class="stock-icon-avatar ${item.iconClass}"><i class="ri-robot-2-line"></i></div>
+                                    <div class="stock-title-info">
+                                        <h4>${item.name}</h4>
+                                        <span>${item.sector}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="stock-price-box mt-3">
+                                <div>
+                                    <span class="price-lbl">Histori Imbal Hasil</span>
+                                    <div class="stock-price-val text-success font-weight-bold">${item.cagr}</div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="price-lbl">Mitra KSEI</span>
+                                    <strong class="text-success"><i class="ri-shield-check-line"></i> OJK / Bibit</strong>
+                                </div>
+                            </div>
+
+                            <div class="stock-stats-row mt-3">
+                                <div class="stock-stats-item" style="grid-column: span 2;">
+                                    <span>Alokasi Aset Otomatis</span>
+                                    <strong class="text-cyan">${item.allocation}</strong>
+                                </div>
+                                <div class="stock-stats-item" style="grid-column: span 2;">
+                                    <span>Karakteristik</span>
+                                    <strong>${item.riskLevel}</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary btn-buy-invest mt-3" onclick="window.openInvestOrderModal('${item.id}', 'robo')">
+                            <i class="ri-robot-2-line"></i> Investasi Robo Bibit
+                        </button>
+                    </div>
+                `;
+            }
+        }).join('');
+    }
+
+    function switchInvestCategory(cat) {
+        currentInvestCategory = cat;
+        document.querySelectorAll('.invest-tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-invest-cat') === cat);
+        });
+        renderInvestCards();
+    }
+
+    window.openInvestOrderModal = function(itemId, category) {
+        const list = INVEST_DATA[category] || [];
+        const item = list.find(i => i.id === itemId);
+        if (!item) return;
+
+        currentInvestSelectedItem = { ...item, categoryType: category };
+
+        const titleEl = document.getElementById('investOrderModalTitle');
+        const subEl = document.getElementById('investOrderSubtitle');
+        const priceEl = document.getElementById('investCurrentPrice');
+        const changeEl = document.getElementById('investPriceChange');
+        const badgeEl = document.getElementById('investOrderLogoBadge');
+        const groupLot = document.getElementById('groupInvestLot');
+        const groupNominal = document.getElementById('groupInvestNominal');
+
+        if (category === 'stocks') {
+            if (titleEl) titleEl.textContent = `Beli Saham ${item.ticker}`;
+            if (subEl) subEl.textContent = `${item.name} • ${item.sector}`;
+            if (priceEl) priceEl.textContent = `${formatRupiah(item.price)} / lembar`;
+            if (changeEl) changeEl.innerHTML = `+${formatRupiah(item.changeAmt)} (+${item.changePercent}%)`;
+            if (badgeEl) badgeEl.innerHTML = `<i class="ri-line-chart-line"></i>`;
+
+            if (groupLot) groupLot.classList.remove('hidden');
+            if (groupNominal) groupNominal.classList.add('hidden');
+
+            const lotInput = document.getElementById('investLotInput');
+            if (lotInput) lotInput.value = 1;
+        } else {
+            if (titleEl) titleEl.textContent = `Beli ${item.name}`;
+            if (subEl) subEl.textContent = `${item.sector} • Reksa Dana Bibit`;
+            if (priceEl) priceEl.textContent = `NAV: ${formatRupiah(item.price)}`;
+            if (changeEl) changeEl.innerHTML = `<span class="text-success font-weight-bold">${item.cagr}</span>`;
+            if (badgeEl) badgeEl.innerHTML = category === 'robo' ? `<i class="ri-robot-2-line"></i>` : `<i class="ri-funds-box-line"></i>`;
+
+            if (groupLot) groupLot.classList.add('hidden');
+            if (groupNominal) groupNominal.classList.remove('hidden');
+
+            const nomInput = document.getElementById('investNominalInput');
+            if (nomInput) {
+                nomInput.value = item.minBuy || 100000;
+                nomInput.min = item.minBuy || 10000;
+            }
+        }
+
+        updateInvestSummaryCheckout();
+        openModal('modalInvestOrder');
+    };
+
+    function updateInvestSummaryCheckout() {
+        if (!currentInvestSelectedItem) return;
+
+        let totalAmount = 0;
+        if (currentInvestSelectedItem.categoryType === 'stocks') {
+            const lots = parseInt(document.getElementById('investLotInput')?.value) || 1;
+            const pricePerShare = currentInvestSelectedItem.price;
+            totalAmount = lots * 100 * pricePerShare;
+        } else {
+            totalAmount = parseInt(document.getElementById('investNominalInput')?.value) || 100000;
+        }
+
+        const subEl = document.getElementById('investSummarySubtotal');
+        const totEl = document.getElementById('investSummaryTotal');
+
+        if (subEl) subEl.textContent = formatRupiah(totalAmount);
+        if (totEl) totEl.textContent = formatRupiah(totalAmount);
+    }
+
+    // Input listeners for order modal
+    document.getElementById('investLotInput')?.addEventListener('input', updateInvestSummaryCheckout);
+    document.getElementById('investNominalInput')?.addEventListener('input', updateInvestSummaryCheckout);
+
+    // Confirm Buy Investment Click -> Open PIN Modal
+    document.getElementById('btnConfirmBuyInvest')?.addEventListener('click', () => {
+        if (!currentInvestSelectedItem) return;
+
+        let totalAmount = 0;
+        let orderDesc = '';
+        const isAutoInvest = document.getElementById('checkAutoInvest')?.checked;
+
+        if (currentInvestSelectedItem.categoryType === 'stocks') {
+            const lots = parseInt(document.getElementById('investLotInput')?.value) || 1;
+            totalAmount = lots * 100 * currentInvestSelectedItem.price;
+            orderDesc = `Beli ${lots} Lot Saham ${currentInvestSelectedItem.ticker}`;
+        } else {
+            totalAmount = parseInt(document.getElementById('investNominalInput')?.value) || 100000;
+            orderDesc = `Investasi ${currentInvestSelectedItem.name}`;
+        }
+
+        if (isNaN(totalAmount) || totalAmount <= 0) {
+            showToast('Masukkan jumlah lot atau nominal yang valid!', 'error');
+            return;
+        }
+
+        if (totalAmount > state.balance) {
+            showToast(`Saldo My Klepeh Anda (${formatRupiah(state.balance)}) tidak mencukupi untuk investasi ini!`, 'error');
+            return;
+        }
+
+        pendingTx = {
+            title: orderDesc,
+            category: 'payment',
+            type: 'debit',
+            amount: totalAmount,
+            method: 'Saldo Klepeh (KSEI / Bibit IDN-99214)',
+            note: `${orderDesc}${isAutoInvest ? ' (Auto-Invest Aktif Tiap Tgl 25)' : ''} via Bibit Terintegrasi`
+        };
+
+        closeModal('modalInvestOrder');
+        resetPinDots();
+        openModal('modalPin');
+    });
+
+    // Deep link / Open Bibit Web & App
+    document.getElementById('btnOpenBibitApp')?.addEventListener('click', () => {
+        playSuccessSound();
+        showToast('Membuka Portal Resmi Aplikasi Bibit...', 'success');
+        window.open('https://app.bibit.id', '_blank');
+    });
+
+    // Sync Portfolio Handler
+    document.getElementById('btnSyncBibitPorto')?.addEventListener('click', () => {
+        const syncBtn = document.getElementById('btnSyncBibitPorto');
+        if (syncBtn) {
+            syncBtn.disabled = true;
+            syncBtn.innerHTML = `<i class="ri-loader-4-line ri-spin"></i> Menyinkronkan...`;
+        }
+
+        setTimeout(() => {
+            if (syncBtn) {
+                syncBtn.disabled = false;
+                syncBtn.innerHTML = `<i class="ri-refresh-line"></i> Sinkronkan Portofolio`;
+            }
+            playSuccessSound();
+            showToast('Portofolio KSEI & Bibit berhasil disinkronkan ke My Klepeh! 📈', 'success');
+        }, 1200);
+    });
+
+    // Tab Listeners for Invest Subtabs
+    document.querySelectorAll('.invest-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cat = btn.getAttribute('data-invest-cat');
+            if (cat) switchInvestCategory(cat);
+        });
+    });
+
+    // Initial render for Invest
+    renderInvestCards();
+
     // Initial populate for travel dropdowns & results
     populateTravelDropdowns('flight');
     renderTravelResults();
@@ -3279,4 +3873,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // INIT INITIAL APP RENDER
     renderApp();
 });
+
 
