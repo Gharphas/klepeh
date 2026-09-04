@@ -4054,12 +4054,14 @@ button:active,
     letter-spacing: -0.02em;
     margin-bottom: 0.5rem;
     background: linear-gradient(135deg, #ffffff 40%, #7dd3fc 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 [data-theme="light"] .travel-hero-content h2 {
     background: linear-gradient(135deg, #0f172a 40%, #0369a1 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -5457,12 +5459,14 @@ button:active,
     letter-spacing: -0.02em;
     margin-bottom: 0.5rem;
     background: linear-gradient(135deg, #ffffff 30%, #34d399 70%, #38bdf8 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 [data-theme="light"] .invest-hero-content h2 {
     background: linear-gradient(135deg, #064e3b 20%, #059669 60%, #0284c7 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
