@@ -1549,6 +1549,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 switchTab('ppob');
             } else if (serviceKey === 'invest') {
                 switchTab('invest');
+                if (typeof switchInvestCategory === 'function') switchInvestCategory('stocks');
+            } else if (serviceKey === 'crypto') {
+                switchTab('invest');
+                if (typeof switchInvestCategory === 'function') switchInvestCategory('crypto');
             } else {
                 openPpobModal(serviceKey);
             }
@@ -3275,7 +3279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('travelClassInput')?.addEventListener('change', renderTravelResults);
 
     // ----------------------------------------------------------------------
-    // 14. INVESTASI SAHAM IDX & REKSA DANA (BIBIT INTEGRATION HUB)
+    // 14. INVESTASI SAHAM IDX, REKSA DANA BIBIT & KRIPTO PINTU
     // ----------------------------------------------------------------------
     const INVEST_DATA = {
         stocks: [
@@ -3440,6 +3444,134 @@ document.addEventListener('DOMContentLoaded', () => {
                 dividendYield: '0.9%',
                 marketCap: 'Rp 1.197 T',
                 lotMin: 1
+            }
+        ],
+        crypto: [
+            {
+                id: 'CR-BTC',
+                ticker: 'BTC',
+                symbol: 'BTC',
+                name: 'Bitcoin',
+                sector: 'Digital Gold • Layer-1 (Pintu)',
+                type: 'crypto',
+                iconClass: 'stock-crypto-btc',
+                iconLetter: '₿',
+                price: 1045000000,
+                changeAmt: 48500000,
+                changePercent: 4.85,
+                isUp: true,
+                earnRate: '4.0% / thn (Bunga Tiap Jam)',
+                vol24h: 'Rp 2.45 Triliun',
+                marketCap: 'Rp 20.800 Triliun',
+                minBuy: 11000
+            },
+            {
+                id: 'CR-ETH',
+                ticker: 'ETH',
+                symbol: 'ETH',
+                name: 'Ethereum',
+                sector: 'Smart Contracts & DeFi (Pintu)',
+                type: 'crypto',
+                iconClass: 'stock-crypto-eth',
+                iconLetter: 'Ξ',
+                price: 54200000,
+                changeAmt: 1680000,
+                changePercent: 3.20,
+                isUp: true,
+                earnRate: '3.8% / thn (Staking)',
+                vol24h: 'Rp 1.12 Triliun',
+                marketCap: 'Rp 6.510 Triliun',
+                minBuy: 11000
+            },
+            {
+                id: 'CR-SOL',
+                ticker: 'SOL',
+                symbol: 'SOL',
+                name: 'Solana',
+                sector: 'High-Speed Blockchain (Pintu)',
+                type: 'crypto',
+                iconClass: 'stock-crypto-sol',
+                iconLetter: 'SOL',
+                price: 2450000,
+                changeAmt: 165000,
+                changePercent: 7.15,
+                isUp: true,
+                earnRate: '6.5% / thn',
+                vol24h: 'Rp 680 Miliar',
+                marketCap: 'Rp 1.150 Triliun',
+                minBuy: 11000
+            },
+            {
+                id: 'CR-PTU',
+                ticker: 'PTU',
+                symbol: 'PTU',
+                name: 'Pintu Token',
+                sector: 'Ekosistem Resmi Aplikasi PINTU',
+                type: 'crypto',
+                iconClass: 'stock-crypto-ptu',
+                iconLetter: 'PTU',
+                price: 8500,
+                changeAmt: 450,
+                changePercent: 5.59,
+                isUp: true,
+                earnRate: '12.0% / thn (VIP Level)',
+                vol24h: 'Rp 45 Miliar',
+                marketCap: 'Rp 850 Miliar',
+                minBuy: 11000
+            },
+            {
+                id: 'CR-USDT',
+                ticker: 'USDT',
+                symbol: 'USDT',
+                name: 'Tether USD',
+                sector: 'USD Stablecoin 1:1 (Pintu Earn)',
+                type: 'crypto',
+                iconClass: 'stock-crypto-usdt',
+                iconLetter: '₮',
+                price: 16250,
+                changeAmt: 25,
+                changePercent: 0.15,
+                isUp: true,
+                earnRate: '8.5% / thn (Bunga Tertinggi)',
+                vol24h: 'Rp 3.85 Triliun',
+                marketCap: 'Rp 1.950 Triliun',
+                minBuy: 11000
+            },
+            {
+                id: 'CR-BNB',
+                ticker: 'BNB',
+                symbol: 'BNB',
+                name: 'Binance Coin',
+                sector: 'BNB Chain Network (Pintu)',
+                type: 'crypto',
+                iconClass: 'stock-crypto-btc',
+                iconLetter: 'BNB',
+                price: 9350000,
+                changeAmt: 195000,
+                changePercent: 2.10,
+                isUp: true,
+                earnRate: '3.0% / thn',
+                vol24h: 'Rp 410 Miliar',
+                marketCap: 'Rp 1.420 Triliun',
+                minBuy: 11000
+            },
+            {
+                id: 'CR-DOGE',
+                ticker: 'DOGE',
+                symbol: 'DOGE',
+                name: 'Dogecoin',
+                sector: 'Meme & Payment Currency (Pintu)',
+                type: 'crypto',
+                iconClass: 'stock-crypto-btc',
+                iconLetter: 'Ð',
+                price: 2450,
+                changeAmt: 120,
+                changePercent: 5.15,
+                isUp: true,
+                earnRate: '2.5% / thn',
+                vol24h: 'Rp 320 Miliar',
+                marketCap: 'Rp 355 Triliun',
+                minBuy: 11000
             }
         ],
         mutualfunds: [
@@ -3617,6 +3749,54 @@ document.addEventListener('DOMContentLoaded', () => {
                         </button>
                     </div>
                 `;
+            } else if (currentInvestCategory === 'crypto') {
+                return `
+                    <div class="stock-card">
+                        <div>
+                            <div class="stock-card-top">
+                                <div class="stock-brand-meta">
+                                    <div class="stock-icon-avatar ${item.iconClass}">${item.iconLetter}</div>
+                                    <div class="stock-title-info">
+                                        <h4>${item.name} (${item.ticker})</h4>
+                                        <span>${item.sector}</span>
+                                    </div>
+                                </div>
+                                <span class="stock-sector-tag" style="background: rgba(2, 132, 199, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">
+                                    <i class="ri-door-lock-line"></i> PINTU
+                                </span>
+                            </div>
+
+                            <div class="stock-price-box mt-3">
+                                <div>
+                                    <span class="price-lbl">Harga Live (IDR)</span>
+                                    <div class="stock-price-val font-weight-bold" style="font-size: 1.25rem;">${formatRupiah(item.price)}</div>
+                                </div>
+                                <div class="stock-change-badge text-success font-weight-bold">
+                                    <i class="ri-arrow-up-line"></i> +${item.changePercent}%
+                                </div>
+                            </div>
+
+                            <div class="stock-stats-row mt-3">
+                                <div class="stock-stats-item" style="grid-column: span 2;">
+                                    <span>Pintu Earn (Bunga Pasif)</span>
+                                    <strong class="text-success"><i class="ri-flashlight-line"></i> ${item.earnRate}</strong>
+                                </div>
+                                <div class="stock-stats-item">
+                                    <span>Volume 24 Jam</span>
+                                    <strong>${item.vol24h}</strong>
+                                </div>
+                                <div class="stock-stats-item">
+                                    <span>Min. Beli</span>
+                                    <strong class="text-primary">${formatRupiah(item.minBuy)}</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn-pintu btn-buy-invest mt-3" onclick="window.openInvestOrderModal('${item.id}', 'crypto')">
+                            <i class="ri-bit-coin-line"></i> Beli ${item.ticker} via Pintu
+                        </button>
+                    </div>
+                `;
             } else if (currentInvestCategory === 'mutualfunds') {
                 return `
                     <div class="stock-card">
@@ -3732,6 +3912,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const badgeEl = document.getElementById('investOrderLogoBadge');
         const groupLot = document.getElementById('groupInvestLot');
         const groupNominal = document.getElementById('groupInvestNominal');
+        const nominalLbl = document.getElementById('investNominalLabel');
+        const cryptoEst = document.getElementById('cryptoEstBadge');
+        const earnBox = document.getElementById('pintuEarnBox');
+        const earnRateEl = document.getElementById('pintuEarnRate');
+        const autoTitle = document.getElementById('autoInvestTitle');
+        const autoSub = document.getElementById('autoInvestSub');
+        const feeLbl = document.getElementById('investFeeLabel');
 
         if (category === 'stocks') {
             if (titleEl) titleEl.textContent = `Beli Saham ${item.ticker}`;
@@ -3742,10 +3929,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (groupLot) groupLot.classList.remove('hidden');
             if (groupNominal) groupNominal.classList.add('hidden');
+            if (cryptoEst) cryptoEst.classList.add('hidden');
+            if (earnBox) earnBox.classList.add('hidden');
+
+            if (autoTitle) autoTitle.textContent = 'Nabung Rutin Tiap Bulan (Auto-Invest Saham)';
+            if (autoSub) autoSub.textContent = 'Otomatis alokasikan dari saldo My Klepeh tiap tanggal 25';
+            if (feeLbl) feeLbl.textContent = 'Biaya KSEI & Broker Bibit';
 
             const lotInput = document.getElementById('investLotInput');
             if (lotInput) lotInput.value = 1;
+        } else if (category === 'crypto') {
+            if (titleEl) titleEl.textContent = `Beli ${item.name} (${item.ticker})`;
+            if (subEl) subEl.textContent = `${item.sector} • Pintu Kripto & Bappebti`;
+            if (priceEl) priceEl.textContent = `${formatRupiah(item.price)}`;
+            if (changeEl) changeEl.innerHTML = `<span class="text-success font-weight-bold">+${item.changePercent}% (24 Jam)</span>`;
+            if (badgeEl) badgeEl.innerHTML = `<i class="ri-bit-coin-line"></i>`;
+
+            if (groupLot) groupLot.classList.add('hidden');
+            if (groupNominal) groupNominal.classList.remove('hidden');
+            if (cryptoEst) cryptoEst.classList.remove('hidden');
+            if (earnBox) earnBox.classList.remove('hidden');
+            if (earnRateEl) earnRateEl.textContent = `APY: ${item.earnRate}`;
+
+            if (nominalLbl) nominalLbl.textContent = `Nominal Pembelian ${item.ticker} (Rp)`;
+            if (autoTitle) autoTitle.textContent = `Pintu Auto-DCA (${item.ticker} Nabung Rutin Mingguan)`;
+            if (autoSub) autoSub.textContent = 'Otomatis beli secara berkala dengan strategi Dollar Cost Averaging';
+            if (feeLbl) feeLbl.textContent = 'Biaya Transaksi PINTU & PPN CFX';
+
+            const nomInput = document.getElementById('investNominalInput');
+            if (nomInput) {
+                nomInput.value = item.minBuy || 50000;
+                nomInput.min = item.minBuy || 11000;
+            }
         } else {
+            // Mutual funds & Robo
             if (titleEl) titleEl.textContent = `Beli ${item.name}`;
             if (subEl) subEl.textContent = `${item.sector} • Reksa Dana Bibit`;
             if (priceEl) priceEl.textContent = `NAV: ${formatRupiah(item.price)}`;
@@ -3754,6 +3971,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (groupLot) groupLot.classList.add('hidden');
             if (groupNominal) groupNominal.classList.remove('hidden');
+            if (cryptoEst) cryptoEst.classList.add('hidden');
+            if (earnBox) earnBox.classList.add('hidden');
+
+            if (nominalLbl) nominalLbl.textContent = 'Nominal Investasi Reksa Dana (Rp)';
+            if (autoTitle) autoTitle.textContent = 'Nabung Rutin Tiap Bulan (Auto-Invest Bibit)';
+            if (autoSub) autoSub.textContent = 'Otomatis alokasikan dari saldo My Klepeh tiap tanggal 25';
+            if (feeLbl) feeLbl.textContent = 'Biaya KSEI & Manajer Investasi';
 
             const nomInput = document.getElementById('investNominalInput');
             if (nomInput) {
@@ -3775,7 +3999,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const pricePerShare = currentInvestSelectedItem.price;
             totalAmount = lots * 100 * pricePerShare;
         } else {
-            totalAmount = parseInt(document.getElementById('investNominalInput')?.value) || 100000;
+            totalAmount = parseInt(document.getElementById('investNominalInput')?.value) || 50000;
+            
+            // Calculate Crypto coin estimate if in crypto mode
+            if (currentInvestSelectedItem.categoryType === 'crypto') {
+                const coinPrice = currentInvestSelectedItem.price;
+                const estCoin = (totalAmount / coinPrice).toFixed(7);
+                const estEl = document.getElementById('cryptoEstCoinVal');
+                if (estEl) estEl.textContent = `${estCoin} ${currentInvestSelectedItem.ticker}`;
+            }
         }
 
         const subEl = document.getElementById('investSummarySubtotal');
@@ -3801,6 +4033,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const lots = parseInt(document.getElementById('investLotInput')?.value) || 1;
             totalAmount = lots * 100 * currentInvestSelectedItem.price;
             orderDesc = `Beli ${lots} Lot Saham ${currentInvestSelectedItem.ticker}`;
+        } else if (currentInvestSelectedItem.categoryType === 'crypto') {
+            totalAmount = parseInt(document.getElementById('investNominalInput')?.value) || 50000;
+            const coinPrice = currentInvestSelectedItem.price;
+            const estCoin = (totalAmount / coinPrice).toFixed(6);
+            orderDesc = `Beli ${estCoin} ${currentInvestSelectedItem.name} (${currentInvestSelectedItem.ticker})`;
         } else {
             totalAmount = parseInt(document.getElementById('investNominalInput')?.value) || 100000;
             orderDesc = `Investasi ${currentInvestSelectedItem.name}`;
@@ -3816,13 +4053,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const methodDesc = currentInvestSelectedItem.categoryType === 'crypto'
+            ? 'Saldo Klepeh (Pintu CFX-88192)'
+            : 'Saldo Klepeh (KSEI / Bibit IDN-99214)';
+
         pendingTx = {
             title: orderDesc,
             category: 'payment',
             type: 'debit',
             amount: totalAmount,
-            method: 'Saldo Klepeh (KSEI / Bibit IDN-99214)',
-            note: `${orderDesc}${isAutoInvest ? ' (Auto-Invest Aktif Tiap Tgl 25)' : ''} via Bibit Terintegrasi`
+            method: methodDesc,
+            note: `${orderDesc}${isAutoInvest ? ' (Auto-Invest / DCA Aktif)' : ''} via ${currentInvestSelectedItem.categoryType === 'crypto' ? 'Pintu Terintegrasi' : 'Bibit Terintegrasi'}`
         };
 
         closeModal('modalInvestOrder');
@@ -3835,6 +4076,13 @@ document.addEventListener('DOMContentLoaded', () => {
         playSuccessSound();
         showToast('Membuka Portal Resmi Aplikasi Bibit...', 'success');
         window.open('https://app.bibit.id', '_blank');
+    });
+
+    // Deep link / Open Pintu Web & App
+    document.getElementById('btnOpenPintuApp')?.addEventListener('click', () => {
+        playSuccessSound();
+        showToast('Membuka Portal Resmi Aplikasi PINTU Kripto...', 'success');
+        window.open('https://pintu.co.id', '_blank');
     });
 
     // Sync Portfolio Handler
@@ -3851,7 +4099,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 syncBtn.innerHTML = `<i class="ri-refresh-line"></i> Sinkronkan Portofolio`;
             }
             playSuccessSound();
-            showToast('Portofolio KSEI & Bibit berhasil disinkronkan ke My Klepeh! 📈', 'success');
+            showToast('Portofolio Saham Bibit & Kripto Pintu berhasil disinkronkan! 📈', 'success');
         }, 1200);
     });
 
