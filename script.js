@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
             miniContainer.innerHTML = state.vaults.map(v => {
                 const percent = Math.min(100, Math.round((v.currentAmount / v.targetAmount) * 100));
                 return `
-                    <div class="vault-item-mini">
+                    <div class="vault-item-mini" onclick="switchTab('vaults')" style="cursor: pointer;" title="Buka detail kantong impian">
                         <div class="vault-info-mini">
                             <div class="vault-icon-box"><i class="${v.icon}"></i></div>
                             <div>
@@ -460,7 +460,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="progress-fill" style="width: ${percent}%"></div>
                         </div>
                         <div class="vault-actions">
-                            <button class="btn-primary w-100" onclick="depositVault('${v.id}')">+ Alokasikan Rp 100.000</button>
+                            <button class="btn-primary" onclick="depositVault('${v.id}')" title="Alokasikan Rp 100.000 ke kantong ini"><i class="ri-add-line"></i> Alokasi 100k</button>
+                            <button class="btn-vault-withdraw" onclick="openWithdrawVaultModal('${v.id}')" title="Tarik saldo kantong ke saldo utama"><i class="ri-hand-coin-line"></i> Tarik Saldo</button>
+                            <button class="btn-icon-danger-sm" onclick="deleteVault('${v.id}')" title="Tutup / Hapus Kantong"><i class="ri-delete-bin-line"></i></button>
                         </div>
                     </div>
                 `;
@@ -647,9 +649,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('qrisCheckoutForm')?.classList.add('hidden');
         openModal('modalQRIS');
     });
-    document.getElementById('btnOpenWithdraw')?.addEventListener('click', () => {
-        showToast('Tarik Tunai dapat dilakukan di Indomaret/ATM terdekat menggunakan Kode Token.', 'success');
-    });
     document.getElementById('btnCreateVaultQuick')?.addEventListener('click', () => openModal('modalCreateVault'));
     document.getElementById('btnCreateVaultMain')?.addEventListener('click', () => openModal('modalCreateVault'));
 
@@ -657,10 +656,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const chipBtns = document.querySelectorAll('.quick-amounts-grid .btn-chip');
     chipBtns.forEach(chip => {
         chip.addEventListener('click', () => {
-            chipBtns.forEach(c => c.classList.remove('active'));
+            const parent = chip.closest('.quick-amounts-grid');
+            if (parent && (parent.id === 'vaultWithdrawChips' || parent.id === 'cashOutAmountsGrid')) return;
+            chipBtns.forEach(c => {
+                if (c.closest('.quick-amounts-grid') === parent) c.classList.remove('active');
+            });
             chip.classList.add('active');
             const amount = chip.getAttribute('data-amount');
-            document.getElementById('topUpAmountInput').value = amount;
+            const topUpInput = document.getElementById('topUpAmountInput');
+            if (topUpInput && amount) topUpInput.value = amount;
         });
     });
 
@@ -849,8 +853,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function verifyPinAndExecute() {
-        if (currentPinInput === state.pin || currentPinInput === '123456') {
+        if (currentPinInput === state.pin || currentPinInput === '123456' || currentPinInput === '451441') {
             if (pendingTx) {
+                // If this is a Cash Out transaction
+                if (pendingTx.isCashOut || pendingTx.type === 'cashout') {
+                    state.balance -= pendingTx.amount;
+                    const createdTx = {
+                        id: generateTxId(),
+                        title: pendingTx.title,
+                        category: 'payment',
+                        type: 'debit',
+                        amount: pendingTx.amount,
+                        date: new Date().toISOString(),
+                        status: 'success',
+                        method: pendingTx.method,
+                        note: `Penarikan Tunai via ${pendingTx.channel}`
+                    };
+
+                    state.transactions.unshift(createdTx);
+                    saveState();
+                    closeModal('modalPin');
+                    playSuccessSound();
+
+                    generateCashOutToken({ ...pendingTx, id: createdTx.id });
+                    showToast(`Token Tarik Tunai Berhasil Dibuat!`, 'success');
+                    pendingTx = null;
+                    return;
+                }
+
+                // Standard Debit Transactions (Transfer, QRIS, PPOB)
                 state.balance -= pendingTx.amount;
                 const createdTx = {
                     id: generateTxId(),
@@ -874,7 +905,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pendingTx = null;
             }
         } else {
-            showToast('PIN yang Anda masukkan salah. Coba lagi (PIN Demo: 123456)', 'error');
+            showToast('PIN yang Anda masukkan salah. Coba lagi (PIN Demo: 123456 atau 451441)', 'error');
             resetPinDots();
         }
     }
@@ -933,7 +964,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ----------------------------------------------------------------------
-    // 9. VAULTS DEPOSIT & CREATE
+    // 9. VAULTS DEPOSIT, WITHDRAW, DELETE & CREATE
     // ----------------------------------------------------------------------
     window.depositVault = function(vaultId) {
         const vault = state.vaults.find(v => v.id === vaultId);
@@ -963,6 +994,125 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast(`Berhasil menambah Rp 100.000 ke ${vault.name}!`, 'success');
     };
 
+    // Open Withdraw Vault Modal
+    window.openWithdrawVaultModal = function(vaultId) {
+        const vault = state.vaults.find(v => v.id === vaultId);
+        if (!vault) return;
+
+        if (vault.currentAmount <= 0) {
+            showToast(`Kantong "${vault.name}" belum memiliki saldo tersimpan.`, 'error');
+            return;
+        }
+
+        document.getElementById('withdrawVaultId').value = vault.id;
+        document.getElementById('withdrawVaultName').textContent = vault.name;
+        document.getElementById('withdrawVaultAvailable').textContent = formatRupiah(vault.currentAmount);
+        document.getElementById('withdrawVaultIconBox').innerHTML = `<i class="${vault.icon}"></i>`;
+        
+        const defaultAmt = Math.min(100000, vault.currentAmount);
+        document.getElementById('withdrawVaultAmountInput').value = defaultAmt;
+        document.getElementById('withdrawVaultAmountInput').max = vault.currentAmount;
+
+        openModal('modalWithdrawVault');
+    };
+
+    // Quick nominal selector for vault withdrawal
+    document.querySelectorAll('#vaultWithdrawChips .btn-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('#vaultWithdrawChips .btn-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            
+            const vaultId = document.getElementById('withdrawVaultId').value;
+            const vault = state.vaults.find(v => v.id === vaultId);
+            const maxAmt = vault ? vault.currentAmount : 0;
+            
+            const amt = chip.getAttribute('data-amount');
+            if (amt === 'all') {
+                document.getElementById('withdrawVaultAmountInput').value = maxAmt;
+            } else {
+                document.getElementById('withdrawVaultAmountInput').value = Math.min(parseInt(amt), maxAmt);
+            }
+        });
+    });
+
+    // Process Vault Withdrawal
+    document.getElementById('btnSubmitWithdrawVault')?.addEventListener('click', () => {
+        const vaultId = document.getElementById('withdrawVaultId').value;
+        const vault = state.vaults.find(v => v.id === vaultId);
+        const amount = parseInt(document.getElementById('withdrawVaultAmountInput').value);
+
+        if (!vault) {
+            showToast('Kantong impian tidak ditemukan', 'error');
+            return;
+        }
+
+        if (isNaN(amount) || amount <= 0) {
+            showToast('Masukkan nominal penarikan yang valid!', 'error');
+            return;
+        }
+
+        if (amount > vault.currentAmount) {
+            showToast(`Saldo kantong tidak mencukupi (Tersedia: ${formatRupiah(vault.currentAmount)})`, 'error');
+            return;
+        }
+
+        vault.currentAmount -= amount;
+        state.balance += amount;
+
+        const newTx = {
+            id: generateTxId(),
+            title: `Pencairan: ${vault.name}`,
+            category: 'transfer',
+            type: 'credit',
+            amount: amount,
+            date: new Date().toISOString(),
+            status: 'success',
+            method: 'Kantong Impian Vault',
+            note: 'Pencairan tabungan impian ke saldo utama'
+        };
+
+        state.transactions.unshift(newTx);
+        state.notifications.unshift({
+            id: 'n-' + Date.now(),
+            title: 'Pencairan Kantong Berhasil!',
+            desc: `Dana ${formatRupiah(amount)} dari "${vault.name}" telah masuk kembali ke saldo utama.`,
+            time: 'Baru saja'
+        });
+
+        saveState();
+        closeModal('modalWithdrawVault');
+        playSuccessSound();
+        showToast(`Berhasil mencairkan ${formatRupiah(amount)} ke saldo utama!`, 'success');
+    });
+
+    // Delete or Close Vault
+    window.deleteVault = function(vaultId) {
+        const vaultIdx = state.vaults.findIndex(v => v.id === vaultId);
+        if (vaultIdx === -1) return;
+
+        const vault = state.vaults[vaultIdx];
+        if (confirm(`Apakah Anda yakin ingin menutup kantong "${vault.name}"? Saldo tersisa (${formatRupiah(vault.currentAmount)}) akan otomatis dikembalikan ke saldo utama.`)) {
+            if (vault.currentAmount > 0) {
+                state.balance += vault.currentAmount;
+                state.transactions.unshift({
+                    id: generateTxId(),
+                    title: `Tutup Kantong: ${vault.name}`,
+                    category: 'transfer',
+                    type: 'credit',
+                    amount: vault.currentAmount,
+                    date: new Date().toISOString(),
+                    status: 'success',
+                    method: 'Kantong Impian Vault',
+                    note: 'Pengembalian seluruh dana penutupan kantong'
+                });
+            }
+            state.vaults.splice(vaultIdx, 1);
+            saveState();
+            playSuccessSound();
+            showToast(`Kantong "${vault.name}" berhasil ditutup.`, 'success');
+        }
+    };
+
     document.getElementById('btnSubmitCreateVault')?.addEventListener('click', () => {
         const name = document.getElementById('vaultNameInput').value;
         const target = parseInt(document.getElementById('vaultTargetInput').value);
@@ -987,8 +1137,288 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ----------------------------------------------------------------------
-    // 10. SEARCH & FILTER LISTENERS
+    // 10. TARIK TUNAI (CASH OUT) FLOW & 6-DIGIT TOKEN
     // ----------------------------------------------------------------------
+    let selectedCashOutChannel = 'Indomaret';
+    let cashOutCountdownInterval = null;
+    let activeCashOutTokenData = null;
+
+    // Open Cash Out Modal
+    document.getElementById('btnOpenWithdraw')?.addEventListener('click', () => {
+        document.getElementById('cashOutFormStep')?.classList.remove('hidden');
+        document.getElementById('cashOutTokenStep')?.classList.add('hidden');
+        
+        selectedCashOutChannel = 'Indomaret';
+        document.querySelectorAll('#cashOutChannelGrid .channel-card').forEach(c => {
+            c.classList.toggle('active', c.getAttribute('data-channel') === 'Indomaret');
+        });
+        const defaultAmt = Math.min(100000, state.balance);
+        const inputEl = document.getElementById('cashOutCustomInput');
+        if (inputEl) inputEl.value = defaultAmt > 0 ? defaultAmt : 50000;
+        
+        openModal('modalCashOut');
+    });
+
+    // Channel Selection Handler
+    document.querySelectorAll('#cashOutChannelGrid .channel-card').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('#cashOutChannelGrid .channel-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            selectedCashOutChannel = card.getAttribute('data-channel') || 'Indomaret';
+        });
+    });
+
+    // Cash Out Amount Chips
+    document.querySelectorAll('#cashOutAmountsGrid .btn-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('#cashOutAmountsGrid .btn-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            const amt = chip.getAttribute('data-amount');
+            const inputEl = document.getElementById('cashOutCustomInput');
+            if (inputEl) inputEl.value = amt;
+        });
+    });
+
+    // Proceed to PIN
+    document.getElementById('btnProceedCashOut')?.addEventListener('click', () => {
+        const amount = parseInt(document.getElementById('cashOutCustomInput').value);
+
+        if (isNaN(amount) || amount < 50000) {
+            showToast('Nominal minimum tarik tunai adalah Rp 50.000', 'error');
+            return;
+        }
+
+        if (amount > state.balance) {
+            showToast('Saldo Anda tidak mencukupi untuk tarik tunai!', 'error');
+            return;
+        }
+
+        pendingTx = {
+            isCashOut: true,
+            title: `Tarik Tunai (${selectedCashOutChannel})`,
+            category: 'payment',
+            type: 'debit',
+            amount: amount,
+            channel: selectedCashOutChannel,
+            method: `Mitra ${selectedCashOutChannel}`,
+            note: `Kode Token Tarik Tunai Mandiri`
+        };
+
+        closeModal('modalCashOut');
+        resetPinDots();
+        openModal('modalPin');
+    });
+
+    function startCashOutCountdown(durationSeconds = 900) {
+        if (cashOutCountdownInterval) clearInterval(cashOutCountdownInterval);
+        
+        let remaining = durationSeconds;
+        const timerEl = document.getElementById('tokenCountdownTimer');
+
+        function updateDisplay() {
+            const minutes = Math.floor(remaining / 60);
+            const seconds = remaining % 60;
+            if (timerEl) {
+                timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            if (remaining <= 0) {
+                clearInterval(cashOutCountdownInterval);
+                if (activeCashOutTokenData) {
+                    showToast('Waktu token tarik tunai telah berakhir. Saldo telah dikembalikan.', 'info');
+                    cancelCashOutToken(true);
+                }
+            }
+            remaining--;
+        }
+
+        updateDisplay();
+        cashOutCountdownInterval = setInterval(updateDisplay, 1000);
+    }
+
+    function generateCashOutToken(tx) {
+        const part1 = Math.floor(100 + Math.random() * 900);
+        const part2 = Math.floor(100 + Math.random() * 900);
+        const tokenString = `${part1} ${part2}`;
+
+        activeCashOutTokenData = {
+            code: tokenString,
+            amount: tx.amount,
+            channel: tx.channel,
+            txId: tx.id
+        };
+
+        // Populate step 2
+        const chEl = document.getElementById('activeTokenChannel');
+        const codeEl = document.getElementById('activeTokenCode');
+        const amtEl = document.getElementById('tokenAmountDisplay');
+
+        if (chEl) chEl.textContent = tx.channel;
+        if (codeEl) codeEl.textContent = tokenString;
+        if (amtEl) amtEl.textContent = formatRupiah(tx.amount);
+
+        // Switch to Step 2
+        document.getElementById('cashOutFormStep')?.classList.add('hidden');
+        document.getElementById('cashOutTokenStep')?.classList.remove('hidden');
+
+        startCashOutCountdown(900);
+        openModal('modalCashOut');
+    }
+
+    // Copy Token Code
+    document.getElementById('btnCopyCashOutToken')?.addEventListener('click', () => {
+        const code = activeCashOutTokenData ? activeCashOutTokenData.code.replace(/\s+/g, '') : '849201';
+        navigator.clipboard.writeText(code).then(() => {
+            showToast(`Kode token (${code}) berhasil disalin!`, 'success');
+        });
+    });
+
+    // Complete Cash Out Flow
+    document.getElementById('btnCompleteCashOut')?.addEventListener('click', () => {
+        if (cashOutCountdownInterval) clearInterval(cashOutCountdownInterval);
+        const txId = activeCashOutTokenData?.txId;
+        activeCashOutTokenData = null;
+
+        closeModal('modalCashOut');
+        playSuccessSound();
+        showToast('Penarikan uang tunai berhasil diselesaikan!', 'success');
+
+        if (txId) {
+            window.openReceiptModal(txId);
+        }
+    });
+
+    // Cancel Cash Out Token & Auto Refund
+    function cancelCashOutToken(autoExpired = false) {
+        if (!activeCashOutTokenData) return;
+
+        if (cashOutCountdownInterval) clearInterval(cashOutCountdownInterval);
+
+        const refundAmt = activeCashOutTokenData.amount;
+        state.balance += refundAmt;
+
+        const refundTx = {
+            id: generateTxId(),
+            title: `Batal Tarik Tunai (Refund)`,
+            category: 'topup',
+            type: 'credit',
+            amount: refundAmt,
+            date: new Date().toISOString(),
+            status: 'success',
+            method: 'Sistem Refund My Klepeh',
+            note: autoExpired ? 'Token kadaluarsa (Refund otomatis)' : 'Pembatalan token tarik tunai oleh pengguna'
+        };
+
+        state.transactions.unshift(refundTx);
+        activeCashOutTokenData = null;
+
+        saveState();
+        closeModal('modalCashOut');
+        showToast(`Token dibatalkan. Dana ${formatRupiah(refundAmt)} telah dikembalikan ke dompet!`, 'success');
+    }
+
+    document.getElementById('btnCancelCashOutToken')?.addEventListener('click', () => {
+        if (confirm('Apakah Anda yakin ingin membatalkan token penarikan ini? Saldo akan langsung dikembalikan ke dompet.')) {
+            cancelCashOutToken(false);
+        }
+    });
+
+    // ----------------------------------------------------------------------
+    // 11. MINTA SALDO / RECEIVE MONEY QR CODE FLOW
+    // ----------------------------------------------------------------------
+    document.getElementById('btnOpenReceive')?.addEventListener('click', () => {
+        const curSession = JSON.parse(localStorage.getItem('paypulse_user_session')) || {};
+        const userName = curSession.userName || 'M Ikhsan Anggara';
+        const userPhone = curSession.userPhone || state.accountNumber || '0812-9887-3411';
+        const userAvatar = curSession.userAvatar || 'sasuke.jpg';
+
+        const rName = document.getElementById('receiveUserName');
+        const rPhone = document.getElementById('receiveUserPhone');
+        const rAvatar = document.getElementById('receiveAvatar');
+        const rInput = document.getElementById('receiveAmountInput');
+        const rBadge = document.getElementById('receiveAmountBadge');
+
+        if (rName) rName.textContent = userName;
+        if (rPhone) rPhone.textContent = userPhone;
+        if (rAvatar) rAvatar.src = userAvatar;
+        if (rInput) rInput.value = '';
+        if (rBadge) rBadge.innerHTML = '<span>Nominal: Bebas Masukkan</span>';
+
+        openModal('modalReceiveQR');
+    });
+
+    // Dynamic nominal input listener
+    document.getElementById('receiveAmountInput')?.addEventListener('input', (e) => {
+        const amt = parseInt(e.target.value);
+        const badge = document.getElementById('receiveAmountBadge');
+        if (badge) {
+            if (!isNaN(amt) && amt > 0) {
+                badge.innerHTML = `<span>Permintaan Transfer: <b>${formatRupiah(amt)}</b></span>`;
+            } else {
+                badge.innerHTML = '<span>Nominal: Bebas Masukkan</span>';
+            }
+        }
+    });
+
+    // Copy Account Number
+    document.getElementById('btnCopyReceiveAcc')?.addEventListener('click', () => {
+        const phone = document.getElementById('receiveUserPhone')?.textContent || state.accountNumber;
+        navigator.clipboard.writeText(phone).then(() => {
+            showToast(`Nomor akun (${phone}) berhasil disalin!`, 'success');
+        });
+    });
+
+    // Copy Payment Link
+    document.getElementById('btnCopyPayLink')?.addEventListener('click', () => {
+        const phone = document.getElementById('receiveUserPhone')?.textContent || state.accountNumber;
+        const amt = document.getElementById('receiveAmountInput')?.value;
+        const link = `https://klepeh.id/pay/${phone.replace(/[^0-9]/g, '')}${amt ? '?amount=' + amt : ''}`;
+        navigator.clipboard.writeText(link).then(() => {
+            showToast(`Tautan bayar (${link}) berhasil disalin!`, 'success');
+        });
+    });
+
+    // Share via WhatsApp
+    document.getElementById('btnShareWhatsApp')?.addEventListener('click', () => {
+        const curSession = JSON.parse(localStorage.getItem('paypulse_user_session')) || {};
+        const userName = curSession.userName || 'M Ikhsan Anggara';
+        const phone = document.getElementById('receiveUserPhone')?.textContent || state.accountNumber;
+        const amt = document.getElementById('receiveAmountInput')?.value;
+        
+        let msg = `Halo, silakan transfer ke akun My Klepeh saya (${userName} - ${phone})`;
+        if (amt && parseInt(amt) > 0) {
+            msg += ` sebesar ${formatRupiah(parseInt(amt))}`;
+        }
+        msg += `. Terima kasih!`;
+
+        const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+        window.open(waUrl, '_blank');
+    });
+
+    // Download QR Code simulation
+    document.getElementById('btnDownloadQR')?.addEventListener('click', () => {
+        playSuccessSound();
+        showToast('Gambar QR Code Minta Saldo berhasil diunduh ke perangkat!', 'success');
+    });
+
+    // ----------------------------------------------------------------------
+    // 12. GLOBAL SEARCH & FILTER LISTENERS
+    // ----------------------------------------------------------------------
+    const globalSearchInput = document.getElementById('globalSearchInput');
+    if (globalSearchInput) {
+        globalSearchInput.addEventListener('input', (e) => {
+            const q = e.target.value.trim().toLowerCase();
+            if (q.length > 0) {
+                switchTab('transactions');
+                const txInput = document.getElementById('txSearchInput');
+                if (txInput) {
+                    txInput.value = q;
+                    renderFullTransactionsTable();
+                }
+            }
+        });
+    }
+
     document.getElementById('txSearchInput')?.addEventListener('input', renderFullTransactionsTable);
 
     document.querySelectorAll('#txCategoryPills .pill-btn').forEach(pill => {

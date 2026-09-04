@@ -188,6 +188,10 @@
                                 <div class="icon-box"><i class="ri-send-plane-line"></i></div>
                                 <span>Transfer</span>
                             </button>
+                            <button class="action-btn action-receive" id="btnOpenReceive">
+                                <div class="icon-box"><i class="ri-qr-scan-line"></i></div>
+                                <span>Minta</span>
+                            </button>
                             <button class="action-btn action-qris" id="btnOpenQRIS">
                                 <div class="icon-box"><i class="ri-qr-code-line"></i></div>
                                 <span>Bayar QRIS</span>
@@ -768,6 +772,278 @@
                 <button class="btn-primary" id="btnConfirmLogout" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); border: 1px solid rgba(244, 63, 94, 0.4); box-shadow: 0 4px 15px rgba(244, 63, 94, 0.35);">
                     <i class="ri-logout-box-r-line"></i> Ya, Keluar Akun
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 9: Tarik Saldo Kantong Impian -->
+    <div class="modal-overlay" id="modalWithdrawVault">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="ri-hand-coin-line"></i> Tarik Saldo Kantong Impian</h3>
+                <button class="modal-close" data-close="modalWithdrawVault">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="withdrawVaultId">
+                <div class="vault-info-banner">
+                    <div class="vault-icon-box" id="withdrawVaultIconBox"><i class="ri-safe-2-line"></i></div>
+                    <div>
+                        <h4 id="withdrawVaultName">Liburan ke Japan 2026</h4>
+                        <span class="text-muted">Saldo Tersimpan: <strong id="withdrawVaultAvailable" class="text-success">Rp 13.000.000</strong></span>
+                    </div>
+                </div>
+
+                <div class="form-group mt-3">
+                    <label>Pilih Nominal Penarikan</label>
+                    <div class="quick-amounts-grid" id="vaultWithdrawChips">
+                        <button class="btn-chip" data-amount="50000">Rp 50.000</button>
+                        <button class="btn-chip active" data-amount="100000">Rp 100.000</button>
+                        <button class="btn-chip" data-amount="500000">Rp 500.000</button>
+                        <button class="btn-chip" data-amount="1000000">Rp 1.000.000</button>
+                        <button class="btn-chip" data-amount="all">Tarik Semua</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="withdrawVaultAmountInput">Atau Masukkan Nominal Kustom (Rp)</label>
+                    <input type="number" id="withdrawVaultAmountInput" placeholder="Contoh: 100000" min="10000" value="100000">
+                </div>
+
+                <div class="form-group">
+                    <label>Tujuan Pencairan</label>
+                    <div class="destination-account-preview">
+                        <i class="ri-wallet-3-line"></i>
+                        <div>
+                            <span>Saldo Utama E-Wallet</span>
+                            <small class="text-muted">Langsung ditambahkan ke saldo aktif</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" data-close="modalWithdrawVault">Batal</button>
+                <button class="btn-primary" id="btnSubmitWithdrawVault"><i class="ri-check-line"></i> Cairkan ke Saldo Utama</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 10: Tarik Tunai Cash Out & Token Simulator -->
+    <div class="modal-overlay" id="modalCashOut">
+        <div class="modal-box modal-cashout-box">
+            <div class="modal-header">
+                <h3><i class="ri-bank-card-line"></i> Tarik Tunai (Cash Out)</h3>
+                <button class="modal-close" data-close="modalCashOut">&times;</button>
+            </div>
+            
+            <!-- Step 1: Form Pembuatan Token -->
+            <div class="modal-body" id="cashOutFormStep">
+                <div class="form-group">
+                    <label>Pilih Gerai / ATM Mitra Penarikan</label>
+                    <div class="channel-select-grid" id="cashOutChannelGrid">
+                        <div class="channel-card active" data-channel="Indomaret">
+                            <i class="ri-store-2-line"></i>
+                            <div>
+                                <strong>Indomaret</strong>
+                                <span>Kasir Gerai</span>
+                            </div>
+                        </div>
+                        <div class="channel-card" data-channel="Alfamart">
+                            <i class="ri-store-3-line"></i>
+                            <div>
+                                <strong>Alfamart</strong>
+                                <span>Kasir Gerai</span>
+                            </div>
+                        </div>
+                        <div class="channel-card" data-channel="ATM BCA Cardless">
+                            <i class="ri-bank-line"></i>
+                            <div>
+                                <strong>ATM BCA</strong>
+                                <span>Tanpa Kartu</span>
+                            </div>
+                        </div>
+                        <div class="channel-card" data-channel="ATM BRI Cardless">
+                            <i class="ri-bank-card-2-line"></i>
+                            <div>
+                                <strong>ATM BRI</strong>
+                                <span>Tanpa Kartu</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Pilih Nominal Tarik Tunai</label>
+                    <div class="quick-amounts-grid" id="cashOutAmountsGrid">
+                        <button class="btn-chip" data-amount="50000">Rp 50.000</button>
+                        <button class="btn-chip active" data-amount="100000">Rp 100.000</button>
+                        <button class="btn-chip" data-amount="200000">Rp 200.000</button>
+                        <button class="btn-chip" data-amount="500000">Rp 500.000</button>
+                        <button class="btn-chip" data-amount="1000000">Rp 1.000.000</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cashOutCustomInput">Nominal Tarik Tunai (Rp)</label>
+                    <input type="number" id="cashOutCustomInput" value="100000" step="50000">
+                </div>
+
+                <div class="fee-summary-row">
+                    <span>Biaya Admin</span>
+                    <strong class="text-success"><i class="ri-shield-check-line"></i> GRATIS (Promo Bebas Biaya)</strong>
+                </div>
+                
+                <div class="modal-footer" style="padding: 1.25rem 0 0 0; margin-top: 1rem;">
+                    <button class="btn-ghost" data-close="modalCashOut">Batal</button>
+                    <button class="btn-primary" id="btnProceedCashOut">Lanjutkan Ke PIN</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Tampilan Token Aktif (6-Digit Token & Timer) -->
+            <div class="modal-body hidden" id="cashOutTokenStep">
+                <div class="token-active-card">
+                    <div class="token-status-badge">
+                        <span class="pulse-dot"></span> Token Penarikan Aktif
+                    </div>
+                    <div class="token-channel-info" id="activeTokenChannel">Indomaret</div>
+                    
+                    <div class="token-code-display">
+                        <span class="token-digits" id="activeTokenCode">849 201</span>
+                        <button class="btn-copy-token" id="btnCopyCashOutToken" title="Salin Kode">
+                            <i class="ri-file-copy-line"></i>
+                        </button>
+                    </div>
+
+                    <div class="token-timer-box">
+                        <span>Berlaku hingga:</span>
+                        <div class="timer-countdown" id="tokenCountdownTimer">14:59</div>
+                    </div>
+
+                    <!-- Barcode Visual Generator -->
+                    <div class="barcode-container">
+                        <div class="barcode-lines">
+                            <div class="b-line w-2"></div><div class="b-line w-1"></div><div class="b-line w-3"></div><div class="b-line w-1"></div>
+                            <div class="b-line w-2"></div><div class="b-line w-4"></div><div class="b-line w-2"></div><div class="b-line w-1"></div>
+                            <div class="b-line w-3"></div><div class="b-line w-2"></div><div class="b-line w-1"></div><div class="b-line w-4"></div>
+                            <div class="b-line w-2"></div><div class="b-line w-1"></div><div class="b-line w-3"></div><div class="b-line w-2"></div>
+                        </div>
+                        <small class="barcode-sub">Tunjukkan barcode ini kepada kasir</small>
+                    </div>
+
+                    <div class="token-instructions">
+                        <h5><i class="ri-information-line"></i> Petunjuk Penarikan:</h5>
+                        <ol>
+                            <li>Kunjungi gerai mitra atau ATM terdekat.</li>
+                            <li>Tunjukkan <strong>Kode Token 6-digit</strong> atau scan barcode ke kasir / pilih menu Tarik Tunai Tanpa Kartu di ATM.</li>
+                            <li>Terima uang tunai Anda sebesar <strong id="tokenAmountDisplay">Rp 100.000</strong>.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="padding: 1rem 0 0 0; margin-top: 1rem; display: flex; gap: 0.75rem;">
+                    <button class="btn-ghost text-danger" id="btnCancelCashOutToken" style="flex: 1;"><i class="ri-close-circle-line"></i> Batalkan Token</button>
+                    <button class="btn-primary" id="btnCompleteCashOut" style="flex: 1;"><i class="ri-checkbox-circle-line"></i> Selesai Ambil Uang</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 11: Minta Saldo & QR Code Generator -->
+    <div class="modal-overlay" id="modalReceiveQR">
+        <div class="modal-box modal-receive-box">
+            <div class="modal-header">
+                <h3><i class="ri-qr-scan-line"></i> Minta Saldo / Terima Transfer</h3>
+                <button class="modal-close" data-close="modalReceiveQR">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <!-- User Preview Card -->
+                <div class="receive-user-header">
+                    <img src="sasuke.jpg" alt="Avatar" class="avatar-img-sm" id="receiveAvatar">
+                    <div class="receive-user-meta">
+                        <h4 id="receiveUserName">M Ikhsan Anggara</h4>
+                        <span id="receiveUserPhone">0812-9887-3411</span>
+                    </div>
+                    <span class="user-status"><i class="ri-checkbox-circle-fill"></i> Premier</span>
+                </div>
+
+                <!-- Dynamic QR Display Container -->
+                <div class="receive-qr-card">
+                    <div class="qr-display-box" id="receiveQrContainer">
+                        <!-- High Quality SVG QR Code Simulation with Center Badge -->
+                        <div class="qr-code-art">
+                            <svg viewBox="0 0 200 200" width="180" height="180" class="qr-svg">
+                                <rect width="200" height="200" fill="#ffffff" rx="12"/>
+                                <!-- Top-Left Target -->
+                                <rect x="15" y="15" width="45" height="45" rx="6" fill="#0369a1"/>
+                                <rect x="23" y="23" width="29" height="29" rx="3" fill="#ffffff"/>
+                                <rect x="29" y="29" width="17" height="17" rx="2" fill="#0369a1"/>
+                                <!-- Top-Right Target -->
+                                <rect x="140" y="15" width="45" height="45" rx="6" fill="#0369a1"/>
+                                <rect x="148" y="23" width="29" height="29" rx="3" fill="#ffffff"/>
+                                <rect x="154" y="29" width="17" height="17" rx="2" fill="#0369a1"/>
+                                <!-- Bottom-Left Target -->
+                                <rect x="15" y="140" width="45" height="45" rx="6" fill="#0369a1"/>
+                                <rect x="23" y="148" width="29" height="29" rx="3" fill="#ffffff"/>
+                                <rect x="29" y="154" width="17" height="17" rx="2" fill="#0369a1"/>
+                                <!-- Random decorative QR pattern squares -->
+                                <rect x="70" y="20" width="12" height="12" fill="#0f172a"/>
+                                <rect x="90" y="20" width="12" height="12" fill="#0f172a"/>
+                                <rect x="110" y="20" width="12" height="12" fill="#0f172a"/>
+                                <rect x="70" y="40" width="12" height="12" fill="#0f172a"/>
+                                <rect x="110" y="40" width="12" height="12" fill="#0f172a"/>
+                                <rect x="70" y="60" width="24" height="12" fill="#0f172a"/>
+                                <rect x="100" y="60" width="24" height="12" fill="#0f172a"/>
+                                <rect x="20" y="70" width="12" height="24" fill="#0f172a"/>
+                                <rect x="40" y="80" width="20" height="12" fill="#0f172a"/>
+                                <rect x="140" y="70" width="12" height="24" fill="#0f172a"/>
+                                <rect x="160" y="80" width="20" height="12" fill="#0f172a"/>
+                                <rect x="20" y="110" width="24" height="12" fill="#0f172a"/>
+                                <rect x="70" y="130" width="12" height="24" fill="#0f172a"/>
+                                <rect x="90" y="140" width="30" height="12" fill="#0f172a"/>
+                                <rect x="130" y="130" width="12" height="30" fill="#0f172a"/>
+                                <rect x="150" y="130" width="20" height="12" fill="#0f172a"/>
+                                <rect x="70" y="170" width="24" height="15" fill="#0f172a"/>
+                                <rect x="110" y="170" width="20" height="15" fill="#0f172a"/>
+                                <rect x="150" y="160" width="30" height="25" fill="#0f172a"/>
+                                <!-- Center Klepeh Logo Overlay -->
+                                <circle cx="100" cy="100" r="22" fill="#ffffff" stroke="#0284c7" stroke-width="3"/>
+                                <circle cx="100" cy="100" r="16" fill="#0284c7"/>
+                                <path d="M93 95 H107 V105 H93 Z" fill="#ffffff"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="receive-amount-badge" id="receiveAmountBadge">
+                        <span>Nominal: Bebas Masukkan</span>
+                    </div>
+                </div>
+
+                <!-- Input Nominal yang Diminta -->
+                <div class="form-group text-left mt-3">
+                    <label for="receiveAmountInput">Atur Nominal yang Diminta (Opsional)</label>
+                    <div class="input-icon-wrapper">
+                        <input type="number" id="receiveAmountInput" placeholder="Masukkan jumlah, contoh: 50000" class="auth-input">
+                        <i class="ri-money-dollar-circle-line left-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Action Share Buttons -->
+                <div class="receive-actions-grid">
+                    <button class="btn-receive-action" id="btnCopyReceiveAcc">
+                        <i class="ri-file-copy-line"></i>
+                        <span>Salin No. Akun</span>
+                    </button>
+                    <button class="btn-receive-action" id="btnCopyPayLink">
+                        <i class="ri-link"></i>
+                        <span>Salin Link</span>
+                    </button>
+                    <button class="btn-receive-action btn-share-wa" id="btnShareWhatsApp">
+                        <i class="ri-whatsapp-line"></i>
+                        <span>Bagikan WA</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" data-close="modalReceiveQR">Tutup</button>
+                <button class="btn-primary" id="btnDownloadQR"><i class="ri-download-2-line"></i> Unduh Gambar QR</button>
             </div>
         </div>
     </div>

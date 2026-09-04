@@ -699,8 +699,8 @@ button {
 
 .quick-actions-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.85rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.65rem;
 }
 
 .action-btn {
@@ -3119,5 +3119,482 @@ button {
         max-width: 100%;
         padding: 1.5rem 1.15rem;
     }
+
+    .quick-actions-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.4rem;
+    }
+
+    .action-btn {
+        padding: 0.65rem 0.25rem;
+    }
+
+    .action-btn .icon-box {
+        font-size: 1.2rem;
+    }
+
+    .action-btn span {
+        font-size: 0.68rem;
+    }
 }
+
+/* ==========================================================================
+   NEW FEATURES: VAULT WITHDRAW, CASH OUT TOKEN & RECEIVE QR STYLES
+   ========================================================================== */
+
+/* 1. Vault Management & Withdrawal Styles */
+.vault-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.vault-actions button {
+    flex: 1;
+    min-width: 120px;
+    font-size: 0.825rem;
+    padding: 0.65rem 0.75rem;
+}
+
+.btn-vault-withdraw {
+    background: rgba(6, 182, 212, 0.12) !important;
+    border: 1px solid rgba(6, 182, 212, 0.3) !important;
+    color: var(--primary-cyan) !important;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.btn-vault-withdraw:hover {
+    background: var(--primary-cyan) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);
+}
+
+.btn-icon-danger-sm {
+    width: 38px;
+    height: 38px;
+    background: rgba(244, 63, 94, 0.12);
+    border: 1px solid rgba(244, 63, 94, 0.25);
+    color: var(--primary-rose);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-icon-danger-sm:hover {
+    background: var(--primary-rose);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.vault-info-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.25rem;
+}
+
+.vault-info-banner .vault-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: var(--gradient-brand);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.destination-account-preview {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+[data-theme="light"] .destination-account-preview {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.destination-account-preview i {
+    font-size: 1.5rem;
+    color: var(--primary-cyan);
+}
+
+.destination-account-preview div {
+    display: flex;
+    flex-direction: column;
+}
+
+.destination-account-preview span {
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* 2. Tarik Tunai Cash Out & 6-Digit Token Styles */
+.modal-cashout-box {
+    max-width: 500px;
+}
+
+.channel-select-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.channel-card {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+[data-theme="light"] .channel-card {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.channel-card:hover {
+    border-color: var(--primary-cyan);
+    transform: translateY(-2px);
+}
+
+.channel-card.active {
+    background: rgba(6, 182, 212, 0.12);
+    border-color: var(--primary-cyan);
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.25);
+}
+
+.channel-card i {
+    font-size: 1.5rem;
+    color: var(--primary-cyan);
+}
+
+.channel-card strong {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--text-primary);
+}
+
+.channel-card span {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.fee-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+    font-size: 0.85rem;
+}
+
+/* Token Active Presentation Card */
+.token-active-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-highlight);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    position: relative;
+    box-shadow: var(--shadow-glow);
+}
+
+.token-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--primary-emerald);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 0.85rem;
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary-emerald);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: pulseGlow 1.5s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.token-channel-info {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.token-code-display {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: rgba(0, 0, 0, 0.35);
+    border: 2px dashed var(--primary-cyan);
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius-lg);
+    margin: 0.75rem 0 1rem 0;
+}
+
+[data-theme="light"] .token-code-display {
+    background: #f8fafc;
+}
+
+.token-digits {
+    font-size: 2.25rem;
+    font-weight: 900;
+    letter-spacing: 5px;
+    color: var(--primary-cyan);
+    font-family: monospace;
+}
+
+.btn-copy-token {
+    background: rgba(6, 182, 212, 0.2);
+    border: 1px solid var(--primary-cyan);
+    color: var(--primary-cyan);
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-copy-token:hover {
+    background: var(--primary-cyan);
+    color: #fff;
+}
+
+.token-timer-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.timer-countdown {
+    font-weight: 800;
+    color: var(--primary-rose);
+    font-size: 1rem;
+}
+
+/* Barcode Simulation Graphic */
+.barcode-container {
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin: 0 auto 1.25rem auto;
+    max-width: 300px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.barcode-lines {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    height: 50px;
+}
+
+.b-line {
+    background: #000000;
+    height: 100%;
+}
+
+.b-line.w-1 { width: 2px; }
+.b-line.w-2 { width: 4px; }
+.b-line.w-3 { width: 6px; }
+.b-line.w-4 { width: 8px; }
+
+.barcode-sub {
+    display: block;
+    color: #475569;
+    font-size: 0.72rem;
+    margin-top: 0.4rem;
+    font-weight: 600;
+}
+
+.token-instructions {
+    text-align: left;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .token-instructions {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.token-instructions h5 {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-cyan);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.token-instructions ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* 3. Minta Saldo QR Code Styles */
+.modal-receive-box {
+    max-width: 460px;
+}
+
+.receive-user-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1.15rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.25rem;
+    text-align: left;
+}
+
+[data-theme="light"] .receive-user-header {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.receive-user-meta {
+    flex: 1;
+}
+
+.receive-user-meta h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.receive-user-meta span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.receive-qr-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    background: rgba(6, 182, 212, 0.05);
+    border: 1px solid var(--border-highlight);
+    border-radius: var(--radius-lg);
+    margin-bottom: 1rem;
+}
+
+.qr-display-box {
+    padding: 0.75rem;
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    transition: var(--transition);
+}
+
+.qr-display-box:hover {
+    transform: scale(1.02);
+}
+
+.receive-amount-badge {
+    margin-top: 1rem;
+    background: var(--gradient-brand);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: 0.825rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+}
+
+.receive-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+    margin-top: 1.25rem;
+}
+
+.btn-receive-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.75rem 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+[data-theme="light"] .btn-receive-action {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.btn-receive-action:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--primary-cyan);
+    color: var(--primary-cyan);
+    transform: translateY(-2px);
+}
+
+.btn-receive-action i {
+    font-size: 1.35rem;
+}
+
+.btn-receive-action span {
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.btn-share-wa:hover {
+    border-color: #25d366 !important;
+    color: #25d366 !important;
+}
+
 
