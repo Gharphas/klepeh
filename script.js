@@ -4133,6 +4133,50 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal('modalSupportChat');
     };
 
+    // Global Function to Launch WhatsApp Admin Chat with Multi-Fallback
+    window.launchAdminWhatsApp = function(topic = currentSelectedSupportTopic, customDetail = '') {
+        const curSession = JSON.parse(localStorage.getItem('paypulse_user_session')) || {};
+        const userName = curSession.userName || 'M Ikhsan Anggara';
+        const userPhone = curSession.userPhone || state.accountNumber || '0812-9887-3411';
+        const detailInput = customDetail || document.getElementById('supportMessageDetail')?.value.trim() || '';
+
+        let fullMsg = `Halo Admin CS My Klepeh E-Wallet,\n`;
+        fullMsg += `Saya membutuhkan bantuan dan penanganan terkait kendala berikut:\n\n`;
+        fullMsg += `📌 *Topik Kendala:* ${topic}\n`;
+        fullMsg += `👤 *Nama Akun:* ${userName}\n`;
+        fullMsg += `📱 *Nomor Akun/HP:* ${userPhone}\n`;
+        fullMsg += `💳 *Total Saldo:* ${formatRupiah(state.balance)}\n`;
+        if (detailInput) {
+            fullMsg += `📝 *Deskripsi / ID Transaksi:* ${detailInput}\n`;
+        }
+        fullMsg += `\nMohon bantuannya untuk segera diproses. Terima kasih! 🙏`;
+
+        const encoded = encodeURIComponent(fullMsg);
+        const waApiUrl = `https://api.whatsapp.com/send?phone=${ADMIN_WA_INTL}&text=${encoded}`;
+        const waMeUrl = `https://wa.me/${ADMIN_WA_INTL}?text=${encoded}`;
+
+        playSuccessSound();
+        showToast('Membuka WhatsApp Admin My Klepeh (0887-4379-95615)... 💬', 'success');
+
+        closeModal('modalSupportChat');
+
+        // Robust link opening: Try window.open with fallback anchor click
+        try {
+            const newTab = window.open(waApiUrl, '_blank');
+            if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
+                const link = document.createElement('a');
+                link.href = waMeUrl;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        } catch (err) {
+            window.location.href = waApiUrl;
+        }
+    };
+
     // Topic Selection Chips Listener
     document.querySelectorAll('#supportTopicsGrid .btn-topic-chip').forEach(chip => {
         chip.addEventListener('click', () => {
@@ -4150,31 +4194,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Launch WhatsApp Chat with Admin
+    // Launch WhatsApp Chat with Admin Button in Modal
     document.getElementById('btnLaunchWhatsAppChat')?.addEventListener('click', () => {
-        const curSession = JSON.parse(localStorage.getItem('paypulse_user_session')) || {};
-        const userName = curSession.userName || 'M Ikhsan Anggara';
-        const userPhone = curSession.userPhone || state.accountNumber || '0812-9887-3411';
-        const userDetailMsg = document.getElementById('supportMessageDetail')?.value.trim();
-
-        let fullMsg = `Halo Admin CS My Klepeh E-Wallet,\n`;
-        fullMsg += `Saya membutuhkan bantuan terkait kendala berikut:\n\n`;
-        fullMsg += `📌 *Topik Kendala:* ${currentSelectedSupportTopic}\n`;
-        fullMsg += `👤 *Nama Pengguna:* ${userName}\n`;
-        fullMsg += `📱 *Nomor Akun/HP:* ${userPhone}\n`;
-        fullMsg += `💳 *Saldo Saat Ini:* ${formatRupiah(state.balance)}\n`;
-        if (userDetailMsg) {
-            fullMsg += `📝 *Detail Kendala:* ${userDetailMsg}\n`;
-        }
-        fullMsg += `\nMohon bantuannya segera untuk dicek oleh tim admin. Terima kasih! 🙏`;
-
-        const waUrl = `https://api.whatsapp.com/send?phone=${ADMIN_WA_INTL}&text=${encodeURIComponent(fullMsg)}`;
-        
-        playSuccessSound();
-        showToast('Beralih ke WhatsApp Resmi Admin My Klepeh (0887-4379-95615)... 💬', 'success');
-        
-        closeModal('modalSupportChat');
-        window.open(waUrl, '_blank');
+        window.launchAdminWhatsApp();
     });
 
     // Event triggers for opening Support Modal
@@ -4192,6 +4214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // INIT INITIAL APP RENDER
     renderApp();
 });
+
 
 
 
