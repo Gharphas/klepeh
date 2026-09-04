@@ -1553,6 +1553,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (serviceKey === 'crypto') {
                 switchTab('invest');
                 if (typeof switchInvestCategory === 'function') switchInvestCategory('crypto');
+            } else if (serviceKey === 'support') {
+                if (typeof openSupportChatModal === 'function') {
+                    openSupportChatModal();
+                } else {
+                    openModal('modalSupportChat');
+                }
             } else {
                 openPpobModal(serviceKey);
             }
@@ -4111,6 +4117,71 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // ----------------------------------------------------------------------
+    // 15. CUSTOMER SUPPORT & CHAT ADMIN WHATSAPP (0887437995615)
+    // ----------------------------------------------------------------------
+    const ADMIN_WA_RAW = '0887437995615';
+    const ADMIN_WA_INTL = '62887437995615';
+    let currentSelectedSupportTopic = 'Top Up Saldo Belum Masuk';
+
+    window.openSupportChatModal = function() {
+        const curSession = JSON.parse(localStorage.getItem('paypulse_user_session')) || {};
+        const userAvatar = curSession.userAvatar || 'sasuke.jpg';
+        const agentAvatarEl = document.getElementById('supportAgentAvatar');
+        if (agentAvatarEl) agentAvatarEl.src = userAvatar;
+
+        openModal('modalSupportChat');
+    };
+
+    // Topic Selection Chips Listener
+    document.querySelectorAll('#supportTopicsGrid .btn-topic-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('#supportTopicsGrid .btn-topic-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            currentSelectedSupportTopic = chip.getAttribute('data-topic') || 'Kendala Umum';
+        });
+    });
+
+    // Copy Admin WhatsApp Number
+    document.getElementById('btnCopyAdminWa')?.addEventListener('click', () => {
+        navigator.clipboard.writeText(ADMIN_WA_RAW).then(() => {
+            playSuccessSound();
+            showToast(`Nomor WhatsApp Admin (${ADMIN_WA_RAW}) berhasil disalin! 📋`, 'success');
+        });
+    });
+
+    // Launch WhatsApp Chat with Admin
+    document.getElementById('btnLaunchWhatsAppChat')?.addEventListener('click', () => {
+        const curSession = JSON.parse(localStorage.getItem('paypulse_user_session')) || {};
+        const userName = curSession.userName || 'M Ikhsan Anggara';
+        const userPhone = curSession.userPhone || state.accountNumber || '0812-9887-3411';
+        const userDetailMsg = document.getElementById('supportMessageDetail')?.value.trim();
+
+        let fullMsg = `Halo Admin CS My Klepeh E-Wallet,\n`;
+        fullMsg += `Saya membutuhkan bantuan terkait kendala berikut:\n\n`;
+        fullMsg += `📌 *Topik Kendala:* ${currentSelectedSupportTopic}\n`;
+        fullMsg += `👤 *Nama Pengguna:* ${userName}\n`;
+        fullMsg += `📱 *Nomor Akun/HP:* ${userPhone}\n`;
+        fullMsg += `💳 *Saldo Saat Ini:* ${formatRupiah(state.balance)}\n`;
+        if (userDetailMsg) {
+            fullMsg += `📝 *Detail Kendala:* ${userDetailMsg}\n`;
+        }
+        fullMsg += `\nMohon bantuannya segera untuk dicek oleh tim admin. Terima kasih! 🙏`;
+
+        const waUrl = `https://api.whatsapp.com/send?phone=${ADMIN_WA_INTL}&text=${encodeURIComponent(fullMsg)}`;
+        
+        playSuccessSound();
+        showToast('Beralih ke WhatsApp Resmi Admin My Klepeh (0887-4379-95615)... 💬', 'success');
+        
+        closeModal('modalSupportChat');
+        window.open(waUrl, '_blank');
+    });
+
+    // Event triggers for opening Support Modal
+    document.getElementById('fabSupportChat')?.addEventListener('click', openSupportChatModal);
+    document.getElementById('btnHeaderSupport')?.addEventListener('click', openSupportChatModal);
+    document.getElementById('dropdownSupportBtn')?.addEventListener('click', openSupportChatModal);
+
     // Initial render for Invest
     renderInvestCards();
 
@@ -4121,5 +4192,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // INIT INITIAL APP RENDER
     renderApp();
 });
+
 
 

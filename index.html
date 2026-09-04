@@ -93,6 +93,9 @@
                         <i class="ri-sun-line light-icon"></i>
                         <i class="ri-moon-line dark-icon"></i>
                     </button>
+                    <button class="btn-icon support-header-btn" id="btnHeaderSupport" title="Pusat Bantuan & Chat Admin">
+                        <i class="ri-customer-service-2-line"></i>
+                    </button>
                     <button class="btn-icon notification-btn" id="notifBtn" title="Notifikasi">
                         <i class="ri-notification-3-line"></i>
                         <span class="badge-dot" id="notifBadge"></span>
@@ -124,6 +127,10 @@
                             </div>
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-items">
+                                <button class="dropdown-item" id="dropdownSupportBtn">
+                                    <i class="ri-customer-service-2-line" style="color: #25d366;"></i>
+                                    <span>Pusat Bantuan (WhatsApp CS)</span>
+                                </button>
                                 <button class="dropdown-item" id="dropdownThemeToggle">
                                     <i class="ri-sun-line"></i>
                                     <span>Ganti Mode Tema</span>
@@ -306,6 +313,10 @@
                         <div class="service-item" data-service="crypto">
                             <div class="service-icon bg-orange"><i class="ri-bit-coin-line"></i></div>
                             <span>Kripto Pintu</span>
+                        </div>
+                        <div class="service-item" data-service="support">
+                            <div class="service-icon bg-green" style="background: linear-gradient(135deg, #25d366, #128c7e); color: #fff;"><i class="ri-whatsapp-line"></i></div>
+                            <span>Bantuan CS</span>
                         </div>
                         <div class="service-item" data-service="more">
                             <div class="service-icon bg-slate"><i class="ri-more-fill"></i></div>
@@ -1776,6 +1787,102 @@
             <div class="modal-footer">
                 <button class="btn-ghost" data-close="modalInvestOrder">Batal</button>
                 <button class="btn-primary" id="btnConfirmBuyInvest"><i class="ri-shield-check-line"></i> Konfirmasi Beli (PIN)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Support Chat WhatsApp Button -->
+    <div class="floating-support-wrapper" id="fabSupportChat" role="button" tabindex="0" title="Hubungi Admin WhatsApp (0887437995615)">
+        <div class="support-pulse"></div>
+        <div class="floating-support-btn">
+            <i class="ri-whatsapp-fill fab-wa-icon"></i>
+            <span class="fab-label">Chat Admin</span>
+            <span class="fab-online-dot" title="Admin Online 24/7"></span>
+        </div>
+    </div>
+
+    <!-- Modal 15: Pusat Bantuan & Chat Admin WhatsApp (0887437995615) -->
+    <div class="modal-overlay" id="modalSupportChat">
+        <div class="modal-box modal-support-box">
+            <div class="modal-header">
+                <div class="support-agent-header">
+                    <div class="support-avatar-box">
+                        <img src="sasuke.jpg" alt="Admin CS" class="support-agent-img" id="supportAgentAvatar">
+                        <span class="agent-status-badge"></span>
+                    </div>
+                    <div>
+                        <h3>Layanan Bantuan & CS My Klepeh</h3>
+                        <span class="support-sub"><i class="ri-whatsapp-fill text-success"></i> WhatsApp Resmi: <strong>0887437995615</strong></span>
+                    </div>
+                </div>
+                <button class="modal-close" data-close="modalSupportChat">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- CS Welcome Card -->
+                <div class="support-welcome-card">
+                    <div class="support-welcome-text">
+                        <div class="agent-name-tag"><i class="ri-shield-check-fill"></i> Customer Support Resmi (24/7)</div>
+                        <h4>Ada kendala dengan transaksi Anda?</h4>
+                        <p>Tim admin kami siap membantu menyelesaikan segala kendala top up, transfer, QRIS, tagihan, hingga investasi secara cepat dan aman via WhatsApp.</p>
+                    </div>
+                </div>
+
+                <!-- Quick Issue Selector -->
+                <div class="form-group mt-3">
+                    <label><i class="ri-questionnaire-line"></i> Pilih Topik Kendala:</label>
+                    <div class="support-topics-grid" id="supportTopicsGrid">
+                        <button type="button" class="btn-topic-chip active" data-topic="Top Up Saldo Belum Masuk">
+                            <i class="ri-add-circle-line"></i> Top Up Saldo
+                        </button>
+                        <button type="button" class="btn-topic-chip" data-topic="Kendala Transfer & Tarik Tunai">
+                            <i class="ri-send-plane-line"></i> Transfer / Tarik
+                        </button>
+                        <button type="button" class="btn-topic-chip" data-topic="Kendala Pembayaran QRIS">
+                            <i class="ri-qr-code-line"></i> Pembayaran QRIS
+                        </button>
+                        <button type="button" class="btn-topic-chip" data-topic="Kendala Pulsa, Listrik & Tagihan">
+                            <i class="ri-flashlight-line"></i> Pulsa & Tagihan
+                        </button>
+                        <button type="button" class="btn-topic-chip" data-topic="Kendala Tiket & Travel">
+                            <i class="ri-flight-takeoff-line"></i> Tiket Travel
+                        </button>
+                        <button type="button" class="btn-topic-chip" data-topic="Kendala Investasi Saham & Kripto">
+                            <i class="ri-funds-box-line"></i> Investasi / Kripto
+                        </button>
+                        <button type="button" class="btn-topic-chip" data-topic="Kendala Keamanan Akun & PIN">
+                            <i class="ri-lock-password-line"></i> Akun & PIN
+                        </button>
+                        <button type="button" class="btn-topic-chip" data-topic="Kendala Lainnya">
+                            <i class="ri-more-fill"></i> Lainnya
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Detail / Custom Message Input -->
+                <div class="form-group mt-3">
+                    <label for="supportMessageDetail"><i class="ri-edit-line"></i> Deskripsi Kendala (Opsional):</label>
+                    <textarea id="supportMessageDetail" rows="3" class="auth-input" placeholder="Jelaskan detail kendala atau ID transaksi jika ada (contoh: ID Transaksi KLP-8841)..."></textarea>
+                </div>
+
+                <!-- WhatsApp Admin Number Display & Fast Copy -->
+                <div class="support-wa-card">
+                    <div class="wa-info-col">
+                        <i class="ri-whatsapp-fill wa-big-icon"></i>
+                        <div>
+                            <span class="wa-lbl">Nomor WhatsApp Resmi Admin:</span>
+                            <strong class="wa-number" id="displayAdminWaNumber">0887-4379-95615</strong>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-copy-wa" id="btnCopyAdminWa" title="Salin Nomor WhatsApp">
+                        <i class="ri-file-copy-line"></i> Salin
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" data-close="modalSupportChat">Tutup</button>
+                <button class="btn-whatsapp-cs" id="btnLaunchWhatsAppChat">
+                    <i class="ri-whatsapp-fill"></i> Beralih ke WhatsApp Admin
+                </button>
             </div>
         </div>
     </div>
