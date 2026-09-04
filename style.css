@@ -912,6 +912,8 @@ button {
 .bg-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
 .bg-orange { background: linear-gradient(135deg, #f97316, #c2410c); }
 .bg-indigo { background: linear-gradient(135deg, #6366f1, #4338ca); }
+.bg-teal { background: linear-gradient(135deg, #14b8a6, #0f766e); }
+.bg-pink { background: linear-gradient(135deg, #ec4899, #be185d); }
 .bg-slate { background: linear-gradient(135deg, #64748b, #334155); }
 
 .service-item span {

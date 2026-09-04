@@ -1206,6 +1206,63 @@ document.addEventListener('DOMContentLoaded', () => {
                 amount: 345000,
                 admin: 2500
             }
+        },
+        education: {
+            title: 'Tagihan Pendidikan & Kampus',
+            icon: 'ri-graduation-cap-line',
+            subtitle: 'Bayar biaya SPP, UKT, & Uang Gedung Sekolah / Universitas',
+            inputLabel: 'Nomor Induk Mahasiswa (NIM) / No. Siswa (NIS)',
+            inputPlaceholder: 'Contoh: 1301204019 atau No. Virtual Account',
+            inputIcon: 'ri-graduation-cap-fill',
+            hasSubtabs: false,
+            providers: [
+                { id: 'ui', name: 'Universitas Indonesia (UI)' },
+                { id: 'itb', name: 'Institut Teknologi Bandung (ITB)' },
+                { id: 'ugm', name: 'Universitas Gadjah Mada (UGM)' },
+                { id: 'unair', name: 'Universitas Airlangga (UNAIR)' },
+                { id: 'ub', name: 'Universitas Brawijaya (UB)' },
+                { id: 'undip', name: 'Universitas Diponegoro (UNDIP)' },
+                { id: 'telkom_univ', name: 'Telkom University' },
+                { id: 'binus', name: 'Binus University' },
+                { id: 'al_azhar', name: 'Yayasan Pesantren Islam Al-Azhar' },
+                { id: 'penabur', name: 'BPK Penabur' },
+                { id: 'ruangguru', name: 'Ruangguru Academy & Bimbel' }
+            ],
+            packages: { main: [] },
+            inquiry: {
+                name: 'M IKHSAN ANGGARA',
+                tarif: 'UKT Semester Ganjil 2026/2027 (Fakultas Teknik)',
+                amount: 4500000,
+                admin: 2500
+            }
+        },
+        installment: {
+            title: 'Tagihan Cicilan & Multifinance',
+            icon: 'ri-hand-coin-line',
+            subtitle: 'Bayar angsuran kredit motor, mobil, elektronik, & paylater',
+            inputLabel: 'Nomor Kontrak / No. Perjanjian Kredit',
+            inputPlaceholder: 'Contoh: 829103948571',
+            inputIcon: 'ri-file-list-3-fill',
+            hasSubtabs: false,
+            providers: [
+                { id: 'fif', name: 'FIFGROUP (Astra Credit)' },
+                { id: 'adira', name: 'Adira Finance' },
+                { id: 'baf', name: 'BAF (Bussan Auto Finance - Yamaha)' },
+                { id: 'wom', name: 'WOM Finance' },
+                { id: 'maf', name: 'Mega Auto Finance (MAF)' },
+                { id: 'hci', name: 'Home Credit Indonesia (HCI)' },
+                { id: 'kredivo', name: 'Kredivo Paylater & Cicilan' },
+                { id: 'akulaku', name: 'Akulaku Finance' },
+                { id: 'bca_finance', name: 'BCA Finance' },
+                { id: 'oto', name: 'OTO Multiartha Kredit Mobil' }
+            ],
+            packages: { main: [] },
+            inquiry: {
+                name: 'M IKHSAN ANGGARA',
+                tarif: 'Angsuran Ke-7 dari 24 Bulan (Honda Vario 160)',
+                amount: 875000,
+                admin: 2500
+            }
         }
     };
 
@@ -1221,6 +1278,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (key === 'voucher game' || key === 'game' || key === 'games') key = 'games';
         if (key === 'e-money' || key === 'emoney') key = 'emoney';
         if (key === 'tv' || key === 'internet tv' || key === 'internet & tv') key = 'internet';
+        if (key === 'pendidikan' || key === 'spp' || key === 'ukt' || key === 'kuliah') key = 'education';
+        if (key === 'cicilan' || key === 'kredit' || key === 'angsuran' || key === 'multifinance') key = 'installment';
 
         const config = PPOB_CATALOG[key] || PPOB_CATALOG.pulsa;
         currentPpobServiceKey = key;
