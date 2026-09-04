@@ -997,41 +997,500 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal('modalPin');
     });
 
-    // PPOB BUTTON TRIGGERS
+    // ----------------------------------------------------------------------
+    // 6. COMPREHENSIVE PPOB ENGINE (PULSA, PLN, PDAM, BPJS, GAMES, EMONEY, INTERNET)
+    // ----------------------------------------------------------------------
+    const PPOB_CATALOG = {
+        pulsa: {
+            title: 'Pulsa & Paket Data',
+            icon: 'ri-smartphone-line',
+            subtitle: 'Isi ulang pulsa reguler & kuota internet semua operator',
+            inputLabel: 'Nomor Handphone',
+            inputPlaceholder: '08xx-xxxx-xxxx',
+            inputIcon: 'ri-phone-line',
+            hasSubtabs: true,
+            subtab1: 'Pulsa Reguler',
+            subtab2: 'Paket Data Kuota',
+            providers: [
+                { id: 'telkomsel', name: 'Telkomsel (SimPATI / By.U)' },
+                { id: 'indosat', name: 'Indosat Ooredoo Hutchison' },
+                { id: 'xl', name: 'XL Axiata' },
+                { id: 'tri', name: 'Tri Indonesia (3)' },
+                { id: 'smartfren', name: 'Smartfren 4G LTE' },
+                { id: 'axis', name: 'Axis Hitz' }
+            ],
+            packages: {
+                main: [
+                    { id: 'p10', title: 'Pulsa Rp 10.000', desc: 'Masa aktif +15 hari', price: 11500, amount: 10000 },
+                    { id: 'p25', title: 'Pulsa Rp 25.000', desc: 'Masa aktif +30 hari', price: 26000, amount: 25000 },
+                    { id: 'p50', title: 'Pulsa Rp 50.000', desc: 'Masa aktif +45 hari', price: 51000, amount: 50000, badge: 'FAVORIT' },
+                    { id: 'p100', title: 'Pulsa Rp 100.000', desc: 'Masa aktif +60 hari', price: 100500, amount: 100000, badge: 'PROMO' },
+                    { id: 'p150', title: 'Pulsa Rp 150.000', desc: 'Masa aktif +90 hari', price: 150500, amount: 150000 },
+                    { id: 'p200', title: 'Pulsa Rp 200.000', desc: 'Masa aktif +120 hari', price: 199000, amount: 200000, badge: 'CASHBACK' }
+                ],
+                secondary: [
+                    { id: 'd5', title: 'Kuota 5 GB (7 Hari)', desc: 'Full 24 Jam Semua Jaringan', price: 25000, amount: 25000 },
+                    { id: 'd12', title: 'Kuota 12 GB (30 Hari)', desc: '10GB Utama + 2GB YouTube', price: 50000, amount: 50000, badge: 'BESTSELLER' },
+                    { id: 'd25', title: 'Kuota 25 GB (30 Hari)', desc: '20GB Utama + 5GB Apps Chat', price: 85000, amount: 85000 },
+                    { id: 'd50', title: 'Kuota 50 GB Max (30 Hari)', desc: 'Full Kuota Utama Non-Stop', price: 125000, amount: 125000, badge: 'HEMAT' },
+                    { id: 'd100', title: 'Kuota 100 GB Jumbo (30 Hari)', desc: 'Streaming & Gaming Bebas', price: 180000, amount: 180000 },
+                    { id: 'd_unli', title: 'Unlimited Turbo (30 Hari)', desc: 'FUP 3GB/Hari + Free WA/IG', price: 95000, amount: 95000 }
+                ]
+            }
+        },
+        pln: {
+            title: 'Token & Tagihan Listrik PLN',
+            icon: 'ri-flashlight-line',
+            subtitle: 'Beli token listrik prabayar & bayar tagihan pascabayar PLN',
+            inputLabel: 'Nomor Meter / ID Pelanggan PLN',
+            inputPlaceholder: 'Contoh: 5382 0918 2390',
+            inputIcon: 'ri-flashlight-fill',
+            hasSubtabs: true,
+            subtab1: 'Token Listrik (Prabayar)',
+            subtab2: 'Tagihan Listrik (Pascabayar)',
+            providers: [
+                { id: 'pln_pre', name: 'PLN Prabayar (Token)' },
+                { id: 'pln_post', name: 'PLN Pascabayar (Tagihan)' }
+            ],
+            packages: {
+                main: [
+                    { id: 'pln20', title: 'Token PLN 20.000', desc: 'Estimasi ~ 13.5 kWh', price: 21500, amount: 20000 },
+                    { id: 'pln50', title: 'Token PLN 50.000', desc: 'Estimasi ~ 33.8 kWh', price: 51500, amount: 50000, badge: 'POPULER' },
+                    { id: 'pln100', title: 'Token PLN 100.000', desc: 'Estimasi ~ 67.5 kWh', price: 101500, amount: 100000 },
+                    { id: 'pln200', title: 'Token PLN 200.000', desc: 'Estimasi ~ 135.0 kWh', price: 201500, amount: 200000 },
+                    { id: 'pln500', title: 'Token PLN 500.000', desc: 'Estimasi ~ 337.5 kWh', price: 501500, amount: 500000 },
+                    { id: 'pln1000', title: 'Token PLN 1.000.000', desc: 'Estimasi ~ 675.0 kWh', price: 1001500, amount: 1000000 }
+                ],
+                secondary: []
+            },
+            inquiry: {
+                name: 'BAMBANG SUDIBYO',
+                tarif: 'R1M / 900 VA',
+                amount: 145000,
+                admin: 1500
+            }
+        },
+        pdam: {
+            title: 'Pembayaran Air PDAM',
+            icon: 'ri-drop-line',
+            subtitle: 'Cek tagihan & bayar PDAM seluruh wilayah Indonesia',
+            inputLabel: 'Nomor Sambungan / No. Pelanggan PDAM',
+            inputPlaceholder: 'Contoh: 1002938481',
+            inputIcon: 'ri-drop-fill',
+            hasSubtabs: false,
+            providers: [
+                { id: 'pdam_jkt', name: 'PAM JAYA DKI Jakarta' },
+                { id: 'pdam_bdg', name: 'PDAM Tirtawening Kota Bandung' },
+                { id: 'pdam_sby', name: 'PDAM Surya Sembada Kota Surabaya' },
+                { id: 'pdam_smg', name: 'PDAM Tirta Moedal Kota Semarang' },
+                { id: 'pdam_grs', name: 'PDAM Giri Tirta Gresik' },
+                { id: 'pdam_dps', name: 'PDAM Kota Denpasar Bali' },
+                { id: 'pdam_mdn', name: 'PDAM Tirtanadi Sumatera Utara' },
+                { id: 'pdam_bgr', name: 'PDAM Tirta Pakuan Kota Bogor' }
+            ],
+            packages: { main: [] },
+            inquiry: {
+                name: 'HENDRA WIJAYA',
+                tarif: 'Rumah Tangga A2 (Pemakaian: 22 m³)',
+                amount: 92500,
+                admin: 1500
+            }
+        },
+        bpjs: {
+            title: 'Iuran BPJS Kesehatan',
+            icon: 'ri-heart-pulse-line',
+            subtitle: 'Bayar iuran BPJS Kesehatan keluarga tepat waktu',
+            inputLabel: 'Nomor Kartu BPJS / NIK (13-16 digit)',
+            inputPlaceholder: '0001234567890',
+            inputIcon: 'ri-id-card-line',
+            hasSubtabs: false,
+            providers: [
+                { id: 'bpjs_kes', name: 'BPJS Kesehatan Mandiri / Perorangan' }
+            ],
+            packages: {
+                main: [
+                    { id: 'bpjs_1m', title: 'Bayar 1 Bulan', desc: 'Kelas 2 (3 Jiwa)', price: 105000, amount: 105000 },
+                    { id: 'bpjs_2m', title: 'Bayar 2 Bulan', desc: 'Periode 2 Bulan Lunas', price: 210000, amount: 210000 },
+                    { id: 'bpjs_3m', title: 'Bayar 3 Bulan', desc: 'Periode 3 Bulan Lunas', price: 315000, amount: 315000, badge: 'PRAKTIS' },
+                    { id: 'bpjs_6m', title: 'Bayar 6 Bulan', desc: 'Bebas Khawatir 6 Bulan', price: 630000, amount: 630000 },
+                    { id: 'bpjs_12m', title: 'Bayar 12 Bulan (1 Tahun)', desc: 'Perlindungan Setahun Penuh', price: 1260000, amount: 1260000, badge: 'HEMAT' }
+                ]
+            },
+            inquiry: {
+                name: 'KELUARGA M IKHSAN ANGGARA',
+                tarif: 'Kelas 2 Mandiri (3 Peserta Aktif)',
+                amount: 105000,
+                admin: 1500
+            }
+        },
+        games: {
+            title: 'Top Up Voucher Game',
+            icon: 'ri-gamepad-line',
+            subtitle: 'Top up diamond & voucher game favorit instan 24 jam',
+            inputLabel: 'User ID Game',
+            inputPlaceholder: 'Contoh: 12345678',
+            inputIcon: 'ri-gamepad-fill',
+            hasSubtabs: false,
+            hasZoneId: true,
+            providers: [
+                { id: 'mlbb', name: 'Mobile Legends: Bang Bang (MLBB)' },
+                { id: 'ff', name: 'Free Fire (Garena)' },
+                { id: 'val', name: 'Valorant Points (Riot Games)' },
+                { id: 'genshin', name: 'Genshin Impact (Genesis Crystals)' },
+                { id: 'roblox', name: 'Roblox (Robux)' },
+                { id: 'pubg', name: 'PUBG Mobile (UC)' },
+                { id: 'steam', name: 'Steam Wallet Code IDR' }
+            ],
+            packages: {
+                main: [
+                    { id: 'g_ml86', title: '86 Diamonds', desc: 'Bonus 8 Diamonds', price: 20000, amount: 20000 },
+                    { id: 'g_ml172', title: '172 Diamonds', desc: 'Bonus 16 Diamonds', price: 40000, amount: 40000 },
+                    { id: 'g_ml257', title: '257 Diamonds', desc: 'Bonus 25 Diamonds', price: 60000, amount: 60000, badge: 'POPULER' },
+                    { id: 'g_ml706', title: '706 Diamonds', desc: 'Bonus 64 Diamonds', price: 160000, amount: 160000 },
+                    { id: 'g_ml_wdp', title: 'Weekly Diamond Pass', desc: 'Total 220 Diamonds (7 Hari)', price: 28000, amount: 28000, badge: 'TERLARIS' },
+                    { id: 'g_ml_twi', title: 'Twilight Pass', desc: 'Hero Skin & Rewards Eksklusif', price: 145000, amount: 145000 }
+                ]
+            }
+        },
+        emoney: {
+            title: 'Top Up Saldo E-Money & Dompet',
+            icon: 'ri-bank-card-2-line',
+            subtitle: 'Top up instan GoPay, OVO, DANA, ShopeePay, & Kartu Tol',
+            inputLabel: 'Nomor HP Akun / Nomor Kartu E-Money',
+            inputPlaceholder: '08xx-xxxx-xxxx atau 16 digit nomor kartu',
+            inputIcon: 'ri-bank-card-line',
+            hasSubtabs: false,
+            providers: [
+                { id: 'gopay', name: 'GoPay (Customer / Driver)' },
+                { id: 'ovo', name: 'OVO Cash' },
+                { id: 'dana', name: 'DANA Dompet Digital' },
+                { id: 'shopeepay', name: 'ShopeePay' },
+                { id: 'linkaja', name: 'LinkAja' },
+                { id: 'mandiri_emoney', name: 'Mandiri e-Money (NFC)' },
+                { id: 'flazz_bca', name: 'Flazz BCA' },
+                { id: 'brizzi', name: 'BRI Brizzi' }
+            ],
+            packages: {
+                main: [
+                    { id: 'em20', title: 'Saldo Rp 20.000', desc: 'Biaya admin Rp 1.000', price: 21000, amount: 20000 },
+                    { id: 'em50', title: 'Saldo Rp 50.000', desc: 'Biaya admin Rp 1.000', price: 51000, amount: 50000, badge: 'FAVORIT' },
+                    { id: 'em100', title: 'Saldo Rp 100.000', desc: 'Biaya admin Rp 1.000', price: 101000, amount: 100000 },
+                    { id: 'em200', title: 'Saldo Rp 200.000', desc: 'Biaya admin Rp 1.000', price: 201000, amount: 200000 },
+                    { id: 'em500', title: 'Saldo Rp 500.000', desc: 'Bebas biaya admin', price: 500000, amount: 500000, badge: 'FREE ADMIN' },
+                    { id: 'em1000', title: 'Saldo Rp 1.000.000', desc: 'Bebas biaya admin', price: 1000000, amount: 1000000 }
+                ]
+            }
+        },
+        internet: {
+            title: 'Internet & TV Kabel',
+            icon: 'ri-wifi-line',
+            subtitle: 'Bayar tagihan IndiHome, Biznet, First Media, & MyRepublic',
+            inputLabel: 'Nomor Pelanggan / ID Billing Internet',
+            inputPlaceholder: 'Contoh: 12209384711',
+            inputIcon: 'ri-router-line',
+            hasSubtabs: false,
+            providers: [
+                { id: 'indihome', name: 'IndiHome Telkom Fiber' },
+                { id: 'firstmedia', name: 'First Media Cable & Broadband' },
+                { id: 'biznet', name: 'Biznet Home' },
+                { id: 'myrepublic', name: 'MyRepublic Ultra Internet' },
+                { id: 'mncplay', name: 'MNC Play' },
+                { id: 'xlsatu', name: 'XL SATU Fiber' },
+                { id: 'transvision', name: 'Transvision' },
+                { id: 'kvision', name: 'K-Vision / Nex Parabola' }
+            ],
+            packages: { main: [] },
+            inquiry: {
+                name: 'M IKHSAN ANGGARA',
+                tarif: 'Paket Fiber 50 Mbps + TV 88 Channel',
+                amount: 345000,
+                admin: 2500
+            }
+        }
+    };
+
+    let currentPpobServiceKey = 'pulsa';
+    let currentPpobSubtab = 'main';
+    let currentPpobSelectedPackage = null;
+    let currentPpobInquiryData = null;
+
+    // Open PPOB Checkout Modal
+    window.openPpobModal = function(serviceKey) {
+        // Normalize key
+        let key = (serviceKey || 'pulsa').toLowerCase().trim();
+        if (key === 'voucher game' || key === 'game' || key === 'games') key = 'games';
+        if (key === 'e-money' || key === 'emoney') key = 'emoney';
+        if (key === 'tv' || key === 'internet tv' || key === 'internet & tv') key = 'internet';
+
+        const config = PPOB_CATALOG[key] || PPOB_CATALOG.pulsa;
+        currentPpobServiceKey = key;
+        currentPpobSubtab = 'main';
+        currentPpobSelectedPackage = null;
+        currentPpobInquiryData = null;
+
+        // UI Header Updates
+        const iconBadge = document.getElementById('ppobIconBadge');
+        const modalTitle = document.getElementById('ppobModalTitle');
+        const modalSubtitle = document.getElementById('ppobModalSubtitle');
+        const numLabel = document.getElementById('ppobNumLabel');
+        const numInput = document.getElementById('ppobNumberInput');
+        const inputIcon = document.getElementById('ppobInputIcon');
+        const subtabsRow = document.getElementById('ppobSubtabsRow');
+        const subtabMain = document.getElementById('ppobSubtabMain');
+        const subtabSec = document.getElementById('ppobSubtabSecondary');
+        const providerSelect = document.getElementById('ppobProviderSelect');
+        const groupZoneId = document.getElementById('groupPpobZoneId');
+        const inquiryCard = document.getElementById('ppobInquiryCard');
+        const groupPackages = document.getElementById('groupPpobPackages');
+
+        if (iconBadge) iconBadge.innerHTML = `<i class="${config.icon}"></i>`;
+        if (modalTitle) modalTitle.textContent = config.title;
+        if (modalSubtitle) modalSubtitle.textContent = config.subtitle;
+        if (numLabel) numLabel.textContent = config.inputLabel;
+        if (numInput) {
+            numInput.placeholder = config.inputPlaceholder;
+            numInput.value = (key === 'pulsa' || key === 'emoney') ? (state.accountNumber.replace(/-/g, '')) : '';
+        }
+        if (inputIcon) inputIcon.className = `${config.inputIcon} left-icon`;
+
+        // Subtabs Handling
+        if (config.hasSubtabs && subtabsRow) {
+            subtabsRow.classList.remove('hidden');
+            if (subtabMain) subtabMain.querySelector('span').textContent = config.subtab1;
+            if (subtabSec) subtabSec.querySelector('span').textContent = config.subtab2;
+            document.querySelectorAll('.ppob-subtab').forEach(t => {
+                t.classList.toggle('active', t.getAttribute('data-subtab') === 'main');
+            });
+        } else if (subtabsRow) {
+            subtabsRow.classList.add('hidden');
+        }
+
+        // Zone ID (Games only)
+        if (groupZoneId) {
+            groupZoneId.classList.toggle('hidden', !config.hasZoneId);
+        }
+
+        // Providers Dropdown
+        if (providerSelect && config.providers) {
+            providerSelect.innerHTML = config.providers.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+        }
+
+        // Inquiry vs Packages Grid
+        if (config.inquiry && config.packages.main.length === 0) {
+            // Postpaid Mode (PDAM, Internet, BPJS option)
+            if (groupPackages) groupPackages.classList.add('hidden');
+            if (inquiryCard) {
+                inquiryCard.classList.remove('hidden');
+                currentPpobInquiryData = config.inquiry;
+                renderPpobInquiryUI(config.inquiry);
+            }
+        } else {
+            // Prepaid / Package Mode
+            if (inquiryCard) inquiryCard.classList.add('hidden');
+            if (groupPackages) groupPackages.classList.remove('hidden');
+            renderPpobPackageChips();
+        }
+
+        updatePpobSummaryUI();
+        openModal('modalPpobCheckout');
+    };
+
+    function renderPpobInquiryUI(inq) {
+        const custName = document.getElementById('inquiryCustName');
+        const tarif = document.getElementById('inquiryTarif');
+        const baseAmt = document.getElementById('inquiryBaseAmount');
+        const adminVal = document.getElementById('summaryAdminVal');
+
+        if (custName) custName.textContent = inq.name;
+        if (tarif) tarif.textContent = inq.tarif;
+        if (baseAmt) baseAmt.textContent = formatRupiah(inq.amount);
+        if (adminVal) adminVal.textContent = formatRupiah(inq.admin || 1500);
+
+        currentPpobSelectedPackage = {
+            title: `Tagihan ${PPOB_CATALOG[currentPpobServiceKey].title}`,
+            price: inq.amount + (inq.admin || 1500),
+            amount: inq.amount,
+            admin: inq.admin || 1500
+        };
+        updatePpobSummaryUI();
+    }
+
+    function renderPpobPackageChips() {
+        const config = PPOB_CATALOG[currentPpobServiceKey];
+        const grid = document.getElementById('ppobPackagesGrid');
+        if (!grid || !config) return;
+
+        const pkgs = (config.packages && config.packages[currentPpobSubtab]) || config.packages?.main || [];
+
+        if (pkgs.length === 0) {
+            grid.innerHTML = '<p class="text-muted col-span-2 text-center py-3">Pilih opsi atau masukkan nomor ID Anda.</p>';
+            return;
+        }
+
+        // Default to first package
+        currentPpobSelectedPackage = pkgs[0];
+
+        grid.innerHTML = pkgs.map((pkg, idx) => `
+            <div class="ppob-pkg-chip ${idx === 0 ? 'active' : ''}" data-pkg-id="${pkg.id}">
+                ${pkg.badge ? `<span class="ppob-pkg-badge">${pkg.badge}</span>` : ''}
+                <div class="ppob-pkg-title">${pkg.title}</div>
+                <div class="ppob-pkg-desc">${pkg.desc}</div>
+                <div class="ppob-pkg-price">${formatRupiah(pkg.price)}</div>
+            </div>
+        `).join('');
+
+        grid.querySelectorAll('.ppob-pkg-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                grid.querySelectorAll('.ppob-pkg-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                const pkgId = chip.getAttribute('data-pkg-id');
+                currentPpobSelectedPackage = pkgs.find(p => p.id === pkgId);
+                updatePpobSummaryUI();
+            });
+        });
+    }
+
+    function updatePpobSummaryUI() {
+        const summaryLabel = document.getElementById('summaryProductLabel');
+        const summaryVal = document.getElementById('summaryProductVal');
+        const totalPay = document.getElementById('ppobTotalPay');
+
+        if (!currentPpobSelectedPackage) {
+            if (summaryVal) summaryVal.textContent = '-';
+            if (totalPay) totalPay.textContent = 'Rp 0';
+            return;
+        }
+
+        if (summaryLabel) summaryLabel.textContent = currentPpobSelectedPackage.title;
+        if (summaryVal) summaryVal.textContent = formatRupiah(currentPpobSelectedPackage.amount || currentPpobSelectedPackage.price);
+        if (totalPay) totalPay.textContent = formatRupiah(currentPpobSelectedPackage.price);
+    }
+
+    // Subtab switch event
+    document.querySelectorAll('.ppob-subtab').forEach(tabBtn => {
+        tabBtn.addEventListener('click', () => {
+            const sub = tabBtn.getAttribute('data-subtab');
+            currentPpobSubtab = sub;
+            document.querySelectorAll('.ppob-subtab').forEach(t => t.classList.remove('active'));
+            tabBtn.classList.add('active');
+
+            const config = PPOB_CATALOG[currentPpobServiceKey];
+            const groupPackages = document.getElementById('groupPpobPackages');
+            const inquiryCard = document.getElementById('ppobInquiryCard');
+
+            if (currentPpobServiceKey === 'pln' && sub === 'secondary') {
+                // PLN Pascabayar Tagihan
+                if (groupPackages) groupPackages.classList.add('hidden');
+                if (inquiryCard) {
+                    inquiryCard.classList.remove('hidden');
+                    currentPpobInquiryData = config.inquiry;
+                    renderPpobInquiryUI(config.inquiry);
+                }
+            } else {
+                if (inquiryCard) inquiryCard.classList.add('hidden');
+                if (groupPackages) groupPackages.classList.remove('hidden');
+                renderPpobPackageChips();
+            }
+
+            updatePpobSummaryUI();
+        });
+    });
+
+    // PPOB Submit Checkout -> Open PIN Verification
+    document.getElementById('btnSubmitPpob')?.addEventListener('click', () => {
+        const num = document.getElementById('ppobNumberInput')?.value.trim();
+        const config = PPOB_CATALOG[currentPpobServiceKey];
+
+        if (!num) {
+            showToast(`Mohon masukkan ${config.inputLabel}!`, 'error');
+            return;
+        }
+
+        if (!currentPpobSelectedPackage) {
+            showToast('Silakan pilih salah satu nominal atau paket produk.', 'error');
+            return;
+        }
+
+        const finalPrice = currentPpobSelectedPackage.price;
+
+        if (state.balance < finalPrice) {
+            showToast('Saldo Dompet tidak mencukupi untuk transaksi ini.', 'error');
+            return;
+        }
+
+        const providerSelect = document.getElementById('ppobProviderSelect');
+        const providerName = providerSelect ? providerSelect.options[providerSelect.selectedIndex]?.text : config.title;
+
+        // Close PPOB modal and open PIN Modal
+        closeModal('modalPpobCheckout');
+
+        openPinModal(`Pembayaran ${config.title} (${currentPpobSelectedPackage.title})`, finalPrice, (enteredPin) => {
+            processPpobPaymentSuccess(finalPrice, num, providerName);
+        });
+    });
+
+    // Execute PPOB Success
+    function processPpobPaymentSuccess(finalPrice, customerNumber, providerName) {
+        state.balance -= finalPrice;
+        const txId = generateTxId();
+        const config = PPOB_CATALOG[currentPpobServiceKey];
+        const pkg = currentPpobSelectedPackage;
+        
+        // Generate Token SN / Serial Number
+        let serialNumber = '';
+        if (currentPpobServiceKey === 'pln' && currentPpobSubtab === 'main') {
+            // PLN Token: 20 digits format (4-4-4-4-4)
+            serialNumber = `TOKEN LISTRIK: ${Math.floor(1000+Math.random()*9000)}-${Math.floor(1000+Math.random()*9000)}-${Math.floor(1000+Math.random()*9000)}-${Math.floor(1000+Math.random()*9000)}-${Math.floor(1000+Math.random()*9000)}`;
+        } else {
+            serialNumber = `SN: 98${Math.floor(10000000+Math.random()*90000000)} / REF: KLP${Date.now().toString().slice(-6)}`;
+        }
+
+        const newTx = {
+            id: txId,
+            title: `${config.title} - ${pkg.title}`,
+            category: 'payment',
+            type: 'debit',
+            amount: finalPrice,
+            date: new Date().toISOString(),
+            status: 'success',
+            method: `${providerName} (${customerNumber})`,
+            note: `${serialNumber}`
+        };
+
+        state.transactions.unshift(newTx);
+        state.notifications.unshift({
+            id: 'n-' + Date.now(),
+            title: `Pembayaran ${config.title} Berhasil!`,
+            desc: `Transaksi sebesar ${formatRupiah(finalPrice)} untuk ${customerNumber} telah sukses diproses. ${serialNumber}`,
+            time: 'Baru saja'
+        });
+
+        saveState();
+        playSuccessSound();
+        showToast(`Pembayaran ${config.title} Berhasil! 🎉`, 'success');
+
+        // Open Receipt Modal
+        openReceiptModal(txId);
+    }
+
+    // Attach Click Handlers to all PPOB Action Buttons & Services Grid
     document.querySelectorAll('.btn-ppob-action').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
             const serviceType = btn.getAttribute('data-type');
-            document.getElementById('ppobModalTitle').innerHTML = `<i class="ri-flashlight-line"></i> Pembayaran ${serviceType}`;
-            document.getElementById('ppobNumLabel').textContent = `Nomor Pelanggan / ID ${serviceType}`;
-            openModal('modalPpobCheckout');
+            openPpobModal(serviceType);
+        });
+    });
 
-            document.getElementById('btnSubmitPpob').onclick = () => {
-                const num = document.getElementById('ppobNumberInput').value;
-                const price = parseInt(document.getElementById('ppobNominalSelect').value) + 1500;
-
-                if (!num) {
-                    showToast('Masukkan nomor pelanggan!', 'error');
-                    return;
-                }
-
-                if (price > state.balance) {
-                    showToast('Saldo tidak mencukupi untuk tagihan PPOB ini', 'error');
-                    return;
-                }
-
-                pendingTx = {
-                    title: `Tagihan ${serviceType}`,
-                    category: 'payment',
-                    type: 'debit',
-                    amount: price,
-                    method: `PPOB Direct (${num})`,
-                    note: `Pembayaran ${serviceType} No. ${num}`
-                };
-
-                closeModal('modalPpobCheckout');
-                resetPinDots();
-                openModal('modalPin');
-            };
+    document.querySelectorAll('[data-service]').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const serviceKey = item.getAttribute('data-service');
+            if (serviceKey === 'more') {
+                switchTab('ppob');
+            } else {
+                openPpobModal(serviceKey);
+            }
         });
     });
 

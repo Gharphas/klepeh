@@ -440,6 +440,13 @@
                         <p>Top up saldo e-toll, Flazz, TapCash, & ShopeePay.</p>
                         <button class="btn-outline-primary btn-ppob-action" data-type="E-Money">Isi E-Money</button>
                     </div>
+
+                    <div class="ppob-card" id="cardInternet">
+                        <div class="card-icon bg-indigo"><i class="ri-wifi-line"></i></div>
+                        <h4>Internet & TV Kabel</h4>
+                        <p>Bayar IndiHome, Biznet, First Media, & MyRepublic.</p>
+                        <button class="btn-outline-primary btn-ppob-action" data-type="Internet">Bayar Internet</button>
+                    </div>
                 </div>
             </div>
 
@@ -857,32 +864,109 @@
         </div>
     </div>
 
-    <!-- Modal 6: PPOB Payment Checkout -->
+    <!-- Modal 6: PPOB Payment Checkout (All Services) -->
     <div class="modal-overlay" id="modalPpobCheckout">
-        <div class="modal-box">
+        <div class="modal-box modal-ppob-box">
             <div class="modal-header">
-                <h3 id="ppobModalTitle"><i class="ri-flashlight-line"></i> Pembayaran Tagihan</h3>
+                <div class="ppob-header-meta">
+                    <div class="ppob-icon-badge" id="ppobIconBadge">
+                        <i class="ri-flashlight-line"></i>
+                    </div>
+                    <div>
+                        <h3 id="ppobModalTitle">Pembayaran Layanan PPOB</h3>
+                        <span class="ppob-subtitle" id="ppobModalSubtitle">Proses instan & verifikasi otomatis 24 Jam</span>
+                    </div>
+                </div>
                 <button class="modal-close" data-close="modalPpobCheckout">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="ppobNumberInput" id="ppobNumLabel">Nomor Pelanggan / ID PLN</label>
-                    <input type="text" id="ppobNumberInput" placeholder="Masukkan Nomor...">
+                <!-- Sub-type tab (e.g. Pulsa Reguler vs Paket Data / Token vs Tagihan) -->
+                <div class="ppob-subtabs-row hidden" id="ppobSubtabsRow">
+                    <button type="button" class="ppob-subtab active" data-subtab="main" id="ppobSubtabMain">
+                        <span>Pilihan Utama</span>
+                    </button>
+                    <button type="button" class="ppob-subtab" data-subtab="secondary" id="ppobSubtabSecondary">
+                        <span>Pilihan Lainnya</span>
+                    </button>
                 </div>
 
-                <div class="form-group">
-                    <label for="ppobNominalSelect">Pilih Paket / Nominal</label>
-                    <select id="ppobNominalSelect" class="custom-select">
-                        <option value="20000">Nominal Rp 20.000 (Harga Rp 21.500)</option>
-                        <option value="50000" selected>Nominal Rp 50.000 (Harga Rp 51.500)</option>
-                        <option value="100000">Nominal Rp 100.000 (Harga Rp 101.500)</option>
-                        <option value="200000">Nominal Rp 200.000 (Harga Rp 201.500)</option>
+                <!-- Provider / Operator / Biller Selector -->
+                <div class="form-group" id="groupPpobProvider">
+                    <label for="ppobProviderSelect" id="ppobProviderLabel">Pilih Operator / Provider</label>
+                    <select id="ppobProviderSelect" class="custom-select">
+                        <!-- Populated dynamically -->
                     </select>
+                </div>
+
+                <!-- Number Input / Customer ID / Game ID -->
+                <div class="form-group">
+                    <label for="ppobNumberInput" id="ppobNumLabel">Nomor HP / ID Pelanggan</label>
+                    <div class="input-icon-wrapper">
+                        <input type="text" id="ppobNumberInput" placeholder="Contoh: 081298873411 atau No. Meter" class="auth-input">
+                        <i class="ri-phone-line left-icon" id="ppobInputIcon"></i>
+                    </div>
+                </div>
+
+                <!-- Optional Game Zone/Server ID (for Games) -->
+                <div class="form-group hidden" id="groupPpobZoneId">
+                    <label for="ppobZoneInput">Zone ID / Server ID (Game)</label>
+                    <input type="text" id="ppobZoneInput" placeholder="Contoh: 2109 (Zone ID)" class="auth-input">
+                </div>
+
+                <!-- Bill Inquiry / Tagihan Preview Card (For Postpaid PLN, PDAM, BPJS, Internet) -->
+                <div class="ppob-inquiry-card hidden" id="ppobInquiryCard">
+                    <div class="inquiry-header">
+                        <span class="badge-status badge-success"><i class="ri-checkbox-circle-fill"></i> Data Tagihan Ditemukan</span>
+                        <strong class="inquiry-period" id="inquiryPeriod">Bulan Berjalan (2026)</strong>
+                    </div>
+                    <div class="inquiry-details-grid">
+                        <div class="inq-item">
+                            <span class="inq-lbl">Nama Pelanggan</span>
+                            <strong class="inq-val" id="inquiryCustName">M IKHSAN ANGGARA</strong>
+                        </div>
+                        <div class="inq-item">
+                            <span class="inq-lbl">Tarif / Golongan / Paket</span>
+                            <strong class="inq-val" id="inquiryTarif">R1M / 900 VA</strong>
+                        </div>
+                        <div class="inq-item">
+                            <span class="inq-lbl">Tagihan Dasar</span>
+                            <strong class="inq-val" id="inquiryBaseAmount">Rp 85.000</strong>
+                        </div>
+                        <div class="inq-item">
+                            <span class="inq-lbl">Biaya Admin E-Wallet</span>
+                            <strong class="inq-val text-success">Rp 1.500 (Promo)</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Nominal / Package Chips Grid (For Prepaid Pulsa, Data, Token, Games, E-Money) -->
+                <div class="form-group" id="groupPpobPackages">
+                    <label id="ppobPackagesLabel">Pilih Nominal / Paket Produk</label>
+                    <div class="ppob-packages-grid" id="ppobPackagesGrid">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- Payment Summary Breakdown -->
+                <div class="ppob-checkout-summary">
+                    <div class="summary-row">
+                        <span id="summaryProductLabel">Produk / Tagihan</span>
+                        <span id="summaryProductVal">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Biaya Layanan & Admin</span>
+                        <span class="text-success" id="summaryAdminVal">Rp 1.500</span>
+                    </div>
+                    <div class="price-divider"></div>
+                    <div class="summary-row total-row">
+                        <span>Total Pembayaran</span>
+                        <strong class="total-amount text-primary" id="ppobTotalPay">Rp 0</strong>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn-ghost" data-close="modalPpobCheckout">Batal</button>
-                <button class="btn-primary" id="btnSubmitPpob">Bayar Tagihan</button>
+                <button class="btn-primary" id="btnSubmitPpob"><i class="ri-shield-check-line"></i> Bayar Sekarang (PIN)</button>
             </div>
         </div>
     </div>
