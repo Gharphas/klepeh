@@ -1623,42 +1623,1142 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ----------------------------------------------------------------------
-    // 12. GLOBAL SEARCH & FILTER LISTENERS
+    // 13. TRAVEL & BOOKING HUB ENGINE (PESAWAT, KERETA, BUS, HOTEL)
     // ----------------------------------------------------------------------
-    const globalSearchInput = document.getElementById('globalSearchInput');
-    if (globalSearchInput) {
-        globalSearchInput.addEventListener('input', (e) => {
-            const q = e.target.value.trim().toLowerCase();
-            if (q.length > 0) {
-                switchTab('transactions');
-                const txInput = document.getElementById('txSearchInput');
-                if (txInput) {
-                    txInput.value = q;
-                    renderFullTransactionsTable();
+    const TRAVEL_DATA = {
+        flight: {
+            origins: [
+                { code: 'CGK', name: 'Jakarta (Soekarno-Hatta - CGK)' },
+                { code: 'DPS', name: 'Bali / Denpasar (Ngurah Rai - DPS)' },
+                { code: 'SUB', name: 'Surabaya (Juanda - SUB)' },
+                { code: 'YIA', name: 'Yogyakarta (YIA)' },
+                { code: 'KNO', name: 'Medan (Kualanamu - KNO)' },
+                { code: 'UPG', name: 'Makassar (Sultan Hasanuddin - UPG)' },
+                { code: 'LBJ', name: 'Labuan Bajo (Komodo - LBJ)' }
+            ],
+            destinations: [
+                { code: 'DPS', name: 'Bali / Denpasar (Ngurah Rai - DPS)' },
+                { code: 'CGK', name: 'Jakarta (Soekarno-Hatta - CGK)' },
+                { code: 'SUB', name: 'Surabaya (Juanda - SUB)' },
+                { code: 'YIA', name: 'Yogyakarta (YIA)' },
+                { code: 'KNO', name: 'Medan (Kualanamu - KNO)' },
+                { code: 'LBJ', name: 'Labuan Bajo (Komodo - LBJ)' },
+                { code: 'LOP', name: 'Lombok (ZAM - LOP)' }
+            ],
+            items: [
+                {
+                    id: 'FL-GA402',
+                    operator: 'Garuda Indonesia',
+                    code: 'GA-402',
+                    category: 'flight',
+                    logoClass: 'flight-logo',
+                    icon: 'ri-flight-takeoff-line',
+                    originCode: 'CGK',
+                    originCity: 'Jakarta',
+                    originStation: 'Soekarno-Hatta T3',
+                    destCode: 'DPS',
+                    destCity: 'Bali',
+                    destStation: 'Ngurah Rai',
+                    departTime: '08:30',
+                    arriveTime: '11:20',
+                    duration: '1j 50m',
+                    travelClass: 'Ekonomi',
+                    priceOriginal: 1850000,
+                    price: 1450000,
+                    seatsLeft: 5,
+                    gate: 'GATE 4B',
+                    rating: 4.9,
+                    facilities: ['Bagasi 20kg', 'Makan Siang', 'In-flight Wifi', 'Entertainment']
+                },
+                {
+                    id: 'FL-QG680',
+                    operator: 'Citilink',
+                    code: 'QG-680',
+                    category: 'flight',
+                    logoClass: 'flight-logo',
+                    icon: 'ri-flight-takeoff-line',
+                    originCode: 'CGK',
+                    originCity: 'Jakarta',
+                    originStation: 'Soekarno-Hatta T2',
+                    destCode: 'DPS',
+                    destCity: 'Bali',
+                    destStation: 'Ngurah Rai',
+                    departTime: '09:45',
+                    arriveTime: '12:35',
+                    duration: '1j 50m',
+                    travelClass: 'Ekonomi',
+                    priceOriginal: 1200000,
+                    price: 980000,
+                    seatsLeft: 8,
+                    gate: 'GATE 2E',
+                    rating: 4.7,
+                    facilities: ['Bagasi 20kg', 'Snack Box', 'Free Kabin 7kg']
+                },
+                {
+                    id: 'FL-ID6512',
+                    operator: 'Batik Air',
+                    code: 'ID-6512',
+                    category: 'flight',
+                    logoClass: 'flight-logo',
+                    icon: 'ri-flight-takeoff-line',
+                    originCode: 'CGK',
+                    originCity: 'Jakarta',
+                    originStation: 'Soekarno-Hatta T2',
+                    destCode: 'SUB',
+                    destCity: 'Surabaya',
+                    destStation: 'Juanda T1',
+                    departTime: '13:15',
+                    arriveTime: '14:45',
+                    duration: '1j 30m',
+                    travelClass: 'Bisnis',
+                    priceOriginal: 2100000,
+                    price: 1750000,
+                    seatsLeft: 4,
+                    gate: 'GATE 3A',
+                    rating: 4.8,
+                    facilities: ['Lounge Access', 'Bagasi 30kg', 'Hot Meal', 'Priority Boarding']
+                },
+                {
+                    id: 'FL-IU724',
+                    operator: 'Super Air Jet',
+                    code: 'IU-724',
+                    category: 'flight',
+                    logoClass: 'flight-logo',
+                    icon: 'ri-flight-takeoff-line',
+                    originCode: 'CGK',
+                    originCity: 'Jakarta',
+                    originStation: 'Soekarno-Hatta T1',
+                    destCode: 'YIA',
+                    destCity: 'Yogyakarta',
+                    destStation: 'YIA International',
+                    departTime: '07:00',
+                    arriveTime: '08:15',
+                    duration: '1j 15m',
+                    travelClass: 'Ekonomi',
+                    priceOriginal: 850000,
+                    price: 675000,
+                    seatsLeft: 12,
+                    gate: 'GATE 1C',
+                    rating: 4.6,
+                    facilities: ['Bagasi 20kg', 'Free Entertainment App', 'Kabin 7kg']
+                },
+                {
+                    id: 'FL-GA704',
+                    operator: 'Garuda Indonesia',
+                    code: 'GA-704',
+                    category: 'flight',
+                    logoClass: 'flight-logo',
+                    icon: 'ri-flight-takeoff-line',
+                    originCode: 'DPS',
+                    originCity: 'Bali',
+                    originStation: 'Ngurah Rai',
+                    destCode: 'LBJ',
+                    destCity: 'Labuan Bajo',
+                    destStation: 'Komodo Airport',
+                    departTime: '11:00',
+                    arriveTime: '12:15',
+                    duration: '1j 15m',
+                    travelClass: 'Eksekutif',
+                    priceOriginal: 1950000,
+                    price: 1650000,
+                    seatsLeft: 3,
+                    gate: 'GATE 6',
+                    rating: 4.9,
+                    facilities: ['Bagasi 20kg', 'Scenic Flight View', 'Premium Snacks']
+                },
+                {
+                    id: 'FL-JT330',
+                    operator: 'Lion Air',
+                    code: 'JT-330',
+                    category: 'flight',
+                    logoClass: 'flight-logo',
+                    icon: 'ri-flight-takeoff-line',
+                    originCode: 'CGK',
+                    originCity: 'Jakarta',
+                    originStation: 'Soekarno-Hatta T1',
+                    destCode: 'KNO',
+                    destCity: 'Medan',
+                    destStation: 'Kualanamu',
+                    departTime: '15:20',
+                    arriveTime: '17:40',
+                    duration: '2j 20m',
+                    travelClass: 'Ekonomi',
+                    priceOriginal: 1350000,
+                    price: 1050000,
+                    seatsLeft: 9,
+                    gate: 'GATE 1B',
+                    rating: 4.5,
+                    facilities: ['Bagasi 20kg', 'Kabin 7kg']
                 }
+            ]
+        },
+        train: {
+            origins: [
+                { code: 'GMR', name: 'Jakarta (Stasiun Gambir - GMR)' },
+                { code: 'PSE', name: 'Jakarta (Pasar Senen - PSE)' },
+                { code: 'BD', name: 'Bandung (Stasiun Bandung - BD)' },
+                { code: 'YK', name: 'Yogyakarta (Tugu Yogyakarta - YK)' },
+                { code: 'SGU', name: 'Surabaya (Gubeng - SGU)' },
+                { code: 'SLO', name: 'Solo (Solo Balapan - SLO)' },
+                { code: 'SMT', name: 'Semarang (Tawang - SMT)' }
+            ],
+            destinations: [
+                { code: 'YK', name: 'Yogyakarta (Tugu Yogyakarta - YK)' },
+                { code: 'SGU', name: 'Surabaya (Gubeng - SGU)' },
+                { code: 'GMR', name: 'Jakarta (Stasiun Gambir - GMR)' },
+                { code: 'BD', name: 'Bandung (Stasiun Bandung - BD)' },
+                { code: 'SLO', name: 'Solo (Solo Balapan - SLO)' },
+                { code: 'SMT', name: 'Semarang (Tawang - SMT)' }
+            ],
+            items: [
+                {
+                    id: 'TR-TAKSAKA',
+                    operator: 'KAI Taksaka Panoramic',
+                    code: 'KA-68',
+                    category: 'train',
+                    logoClass: 'train-logo',
+                    icon: 'ri-train-line',
+                    originCode: 'GMR',
+                    originCity: 'Jakarta',
+                    originStation: 'Gambir',
+                    destCode: 'YK',
+                    destCity: 'Yogyakarta',
+                    destStation: 'Tugu Yogya',
+                    departTime: '09:20',
+                    arriveTime: '15:35',
+                    duration: '6j 15m',
+                    travelClass: 'Eksekutif',
+                    priceOriginal: 650000,
+                    price: 520000,
+                    seatsLeft: 6,
+                    gate: 'JALUR 3',
+                    rating: 4.9,
+                    facilities: ['Kaca Panoramic View', 'Reclining Seat 140°', 'Free Wifi', 'Colokan Charger', 'Restorasi']
+                },
+                {
+                    id: 'TR-ARGOBROMO',
+                    operator: 'KAI Argo Bromo Anggrek',
+                    code: 'KA-2',
+                    category: 'train',
+                    logoClass: 'train-logo',
+                    icon: 'ri-train-line',
+                    originCode: 'GMR',
+                    originCity: 'Jakarta',
+                    originStation: 'Gambir',
+                    destCode: 'SGU',
+                    destCity: 'Surabaya',
+                    destStation: 'Surabaya Pasarturi',
+                    departTime: '08:20',
+                    arriveTime: '16:30',
+                    duration: '8j 10m',
+                    travelClass: 'Eksekutif',
+                    priceOriginal: 820000,
+                    price: 690000,
+                    seatsLeft: 10,
+                    gate: 'JALUR 2',
+                    rating: 4.9,
+                    facilities: ['Luxury Seat', 'Makan Siang Restorasi', 'Bantal & Selimut', 'Stopkontak']
+                },
+                {
+                    id: 'TR-PARAHYANGAN',
+                    operator: 'KAI Argo Parahyangan',
+                    code: 'KA-40',
+                    category: 'train',
+                    logoClass: 'train-logo',
+                    icon: 'ri-train-line',
+                    originCode: 'GMR',
+                    originCity: 'Jakarta',
+                    originStation: 'Gambir',
+                    destCode: 'BD',
+                    destCity: 'Bandung',
+                    destStation: 'Stasiun Bandung',
+                    departTime: '06:30',
+                    arriveTime: '09:15',
+                    duration: '2j 45m',
+                    travelClass: 'Ekonomi',
+                    priceOriginal: 180000,
+                    price: 150000,
+                    seatsLeft: 14,
+                    gate: 'JALUR 1',
+                    rating: 4.7,
+                    facilities: ['AC Dingin', 'Stopkontak', 'Kursi 2-2 Nyaman']
+                },
+                {
+                    id: 'TR-LODAYA',
+                    operator: 'KAI Lodaya',
+                    code: 'KA-92',
+                    category: 'train',
+                    logoClass: 'train-logo',
+                    icon: 'ri-train-line',
+                    originCode: 'BD',
+                    originCity: 'Bandung',
+                    originStation: 'Bandung',
+                    destCode: 'SLO',
+                    destCity: 'Solo',
+                    destStation: 'Solo Balapan',
+                    departTime: '07:05',
+                    arriveTime: '15:40',
+                    duration: '8j 35m',
+                    travelClass: 'Eksekutif',
+                    priceOriginal: 480000,
+                    price: 395000,
+                    seatsLeft: 7,
+                    gate: 'JALUR 4',
+                    rating: 4.8,
+                    facilities: ['Reclining Seat', 'AC', 'Pemandangan Pegunungan']
+                }
+            ]
+        },
+        bus: {
+            origins: [
+                { code: 'JKT', name: 'Jakarta (Pulo Gebang / Kp Rambutan)' },
+                { code: 'BDG', name: 'Bandung (Leuwi Panjang / Pasteur)' },
+                { code: 'YOG', name: 'Yogyakarta (Giwangan / Jombor)' },
+                { code: 'SBY', name: 'Surabaya (Purabaya / Bungurasih)' },
+                { code: 'SMG', name: 'Semarang (Terboyo / Kalibanteng)' }
+            ],
+            destinations: [
+                { code: 'YOG', name: 'Yogyakarta (Giwangan / Jombor)' },
+                { code: 'SBY', name: 'Surabaya (Purabaya / Bungurasih)' },
+                { code: 'JKT', name: 'Jakarta (Pulo Gebang / Kp Rambutan)' },
+                { code: 'DPS', name: 'Bali / Denpasar (Mengwi)' },
+                { code: 'MLG', name: 'Malang (Arjosari)' }
+            ],
+            items: [
+                {
+                    id: 'BUS-SINARJAYA',
+                    operator: 'Sinar Jaya Suites Class',
+                    code: 'SJ-Sleeper',
+                    category: 'bus',
+                    logoClass: 'bus-logo',
+                    icon: 'ri-bus-fill',
+                    originCode: 'JKT',
+                    originCity: 'Jakarta',
+                    originStation: 'Terminal Pulo Gebang',
+                    destCode: 'YOG',
+                    destCity: 'Yogyakarta',
+                    destStation: 'Terminal Giwangan',
+                    departTime: '18:30',
+                    arriveTime: '04:15',
+                    duration: '9j 45m',
+                    travelClass: 'Eksekutif',
+                    priceOriginal: 380000,
+                    price: 310000,
+                    seatsLeft: 4,
+                    gate: 'PERON 5',
+                    rating: 4.9,
+                    facilities: ['Private Sleeper Bed', 'Personal TV (AVOD)', 'Bantal Selimut', 'Snack & Air Mineral', 'USB Charger']
+                },
+                {
+                    id: 'BUS-ROSALIA',
+                    operator: 'Rosalia Indah Double Decker',
+                    code: 'RI-DD102',
+                    category: 'bus',
+                    logoClass: 'bus-logo',
+                    icon: 'ri-bus-fill',
+                    originCode: 'JKT',
+                    originCity: 'Jakarta',
+                    originStation: 'Terminal Kalideres',
+                    destCode: 'SBY',
+                    destCity: 'Surabaya',
+                    destStation: 'Terminal Bungurasih',
+                    departTime: '17:00',
+                    arriveTime: '05:30',
+                    duration: '12j 30m',
+                    travelClass: 'Eksekutif',
+                    priceOriginal: 450000,
+                    price: 375000,
+                    seatsLeft: 6,
+                    gate: 'PERON 2',
+                    rating: 4.8,
+                    facilities: ['First Class Reclining', 'Prasmanan Makan Malam', 'Pramugari Bus', 'Toilet Bersih']
+                },
+                {
+                    id: 'BUS-JURAGAN99',
+                    operator: 'Juragan 99 Trans Luxury',
+                    code: 'J99-08',
+                    category: 'bus',
+                    logoClass: 'bus-logo',
+                    icon: 'ri-bus-fill',
+                    originCode: 'JKT',
+                    originCity: 'Jakarta',
+                    originStation: 'Pondok Pinang',
+                    destCode: 'MLG',
+                    destCity: 'Malang',
+                    destStation: 'Terminal Arjosari',
+                    departTime: '19:00',
+                    arriveTime: '06:45',
+                    duration: '11j 45m',
+                    travelClass: 'Bisnis',
+                    priceOriginal: 550000,
+                    price: 460000,
+                    seatsLeft: 3,
+                    gate: 'PERON 1',
+                    rating: 4.9,
+                    facilities: ['Sleeper Capsule', 'Air Purifier', 'Coffee & Tea Maker', 'Wifi High Speed']
+                }
+            ]
+        },
+        hotel: {
+            items: [
+                {
+                    id: 'HT-MULIA-BALI',
+                    name: 'The Mulia Resort & Villas',
+                    category: 'hotel',
+                    city: 'Bali',
+                    location: 'Nusa Dua, Bali',
+                    stars: 5,
+                    rating: 4.9,
+                    ratingCount: 1420,
+                    image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=600',
+                    priceOriginal: 3800000,
+                    price: 2850000,
+                    roomsLeft: 3,
+                    roomType: 'Mulia Grandeur Suite (Ocean View)',
+                    amenities: ['Infinity Pool', 'Sarapan Buffet', 'Spa & Sauna', 'Free WiFi', 'Pantai Privat'],
+                    roomOptions: [
+                        { name: 'Mulia Grandeur (King Bed)', extra: 0 },
+                        { name: 'Ocean View Suite (King + Balkon)', extra: 450000 },
+                        { name: 'Private Pool Villa (1 Bedroom)', extra: 1200000 }
+                    ]
+                },
+                {
+                    id: 'HT-HYATT-JKT',
+                    name: 'Grand Hyatt Jakarta',
+                    category: 'hotel',
+                    city: 'Jakarta',
+                    location: 'Bundaran HI, Jakarta Pusat',
+                    stars: 5,
+                    rating: 4.8,
+                    ratingCount: 980,
+                    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=600',
+                    priceOriginal: 2700000,
+                    price: 2150000,
+                    roomsLeft: 5,
+                    roomType: 'Grand Deluxe King Bed',
+                    amenities: ['Akses Langsung Plaza Indonesia', 'Sarapan Mewah', 'Gym & Kolam', 'City View'],
+                    roomOptions: [
+                        { name: 'Grand Deluxe Room (City View)', extra: 0 },
+                        { name: 'Club Executive Room (Lounge)', extra: 500000 },
+                        { name: 'Presidential Suite', extra: 2500000 }
+                    ]
+                },
+                {
+                    id: 'HT-TENTREM-YOG',
+                    name: 'Hotel Tentrem Yogyakarta',
+                    category: 'hotel',
+                    city: 'Yogyakarta',
+                    location: 'Jl. P. Mangkubumi, Yogyakarta',
+                    stars: 5,
+                    rating: 4.9,
+                    ratingCount: 2100,
+                    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=600',
+                    priceOriginal: 1650000,
+                    price: 1280000,
+                    roomsLeft: 6,
+                    roomType: 'Deluxe Room Twin Bed',
+                    amenities: ['Gaharu Spa', 'Resto Tradisional & Western', 'Kids Playground', 'Kolam Renang'],
+                    roomOptions: [
+                        { name: 'Deluxe Room (Twin / King)', extra: 0 },
+                        { name: 'Premier Room (Balkon Merapi View)', extra: 300000 },
+                        { name: 'Executive Suite', extra: 850000 }
+                    ]
+                },
+                {
+                    id: 'HT-PADMA-BDG',
+                    name: 'Padma Hotel Bandung',
+                    category: 'hotel',
+                    city: 'Bandung',
+                    location: 'Ciumbuleuit, Bandung',
+                    stars: 5,
+                    rating: 4.9,
+                    ratingCount: 1850,
+                    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=600',
+                    priceOriginal: 2200000,
+                    price: 1750000,
+                    roomsLeft: 4,
+                    roomType: 'Premier Room (Hill View)',
+                    amenities: ['Pemandangan Lembah Hijau', 'Heated Pool', 'Afternoon Tea', 'Mini Zoo'],
+                    roomOptions: [
+                        { name: 'Premier Room (Mountain View)', extra: 0 },
+                        { name: 'Hillside Studio Suite', extra: 400000 },
+                        { name: 'Gallery Suite Jacuzzi', extra: 950000 }
+                    ]
+                },
+                {
+                    id: 'HT-AYANA-LBJ',
+                    name: 'AYANA Komodo Waecicu Beach',
+                    category: 'hotel',
+                    city: 'Labuan Bajo',
+                    location: 'Pantai Waecicu, Labuan Bajo',
+                    stars: 5,
+                    rating: 4.9,
+                    ratingCount: 760,
+                    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=600',
+                    priceOriginal: 4500000,
+                    price: 3600000,
+                    roomsLeft: 2,
+                    roomType: 'Full Ocean View Suite',
+                    amenities: ['Dermaga Privat Sunset', 'Private Yacht Tour', 'Rooftop Bar', 'Infinity Pool'],
+                    roomOptions: [
+                        { name: 'Full Ocean View Room', extra: 0 },
+                        { name: 'Deluxe Ocean View (High Floor)', extra: 550000 },
+                        { name: 'Ocean Suite (Sunset Front)', extra: 1500000 }
+                    ]
+                },
+                {
+                    id: 'HT-MARRIOTT-SBY',
+                    name: 'JW Marriott Hotel Surabaya',
+                    category: 'hotel',
+                    city: 'Surabaya',
+                    location: 'Jl. Embong Malang, Surabaya',
+                    stars: 5,
+                    rating: 4.8,
+                    ratingCount: 1100,
+                    image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&q=80&w=600',
+                    priceOriginal: 1900000,
+                    price: 1450000,
+                    roomsLeft: 7,
+                    roomType: 'Deluxe Executive King',
+                    amenities: ['Oasis Pool', 'JW Lounge', 'Pusat Kota', 'Spa Bintang 5'],
+                    roomOptions: [
+                        { name: 'Deluxe King / Twin', extra: 0 },
+                        { name: 'Executive Suite Lounge', extra: 450000 }
+                    ]
+                }
+            ]
+        }
+    };
+
+    let currentTravelCat = 'flight';
+    let currentSelectedTravelItem = null;
+    let selectedSeatNumber = '2A';
+    let selectedRoomExtra = 0;
+    let selectedRoomName = '';
+    let currentTravelDiscount = 0;
+    let appliedPromoCode = '';
+
+    // Initialize Dropdowns for Category
+    function populateTravelDropdowns(cat) {
+        const originSelect = document.getElementById('travelOriginInput');
+        const destSelect = document.getElementById('travelDestInput');
+        const transportFields = document.getElementById('transportFields');
+        const hotelFields = document.getElementById('hotelFields');
+        const groupTravelClass = document.getElementById('groupTravelClass');
+        const labelPassengerCount = document.getElementById('labelPassengerCount');
+        const labelDate = document.getElementById('labelDate');
+        const resultsTitle = document.getElementById('resultsTitle');
+
+        if (cat === 'hotel') {
+            if (transportFields) transportFields.classList.add('hidden');
+            if (hotelFields) hotelFields.classList.remove('hidden');
+            if (groupTravelClass) groupTravelClass.classList.add('hidden');
+            if (labelPassengerCount) labelPassengerCount.textContent = 'Jumlah Tamu & Kamar';
+            if (labelDate) labelDate.textContent = 'Tanggal Check-in';
+            if (resultsTitle) resultsTitle.textContent = 'Pilihan Hotel & Resort Mewah';
+            return;
+        }
+
+        if (transportFields) transportFields.classList.remove('hidden');
+        if (hotelFields) hotelFields.classList.add('hidden');
+        if (groupTravelClass) groupTravelClass.classList.remove('hidden');
+        if (labelPassengerCount) labelPassengerCount.textContent = 'Jumlah Penumpang';
+        if (labelDate) labelDate.textContent = 'Tanggal Berangkat';
+
+        const data = TRAVEL_DATA[cat];
+        if (!data || !originSelect || !destSelect) return;
+
+        originSelect.innerHTML = data.origins.map(o => `<option value="${o.code}">${o.name}</option>`).join('');
+        destSelect.innerHTML = data.destinations.map(d => `<option value="${d.code}">${d.name}</option>`).join('');
+
+        // Adjust labels
+        const labelOrigin = document.getElementById('labelOrigin');
+        const labelDest = document.getElementById('labelDest');
+        if (cat === 'flight') {
+            if (labelOrigin) labelOrigin.textContent = 'Bandara Asal';
+            if (labelDest) labelDest.textContent = 'Bandara Tujuan';
+            if (resultsTitle) resultsTitle.textContent = 'Pilihan Tiket Pesawat Tersedia';
+        } else if (cat === 'train') {
+            if (labelOrigin) labelOrigin.textContent = 'Stasiun Asal';
+            if (labelDest) labelDest.textContent = 'Stasiun Tujuan';
+            if (resultsTitle) resultsTitle.textContent = 'Jadwal Kereta Api KAI';
+        } else if (cat === 'bus') {
+            if (labelOrigin) labelOrigin.textContent = 'Terminal / Titik Keberangkatan';
+            if (labelDest) labelDest.textContent = 'Terminal / Titik Turun';
+            if (resultsTitle) resultsTitle.textContent = 'Pilihan Bus & Travel Antar Kota';
+        }
+    }
+
+    // Switch Travel Category Sub-tab
+    function switchTravelCategory(cat) {
+        currentTravelCat = cat;
+        document.querySelectorAll('.travel-tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-travel-cat') === cat);
+        });
+
+        populateTravelDropdowns(cat);
+        renderTravelResults();
+    }
+
+    // Filter & Sort Travel Results
+    function getFilteredTravelItems() {
+        const sortMode = document.getElementById('travelSortSelect')?.value || 'cheapest';
+
+        if (currentTravelCat === 'hotel') {
+            const locFilter = document.getElementById('hotelLocationInput')?.value || 'all';
+            let list = [...TRAVEL_DATA.hotel.items];
+
+            if (locFilter !== 'all') {
+                list = list.filter(h => h.city.toLowerCase() === locFilter.toLowerCase());
             }
+
+            if (sortMode === 'cheapest') list.sort((a, b) => a.price - b.price);
+            else if (sortMode === 'rating') list.sort((a, b) => b.rating - a.rating);
+
+            return list;
+        }
+
+        const originVal = document.getElementById('travelOriginInput')?.value;
+        const destVal = document.getElementById('travelDestInput')?.value;
+        const classVal = document.getElementById('travelClassInput')?.value || 'all';
+
+        let list = [...(TRAVEL_DATA[currentTravelCat]?.items || [])];
+
+        // Soft filter: prioritize matched origin/dest, keep list robust
+        if (originVal && destVal) {
+            const exactMatches = list.filter(i => i.originCode === originVal && i.destCode === destVal);
+            if (exactMatches.length > 0) list = exactMatches;
+        }
+
+        if (classVal !== 'all') {
+            const classMatches = list.filter(i => i.travelClass.toLowerCase() === classVal.toLowerCase());
+            if (classMatches.length > 0) list = classMatches;
+        }
+
+        if (sortMode === 'cheapest') list.sort((a, b) => a.price - b.price);
+        else if (sortMode === 'rating') list.sort((a, b) => b.rating - a.rating);
+        else if (sortMode === 'earliest') list.sort((a, b) => a.departTime.localeCompare(b.departTime));
+
+        return list;
+    }
+
+    // Render Travel Listing
+    function renderTravelResults() {
+        const container = document.getElementById('travelCardsContainer');
+        const countBadge = document.getElementById('resultsCountBadge');
+        if (!container) return;
+
+        const items = getFilteredTravelItems();
+        if (countBadge) countBadge.textContent = `${items.length} Pilihan Tersedia`;
+
+        if (items.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state-card text-center py-5">
+                    <i class="ri-search-eye-line text-muted" style="font-size: 3rem;"></i>
+                    <h4 class="mt-2">Rute atau Hotel Belum Tersedia</h4>
+                    <p class="text-secondary">Coba ubah kota asal, tujuan, atau pilih tanggal keberangkatan lain.</p>
+                </div>
+            `;
+            return;
+        }
+
+        if (currentTravelCat === 'hotel') {
+            container.innerHTML = `
+                <div class="hotels-cards-grid">
+                    ${items.map(h => `
+                        <div class="hotel-card">
+                            <div class="hotel-thumbnail-box">
+                                <img src="${h.image}" alt="${h.name}" class="hotel-img" loading="lazy">
+                                <div class="hotel-rating-tag">
+                                    <i class="ri-star-fill"></i> ${h.rating} <small>(${h.ratingCount})</small>
+                                </div>
+                                <div class="hotel-star-stars">
+                                    ${'<i class="ri-star-fill"></i>'.repeat(h.stars)}
+                                </div>
+                            </div>
+                            <div class="hotel-content-body">
+                                <div class="hotel-title-meta">
+                                    <h4>${h.name}</h4>
+                                    <span class="hotel-location"><i class="ri-map-pin-2-line text-primary"></i> ${h.location}</span>
+                                </div>
+                                <div class="hotel-amenities-row">
+                                    ${h.amenities.slice(0, 3).map(a => `<span class="facility-chip"><i class="ri-check-line"></i> ${a}</span>`).join('')}
+                                </div>
+                                <div class="hotel-card-footer">
+                                    <div class="hotel-price-text">
+                                        <span class="per-night">Mulai dari / malam</span>
+                                        <div class="nightly-rate">${formatRupiah(h.price)}</div>
+                                    </div>
+                                    <button class="btn-primary btn-book-travel" onclick="openTravelBookingModal('${h.id}', 'hotel')">
+                                        Pesan Kamar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            return;
+        }
+
+        // Render Transport Tickets (Flight, Train, Bus)
+        container.innerHTML = items.map(item => `
+            <div class="ticket-card">
+                <div class="ticket-operator-col">
+                    <div class="operator-logo-box ${item.logoClass}">
+                        <i class="${item.icon}"></i>
+                    </div>
+                    <div class="operator-meta">
+                        <h4>${item.operator}</h4>
+                        <span class="vehicle-code">${item.code}</span>
+                        <div><span class="badge-class">${item.travelClass}</span></div>
+                    </div>
+                </div>
+
+                <div class="ticket-timeline-col">
+                    <div class="timeline-points-row">
+                        <div class="point-time-box">
+                            <div class="time">${item.departTime}</div>
+                            <div class="city">${item.originCity} (${item.originCode})</div>
+                            <div class="station">${item.originStation}</div>
+                        </div>
+
+                        <div class="timeline-track">
+                            <span class="timeline-duration">${item.duration}</span>
+                            <div class="timeline-graphic">
+                                <div class="timeline-line"></div>
+                                <div class="timeline-icon-box"><i class="${item.icon}"></i></div>
+                                <div class="timeline-line"></div>
+                            </div>
+                            <span class="timeline-tag"><i class="ri-checkbox-circle-fill"></i> Langsung</span>
+                        </div>
+
+                        <div class="point-time-box text-right">
+                            <div class="time">${item.arriveTime}</div>
+                            <div class="city">${item.destCity} (${item.destCode})</div>
+                            <div class="station">${item.destStation}</div>
+                        </div>
+                    </div>
+
+                    <div class="facilities-tags-row">
+                        ${item.facilities.map(f => `<span class="facility-chip"><i class="ri-checkbox-circle-line"></i> ${f}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="ticket-price-col">
+                    <div class="price-meta">
+                        <span class="original-price">${formatRupiah(item.priceOriginal)}</span>
+                        <div class="final-price">${formatRupiah(item.price)}</div>
+                        <div class="seat-remains"><i class="ri-fire-line"></i> Sisa ${item.seatsLeft} kursi!</div>
+                    </div>
+                    <button class="btn-primary btn-book-travel" onclick="openTravelBookingModal('${item.id}', '${item.category}')">
+                        Pilih & Pesan
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Interactive Seat Matrix Generator
+    function renderSeatMatrix(category) {
+        const matrixContainer = document.getElementById('seatGridMatrix');
+        if (!matrixContainer) return;
+
+        let rows = 6;
+        let cols = ['A', 'B', 'C', 'D', 'E', 'F'];
+        let aisleIndex = 3;
+
+        if (category === 'train') {
+            rows = 6;
+            cols = ['A', 'B', 'C', 'D'];
+            aisleIndex = 2;
+        } else if (category === 'bus') {
+            rows = 5;
+            cols = ['A', 'B', 'C'];
+            aisleIndex = 2;
+        }
+
+        const occupiedSeats = ['1B', '2C', '3A', '4D', '5B', '6E'];
+
+        matrixContainer.innerHTML = Array.from({ length: rows }, (_, r) => {
+            const rowNum = r + 1;
+            const seatBtns = cols.map((col, cIdx) => {
+                const seatId = `${rowNum}${col}`;
+                const isOccupied = occupiedSeats.includes(seatId);
+                const isSelected = selectedSeatNumber === seatId;
+                const statusClass = isOccupied ? 'occupied' : (isSelected ? 'selected' : 'available');
+                
+                let html = `<button type="button" class="seat-item ${statusClass}" data-seat="${seatId}" ${isOccupied ? 'disabled' : ''}>${seatId}</button>`;
+                
+                if (cIdx + 1 === aisleIndex) {
+                    html += `<div class="seat-aisle"><i class="ri-more-2-fill"></i></div>`;
+                }
+                return html;
+            }).join('');
+
+            return `
+                <div class="seat-row">
+                    <span class="row-label">R${rowNum}</span>
+                    ${seatBtns}
+                </div>
+            `;
+        }).join('');
+
+        // Attach seat click listener
+        matrixContainer.querySelectorAll('.seat-item:not(.occupied)').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectedSeatNumber = btn.getAttribute('data-seat');
+                matrixContainer.querySelectorAll('.seat-item').forEach(s => {
+                    if (!s.classList.contains('occupied')) s.classList.remove('selected');
+                });
+                btn.classList.add('selected');
+                const badge = document.getElementById('selectedSeatNumber');
+                if (badge) badge.textContent = selectedSeatNumber;
+            });
         });
     }
 
-    document.getElementById('txSearchInput')?.addEventListener('input', renderFullTransactionsTable);
+    // Open Booking Confirmation Modal
+    window.openTravelBookingModal = function(itemId, category) {
+        let item = null;
+        if (category === 'hotel') {
+            item = TRAVEL_DATA.hotel.items.find(h => h.id === itemId);
+        } else {
+            item = (TRAVEL_DATA[category]?.items || []).find(i => i.id === itemId);
+        }
 
-    document.querySelectorAll('#txCategoryPills .pill-btn').forEach(pill => {
-        pill.addEventListener('click', () => {
-            document.querySelectorAll('#txCategoryPills .pill-btn').forEach(p => p.classList.remove('active'));
-            pill.classList.add('active');
-            renderFullTransactionsTable();
+        if (!item) return;
+        currentSelectedTravelItem = item;
+        selectedSeatNumber = '2A';
+        selectedRoomExtra = 0;
+        selectedRoomName = '';
+        currentTravelDiscount = 0;
+        appliedPromoCode = '';
+
+        // Reset promo alert
+        const promoAlert = document.getElementById('promoAppliedAlert');
+        const promoInput = document.getElementById('travelPromoCode');
+        const discountRow = document.getElementById('priceRowDiscount');
+        if (promoAlert) promoAlert.classList.add('hidden');
+        if (promoInput) promoInput.value = '';
+        if (discountRow) discountRow.classList.add('hidden');
+
+        // Populate summary card
+        const summaryCard = document.getElementById('bookingSummaryCard');
+        const modalTitle = document.getElementById('bookingModalTitle');
+        const seatWrapper = document.getElementById('seatSelectionWrapper');
+        const hotelWrapper = document.getElementById('hotelRoomSelectionWrapper');
+        const priceLabelBase = document.getElementById('priceLabelBase');
+
+        if (category === 'hotel') {
+            if (modalTitle) modalTitle.innerHTML = `<i class="ri-hotel-bed-line"></i> Konfirmasi Reservasi Kamar Hotel`;
+            if (seatWrapper) seatWrapper.classList.add('hidden');
+            if (hotelWrapper) hotelWrapper.classList.remove('hidden');
+            if (priceLabelBase) priceLabelBase.textContent = 'Tarif Kamar per Malam';
+
+            if (summaryCard) {
+                summaryCard.innerHTML = `
+                    <div class="travel-summary-header">
+                        <span class="badge-status badge-success"><i class="ri-hotel-line"></i> Hotel Bintang ${item.stars}</span>
+                        <strong class="text-primary">${item.city}</strong>
+                    </div>
+                    <div class="travel-summary-route">
+                        <div>
+                            <h4>${item.name}</h4>
+                            <small class="text-secondary">${item.location}</small>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Render hotel room options
+            const roomGrid = document.getElementById('roomOptionsGrid');
+            if (roomGrid && item.roomOptions) {
+                selectedRoomName = item.roomOptions[0].name;
+                roomGrid.innerHTML = item.roomOptions.map((opt, idx) => `
+                    <div class="room-option-card ${idx === 0 ? 'active' : ''}" data-extra="${opt.extra}" data-room-name="${opt.name}">
+                        <div>
+                            <strong>${opt.name}</strong>
+                            <div><small class="text-secondary">${opt.extra === 0 ? 'Termasuk paket dasar' : '+ ' + formatRupiah(opt.extra) + ' / malam'}</small></div>
+                        </div>
+                        <i class="ri-checkbox-circle-fill text-primary" style="${idx === 0 ? '' : 'opacity: 0.2'}"></i>
+                    </div>
+                `).join('');
+
+                roomGrid.querySelectorAll('.room-option-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        roomGrid.querySelectorAll('.room-option-card').forEach(c => {
+                            c.classList.remove('active');
+                            const icon = c.querySelector('i');
+                            if (icon) icon.style.opacity = '0.2';
+                        });
+                        card.classList.add('active');
+                        const icon = card.querySelector('i');
+                        if (icon) icon.style.opacity = '1';
+                        selectedRoomExtra = parseInt(card.getAttribute('data-extra')) || 0;
+                        selectedRoomName = card.getAttribute('data-room-name');
+                        updateBookingPriceCalculation();
+                    });
+                });
+            }
+        } else {
+            if (modalTitle) modalTitle.innerHTML = `<i class="${item.icon}"></i> Konfirmasi Pemesanan Tiket & Pilih Kursi`;
+            if (seatWrapper) seatWrapper.classList.remove('hidden');
+            if (hotelWrapper) hotelWrapper.classList.add('hidden');
+            if (priceLabelBase) priceLabelBase.textContent = `Harga Tiket (${item.travelClass})`;
+
+            const seatClassBadge = document.getElementById('selectedSeatClass');
+            if (seatClassBadge) seatClassBadge.textContent = item.travelClass;
+
+            if (summaryCard) {
+                summaryCard.innerHTML = `
+                    <div class="travel-summary-header">
+                        <span class="badge-status badge-success">${item.operator} (${item.code})</span>
+                        <strong class="text-primary">${item.travelClass} Class</strong>
+                    </div>
+                    <div class="travel-summary-route">
+                        <div>
+                            <h4>${item.originCity} (${item.originCode})</h4>
+                            <small class="text-secondary">${item.departTime} WIB</small>
+                        </div>
+                        <i class="ri-arrow-right-line text-primary" style="font-size: 1.35rem;"></i>
+                        <div class="text-right">
+                            <h4>${item.destCity} (${item.destCode})</h4>
+                            <small class="text-secondary">${item.arriveTime} WIB</small>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderSeatMatrix(category);
+        }
+
+        updateBookingPriceCalculation();
+        openModal('modalTravelBooking');
+    };
+
+    function updateBookingPriceCalculation() {
+        if (!currentSelectedTravelItem) return;
+
+        const basePrice = currentSelectedTravelItem.price + selectedRoomExtra;
+        const total = Math.max(0, basePrice - currentTravelDiscount);
+
+        const valBase = document.getElementById('priceValBase');
+        const valDiscount = document.getElementById('priceValDiscount');
+        const valTotal = document.getElementById('priceValTotal');
+
+        if (valBase) valBase.textContent = formatRupiah(basePrice);
+        if (valDiscount) valDiscount.textContent = `- ${formatRupiah(currentTravelDiscount)}`;
+        if (valTotal) valTotal.textContent = formatRupiah(total);
+    }
+
+    // Apply Promo Code
+    document.getElementById('btnApplyTravelPromo')?.addEventListener('click', () => {
+        const input = document.getElementById('travelPromoCode');
+        const code = input ? input.value.trim().toUpperCase() : '';
+        const alertBox = document.getElementById('promoAppliedAlert');
+        const promoNameEl = document.getElementById('appliedPromoName');
+        const promoDiscEl = document.getElementById('appliedPromoDiscount');
+        const discountRow = document.getElementById('priceRowDiscount');
+
+        if (code === 'KLEPEHTRAVEL' || code === 'LIBURANSERU' || code === 'KLEPEHPROMO') {
+            currentTravelDiscount = code === 'LIBURANSERU' ? 100000 : 50000;
+            appliedPromoCode = code;
+
+            if (alertBox) alertBox.classList.remove('hidden');
+            if (promoNameEl) promoNameEl.textContent = code;
+            if (promoDiscEl) promoDiscEl.textContent = formatRupiah(currentTravelDiscount);
+            if (discountRow) discountRow.classList.remove('hidden');
+
+            playSuccessSound();
+            showToast(`Promo ${code} berhasil diterapkan! Hemat ${formatRupiah(currentTravelDiscount)}`, 'success');
+            updateBookingPriceCalculation();
+        } else {
+            showToast('Kode promo tidak valid atau telah kadaluarsa.', 'error');
+        }
+    });
+
+    // Confirm Pay Travel -> Open PIN Verification
+    document.getElementById('btnConfirmPayTravel')?.addEventListener('click', () => {
+        if (!currentSelectedTravelItem) return;
+
+        const guestName = document.getElementById('travelGuestName')?.value.trim();
+        const guestId = document.getElementById('travelGuestId')?.value.trim();
+        const guestPhone = document.getElementById('travelGuestPhone')?.value.trim();
+
+        if (!guestName || !guestId || !guestPhone) {
+            showToast('Mohon lengkapi seluruh data identitas penumpang / tamu.', 'error');
+            return;
+        }
+
+        const basePrice = currentSelectedTravelItem.price + selectedRoomExtra;
+        const finalPrice = Math.max(0, basePrice - currentTravelDiscount);
+
+        if (state.balance < finalPrice) {
+            showToast('Saldo Dompet tidak mencukupi untuk melakukan pemesanan ini.', 'error');
+            return;
+        }
+
+        // Close booking modal and open PIN Modal
+        closeModal('modalTravelBooking');
+
+        openPinModal(`Pembelian ${currentSelectedTravelItem.category === 'hotel' ? 'Reservasi Hotel' : 'Tiket'} ${currentSelectedTravelItem.name || currentSelectedTravelItem.operator}`, finalPrice, (enteredPin) => {
+            processTravelBookingSuccess(finalPrice, guestName);
         });
     });
 
-    // Notifications Drawer
-    document.getElementById('notifBtn')?.addEventListener('click', () => {
-        document.getElementById('drawerNotif').classList.add('active');
+    // Execute Balance Deduction & Generate E-Ticket
+    function processTravelBookingSuccess(finalPrice, guestName) {
+        state.balance -= finalPrice;
+        const txId = generateTxId();
+        const item = currentSelectedTravelItem;
+        const pnrCode = 'KLP-' + Math.floor(1000 + Math.random() * 9000);
+
+        const txTitle = item.category === 'hotel'
+            ? `Reservasi ${item.name} (${item.city})`
+            : `Tiket ${item.operator} (${item.originCode} - ${item.destCode})`;
+
+        const newTx = {
+            id: txId,
+            title: txTitle,
+            category: 'payment',
+            type: 'debit',
+            amount: finalPrice,
+            date: new Date().toISOString(),
+            status: 'success',
+            method: 'My Klepeh E-Wallet',
+            note: `Booking PNR: ${pnrCode} | Penumpang: ${guestName}`
+        };
+
+        state.transactions.unshift(newTx);
+        state.notifications.unshift({
+            id: 'n-' + Date.now(),
+            title: `E-Ticket ${item.name || item.operator} Berhasil Terbit!`,
+            desc: `Pembayaran sebesar ${formatRupiah(finalPrice)} sukses. Kode PNR: ${pnrCode}. Siap digunakan untuk perjalanan Anda.`,
+            time: 'Baru saja'
+        });
+
+        saveState();
+        playSuccessSound();
+        showToast('Pembayaran Sukses! Tiket / Voucher Resmi Berhasil Diterbitkan 🎉', 'success');
+
+        renderETicket(item, guestName, pnrCode);
+        openModal('modalETicket');
+    }
+
+    // Render Digital E-Ticket & Boarding Pass
+    function renderETicket(item, guestName, pnrCode) {
+        const bpLogoBox = document.getElementById('bpLogoBox');
+        const bpOperatorName = document.getElementById('bpOperatorName');
+        const bpSubCategory = document.getElementById('bpSubCategory');
+        const bpOriginCode = document.getElementById('bpOriginCode');
+        const bpOriginCity = document.getElementById('bpOriginCity');
+        const bpDepartTime = document.getElementById('bpDepartTime');
+        const bpDestCode = document.getElementById('bpDestCode');
+        const bpDestCity = document.getElementById('bpDestCity');
+        const bpArrivalTime = document.getElementById('bpArrivalTime');
+        const bpDuration = document.getElementById('bpDuration');
+        const bpRouteIcon = document.getElementById('bpRouteIcon');
+        const bpPassengerName = document.getElementById('bpPassengerName');
+        const bpBookingCode = document.getElementById('bpBookingCode');
+        const bpTravelClass = document.getElementById('bpTravelClass');
+        const bpGateNumber = document.getElementById('bpGateNumber');
+        const bpBarcodeNumeric = document.getElementById('bpBarcodeNumeric');
+
+        if (bpPassengerName) bpPassengerName.textContent = (guestName || 'M IKHSAN ANGGARA').toUpperCase();
+        if (bpBookingCode) bpBookingCode.textContent = pnrCode;
+        if (bpBarcodeNumeric) bpBarcodeNumeric.textContent = `9823 ${Math.floor(1000 + Math.random() * 9000)} ${pnrCode.replace('-', '')} 0019`;
+
+        if (item.category === 'hotel') {
+            if (bpLogoBox) bpLogoBox.innerHTML = '<i class="ri-hotel-bed-line"></i>';
+            if (bpOperatorName) bpOperatorName.textContent = item.name;
+            if (bpSubCategory) bpSubCategory.textContent = `Voucher Hotel Bintang ${item.stars} • ${item.city}`;
+            if (bpOriginCode) bpOriginCode.textContent = 'CHECK-IN';
+            if (bpOriginCity) bpOriginCity.textContent = '14:00 WIB';
+            if (bpDepartTime) bpDepartTime.textContent = '05 Sep 2026';
+            if (bpDestCode) bpDestCode.textContent = 'CHECK-OUT';
+            if (bpDestCity) bpDestCity.textContent = '12:00 WIB';
+            if (bpArrivalTime) bpArrivalTime.textContent = '06 Sep 2026';
+            if (bpDuration) bpDuration.textContent = '1 Malam';
+            if (bpRouteIcon) bpRouteIcon.className = 'ri-hotel-line flight-plane-icon';
+            if (bpTravelClass) bpTravelClass.textContent = selectedRoomName || item.roomType;
+            if (bpGateNumber) bpGateNumber.textContent = 'RESEPSIONIS';
+        } else {
+            if (bpLogoBox) bpLogoBox.innerHTML = `<i class="${item.icon}"></i>`;
+            if (bpOperatorName) bpOperatorName.textContent = item.operator;
+            if (bpSubCategory) bpSubCategory.textContent = `${item.category.toUpperCase()} • ${item.code}`;
+            if (bpOriginCode) bpOriginCode.textContent = item.originCode;
+            if (bpOriginCity) bpOriginCity.textContent = `${item.originCity} (${item.originStation})`;
+            if (bpDepartTime) bpDepartTime.textContent = `${item.departTime} WIB`;
+            if (bpDestCode) bpDestCode.textContent = item.destCode;
+            if (bpDestCity) bpDestCity.textContent = `${item.destCity} (${item.destStation})`;
+            if (bpArrivalTime) bpArrivalTime.textContent = `${item.arriveTime} WIB`;
+            if (bpDuration) bpDuration.textContent = item.duration;
+            if (bpRouteIcon) bpRouteIcon.className = `${item.icon} flight-plane-icon`;
+            if (bpTravelClass) bpTravelClass.textContent = `${item.travelClass} (Seat ${selectedSeatNumber})`;
+            if (bpGateNumber) bpGateNumber.textContent = item.gate;
+        }
+    }
+
+    // Print E-Ticket Handler
+    document.getElementById('btnPrintETicket')?.addEventListener('click', () => {
+        window.print();
     });
 
-    document.getElementById('closeNotifDrawer')?.addEventListener('click', () => {
-        document.getElementById('drawerNotif').classList.remove('active');
+    // Share E-Ticket Handler
+    document.getElementById('btnShareETicket')?.addEventListener('click', () => {
+        const pnr = document.getElementById('bpBookingCode')?.textContent || 'KLP-8942';
+        const op = document.getElementById('bpOperatorName')?.textContent || 'Tiket Travel';
+        const msg = `Halo, ini E-Ticket resmi ${op} saya di My Klepeh E-Wallet. Kode Booking PNR: ${pnr}.`;
+        const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+        window.open(waUrl, '_blank');
     });
+
+    // Listeners for Travel Sub-tabs & Forms
+    document.querySelectorAll('.travel-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cat = btn.getAttribute('data-travel-cat');
+            if (cat) switchTravelCategory(cat);
+        });
+    });
+
+    // Shortcut Click from Dashboard Services Grid
+    document.querySelectorAll('[data-travel]').forEach(el => {
+        el.addEventListener('click', () => {
+            const travelType = el.getAttribute('data-travel');
+            switchTab('travel');
+            if (travelType) switchTravelCategory(travelType);
+        });
+    });
+
+    // Swap Route Button
+    document.getElementById('btnSwapRoute')?.addEventListener('click', () => {
+        const originSelect = document.getElementById('travelOriginInput');
+        const destSelect = document.getElementById('travelDestInput');
+        if (originSelect && destSelect) {
+            const temp = originSelect.value;
+            originSelect.value = destSelect.value;
+            destSelect.value = temp;
+            renderTravelResults();
+        }
+    });
+
+    // Search Form Submit
+    document.getElementById('travelSearchForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        renderTravelResults();
+        showToast('Memperbarui jadwal dan harga tiket...', 'success');
+    });
+
+    document.getElementById('travelSortSelect')?.addEventListener('change', renderTravelResults);
+    document.getElementById('hotelLocationInput')?.addEventListener('change', renderTravelResults);
+    document.getElementById('travelClassInput')?.addEventListener('change', renderTravelResults);
+
+    // Initial populate for travel dropdowns & results
+    populateTravelDropdowns('flight');
+    renderTravelResults();
 
     // INIT INITIAL APP RENDER
     renderApp();
 });
+

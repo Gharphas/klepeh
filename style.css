@@ -3941,4 +3941,1202 @@ button {
     color: #25d366 !important;
 }
 
+/* ==========================================================================
+   TRAVEL & BOOKING HUB STYLES (PESAWAT, KERETA KAI, BUS, HOTEL)
+   ========================================================================== */
+
+/* Hero Banner */
+.travel-hero-banner {
+    position: relative;
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.25) 0%, rgba(13, 148, 136, 0.2) 50%, rgba(99, 102, 241, 0.25) 100%), var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 2.25rem 2rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+    box-shadow: var(--shadow-md);
+}
+
+.travel-hero-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.travel-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    background: rgba(14, 165, 233, 0.2);
+    border: 1px solid rgba(14, 165, 233, 0.4);
+    border-radius: var(--radius-full);
+    color: var(--primary-cyan);
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.travel-hero-content h2 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #ffffff 40%, #7dd3fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .travel-hero-content h2 {
+    background: linear-gradient(135deg, #0f172a 40%, #0369a1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.travel-hero-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    max-width: 650px;
+    line-height: 1.5;
+}
+
+/* Category Tabs Switcher */
+.travel-nav-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.travel-tab-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    padding: 0.95rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    color: var(--text-secondary);
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.travel-tab-btn i {
+    font-size: 1.25rem;
+    transition: var(--transition);
+}
+
+.travel-tab-btn:hover {
+    background: var(--bg-card-hover);
+    color: var(--text-primary);
+    border-color: rgba(14, 165, 233, 0.4);
+    transform: translateY(-2px);
+}
+
+.travel-tab-btn.active {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    border-color: #38bdf8;
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.35);
+}
+
+.travel-tab-btn.active i {
+    transform: scale(1.15);
+}
+
+/* Travel Search & Filter Card */
+.travel-search-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.travel-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.travel-fields-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.travel-input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.travel-input-group.full-width {
+    width: 100%;
+}
+
+.travel-input-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.travel-input-group label i {
+    color: var(--primary-cyan);
+}
+
+.travel-select,
+.travel-input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    outline: none;
+    transition: var(--transition);
+}
+
+.travel-select:focus,
+.travel-input:focus {
+    border-color: var(--primary-cyan);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.btn-swap-route {
+    width: 44px;
+    height: 44px;
+    margin-top: 1.4rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.btn-swap-route:hover {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+    color: #ffffff;
+    transform: rotate(180deg);
+}
+
+.travel-meta-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) auto;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.travel-submit-group {
+    display: flex;
+    align-items: flex-end;
+}
+
+.btn-search-travel {
+    padding: 0.85rem 1.75rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-md);
+}
+
+/* Results Section Header */
+.travel-results-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.results-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.results-count-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.results-count-meta h3 {
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.results-badge {
+    padding: 0.25rem 0.65rem;
+    background: rgba(14, 165, 233, 0.15);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    border-radius: var(--radius-full);
+    color: var(--primary-cyan);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.results-sort-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.custom-select-sm {
+    padding: 0.45rem 0.85rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Cards Grid */
+.travel-cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+/* Transport Ticket Card (Flight, Train, Bus) */
+.ticket-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 1.35rem 1.5rem;
+    display: grid;
+    grid-template-columns: 200px 1fr 220px;
+    gap: 1.5rem;
+    align-items: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.ticket-card:hover {
+    border-color: rgba(14, 165, 233, 0.5);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Operator Info Column */
+.ticket-operator-col {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.operator-logo-box {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+}
+
+.operator-logo-box.flight-logo { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; }
+.operator-logo-box.train-logo { background: linear-gradient(135deg, #f97316, #c2410c); color: #fff; }
+.operator-logo-box.bus-logo { background: linear-gradient(135deg, #10b981, #047857); color: #fff; }
+.operator-logo-box.hotel-logo { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; }
+
+.operator-meta h4 {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 0.15rem;
+}
+
+.operator-meta .vehicle-code {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.operator-meta .badge-class {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-top: 0.25rem;
+    color: var(--primary-cyan);
+}
+
+/* Route & Timeline Column */
+.ticket-timeline-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.timeline-points-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.point-time-box {
+    text-align: left;
+}
+
+.point-time-box.text-right {
+    text-align: right;
+}
+
+.point-time-box .time {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.point-time-box .city {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+}
+
+.point-time-box .station {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.timeline-track {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0 0.5rem;
+}
+
+.timeline-duration {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.timeline-graphic {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.timeline-line {
+    flex: 1;
+    height: 2px;
+    background: var(--border-color);
+    position: relative;
+}
+
+.timeline-icon-box {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: var(--primary-cyan);
+    margin: 0 0.35rem;
+}
+
+.timeline-tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--primary-emerald);
+}
+
+/* Facilities Tags Row */
+.facilities-tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.facility-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem 0.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+
+.facility-chip i {
+    color: var(--primary-cyan);
+}
+
+/* Price & Booking CTA Column */
+.ticket-price-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.65rem;
+    border-left: 1px dashed var(--border-color);
+    padding-left: 1.5rem;
+}
+
+.price-meta {
+    text-align: right;
+}
+
+.price-meta .original-price {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-decoration: line-through;
+}
+
+.price-meta .final-price {
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: var(--primary-cyan);
+    line-height: 1.1;
+}
+
+.price-meta .seat-remains {
+    font-size: 0.72rem;
+    color: var(--primary-rose);
+    font-weight: 700;
+    margin-top: 0.2rem;
+}
+
+.btn-book-travel {
+    width: 100%;
+    padding: 0.65rem 1.25rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: var(--radius-md);
+}
+
+/* ==========================================================================
+   HOTEL CARDS SHOWCASE (GRID 3 COLS)
+   ========================================================================== */
+.hotels-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.hotel-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+
+.hotel-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.hotel-thumbnail-box {
+    position: relative;
+    height: 190px;
+    overflow: hidden;
+}
+
+.hotel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.hotel-card:hover .hotel-img {
+    transform: scale(1.05);
+}
+
+.hotel-rating-tag {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 0.25rem 0.6rem;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    color: #fbbf24;
+    font-weight: 800;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.hotel-star-stars {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    gap: 0.15rem;
+    color: #fbbf24;
+    font-size: 0.85rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.hotel-content-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.hotel-title-meta h4 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-bottom: 0.2rem;
+}
+
+.hotel-location {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.hotel-amenities-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.hotel-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.hotel-price-text .per-night {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.hotel-price-text .nightly-rate {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--primary-cyan);
+}
+
+/* ==========================================================================
+   MODAL BOOKING & INTERACTIVE SEAT MAP
+   ========================================================================== */
+.modal-travel-box {
+    max-width: 680px;
+    width: 95%;
+}
+
+.travel-summary-card {
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.travel-summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.travel-summary-route {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 800;
+    font-size: 1.05rem;
+}
+
+/* Interactive Seat Map */
+.seat-selection-wrapper {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.seat-selection-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.seat-selection-header h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.seat-legend {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.seat-sample {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+}
+
+.seat-sample.available { background: var(--bg-card); border: 1px solid var(--border-color); }
+.seat-sample.selected { background: #0284c7; border: 1px solid #38bdf8; }
+.seat-sample.occupied { background: #334155; opacity: 0.6; }
+
+.vehicle-cabin-container {
+    background: rgba(0, 0, 0, 0.25);
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1rem;
+    text-align: center;
+}
+
+.vehicle-front-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: rgba(14, 165, 233, 0.15);
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--primary-cyan);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+}
+
+.seat-grid-matrix {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.seat-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.row-label {
+    width: 24px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--text-muted);
+}
+
+.seat-item {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.seat-item:hover:not(.occupied) {
+    border-color: var(--primary-cyan);
+    background: rgba(14, 165, 233, 0.2);
+    transform: scale(1.1);
+}
+
+.seat-item.selected {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    border-color: #38bdf8;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.6);
+    transform: scale(1.08);
+}
+
+.seat-item.occupied {
+    background: #1e293b;
+    border-color: #334155;
+    color: #64748b;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.seat-aisle {
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
+.selected-seat-badge {
+    margin-top: 1rem;
+    padding: 0.6rem 1rem;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: var(--radius-md);
+    color: var(--primary-emerald);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+/* Hotel Room Options */
+.room-options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.room-option-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.room-option-card:hover {
+    border-color: var(--primary-cyan);
+    background: var(--bg-card-hover);
+}
+
+.room-option-card.active {
+    border-color: var(--primary-cyan);
+    background: rgba(14, 165, 233, 0.1);
+}
+
+.passenger-form-card,
+.travel-pricing-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.passenger-form-card h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+}
+
+.promo-input-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.promo-input-row input {
+    flex: 1;
+    padding: 0.65rem 0.9rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.promo-tag-applied {
+    padding: 0.5rem 0.75rem;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: var(--radius-md);
+    color: var(--primary-emerald);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+/* ==========================================================================
+   MODAL E-TICKET & DIGITAL BOARDING PASS
+   ========================================================================== */
+.modal-eticket-box {
+    max-width: 580px;
+    width: 95%;
+}
+
+.boarding-pass-card {
+    background: #ffffff;
+    color: #0f172a;
+    border-radius: var(--radius-xl);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    position: relative;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.bp-header {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bp-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.bp-logo-box {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+}
+
+.bp-brand h4 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 0.1rem;
+    color: #ffffff;
+}
+
+.bp-sub {
+    font-size: 0.75rem;
+    opacity: 0.9;
+}
+
+.bp-badge-status {
+    padding: 0.3rem 0.75rem;
+    background: #10b981;
+    color: #ffffff;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Route Display */
+.bp-route-hero {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc;
+}
+
+.route-point h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #0284c7;
+    line-height: 1;
+}
+
+.route-point span {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+    margin: 0.2rem 0;
+}
+
+.route-point strong {
+    font-size: 0.95rem;
+    color: #0f172a;
+}
+
+.route-flight-decor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+    padding: 0 1rem;
+}
+
+.route-duration {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+}
+
+.flight-line-dots {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.flight-line-dots .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #0284c7;
+}
+
+.flight-line-dots .dashed-line {
+    flex: 1;
+    height: 2px;
+    border-top: 2px dashed #cbd5e1;
+}
+
+.flight-plane-icon {
+    font-size: 1.25rem;
+    color: #0284c7;
+    margin: 0 0.3rem;
+}
+
+.direct-badge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-full);
+}
+
+/* Perforated Line with Side Notches */
+.bp-perforated-divider {
+    position: relative;
+    height: 24px;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+}
+
+.bp-perforated-divider .notch {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: var(--bg-modal, #0f172a);
+    border-radius: 50%;
+    top: 0;
+}
+
+.bp-perforated-divider .notch-left {
+    left: -12px;
+}
+
+.bp-perforated-divider .notch-right {
+    right: -12px;
+}
+
+.bp-perforated-divider .dashed-strip {
+    width: 100%;
+    height: 1px;
+    border-top: 2px dashed #cbd5e1;
+    margin: 0 20px;
+}
+
+/* Details Grid */
+.bp-details-grid {
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    background: #ffffff;
+}
+
+.bp-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.bp-field .lbl {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+}
+
+.bp-field .val {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.bp-field .highlight-pnr {
+    color: #0284c7;
+    font-size: 1.15rem;
+    letter-spacing: 0.05em;
+}
+
+/* Barcode Section */
+.bp-barcode-section {
+    padding: 1.25rem 1.5rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.bp-qr-box {
+    padding: 0.35rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+}
+
+.bp-barcode-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.bp-bars .b-line {
+    background: #0f172a !important;
+}
+
+.bp-barcode-code {
+    font-family: monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #334155;
+    letter-spacing: 0.1em;
+}
+
+.bp-scan-note {
+    font-size: 0.7rem;
+    color: #64748b;
+}
+
+/* ==========================================================================
+   RESPONSIVE TRAVEL UI (MOBILE FRIENDLY)
+   ========================================================================== */
+@media (max-width: 992px) {
+    .ticket-card {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .ticket-price-col {
+        border-left: none;
+        border-top: 1px dashed var(--border-color);
+        padding-left: 0;
+        padding-top: 1rem;
+        align-items: flex-start;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .ticket-price-col .price-meta {
+        text-align: left;
+    }
+    .btn-book-travel {
+        width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .travel-nav-tabs {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    .travel-fields-row {
+        flex-direction: column;
+    }
+    .btn-swap-route {
+        margin-top: -0.5rem;
+        margin-bottom: -0.5rem;
+        align-self: center;
+    }
+    .travel-meta-row {
+        grid-template-columns: 1fr;
+    }
+    .bp-details-grid {
+        grid-template-columns: 1fr;
+    }
+    .bp-barcode-section {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+
 

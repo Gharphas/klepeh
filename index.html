@@ -41,6 +41,10 @@
                     <i class="ri-grid-fill"></i>
                     <span>Layanan</span>
                 </a>
+                <a href="#travel" class="nav-link" data-tab="travel">
+                    <i class="ri-flight-takeoff-line"></i>
+                    <span>Tiket & Travel</span>
+                </a>
                 <a href="#vaults" class="nav-link" data-tab="vaults">
                     <i class="ri-safe-2-line"></i>
                     <span>Kantong Impian</span>
@@ -239,6 +243,22 @@
                         <a href="#ppob" class="view-all-link" data-tab="ppob">Lihat Semua</a>
                     </div>
                     <div class="services-grid">
+                        <div class="service-item" data-travel="flight">
+                            <div class="service-icon bg-blue"><i class="ri-flight-takeoff-line"></i></div>
+                            <span>Pesawat</span>
+                        </div>
+                        <div class="service-item" data-travel="train">
+                            <div class="service-icon bg-orange"><i class="ri-train-line"></i></div>
+                            <span>Kereta KAI</span>
+                        </div>
+                        <div class="service-item" data-travel="bus">
+                            <div class="service-icon bg-green"><i class="ri-bus-fill"></i></div>
+                            <span>Bus & Travel</span>
+                        </div>
+                        <div class="service-item" data-travel="hotel">
+                            <div class="service-icon bg-purple"><i class="ri-hotel-bed-line"></i></div>
+                            <span>Hotel</span>
+                        </div>
                         <div class="service-item" data-service="pulsa">
                             <div class="service-icon bg-blue"><i class="ri-smartphone-line"></i></div>
                             <span>Pulsa & Data</span>
@@ -253,7 +273,7 @@
                         </div>
                         <div class="service-item" data-service="bpjs">
                             <div class="service-icon bg-green"><i class="ri-heart-pulse-line"></i></div>
-                            <span>BPJS Kesehatan</span>
+                            <span>BPJS</span>
                         </div>
                         <div class="service-item" data-service="games">
                             <div class="service-icon bg-purple"><i class="ri-gamepad-line"></i></div>
@@ -265,7 +285,7 @@
                         </div>
                         <div class="service-item" data-service="internet">
                             <div class="service-icon bg-indigo"><i class="ri-wifi-line"></i></div>
-                            <span>Internet & TV</span>
+                            <span>Internet TV</span>
                         </div>
                         <div class="service-item" data-service="more">
                             <div class="service-icon bg-slate"><i class="ri-more-fill"></i></div>
@@ -419,6 +439,140 @@
                         <h4>Topup E-Money</h4>
                         <p>Top up saldo e-toll, Flazz, TapCash, & ShopeePay.</p>
                         <button class="btn-outline-primary btn-ppob-action" data-type="E-Money">Isi E-Money</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Travel & Booking Hub View -->
+            <div class="view-content" id="viewTravel">
+                <div class="travel-hero-banner">
+                    <div class="travel-hero-content">
+                        <div class="travel-badge-pill">
+                            <i class="ri-sparkling-fill"></i> Diskon s/d 45% Liburan & Tiket Perjalanan
+                        </div>
+                        <h2>Pesan Tiket & Reservasi Hotel</h2>
+                        <p>Beli tiket pesawat, kereta api KAI, bus antar kota, dan booking hotel berbintang dengan pembayaran instan Saldo Klepeh.</p>
+                    </div>
+                </div>
+
+                <!-- Category Switcher Tabs -->
+                <div class="travel-nav-tabs">
+                    <button class="travel-tab-btn active" data-travel-cat="flight">
+                        <i class="ri-flight-takeoff-line"></i>
+                        <span>Tiket Pesawat</span>
+                    </button>
+                    <button class="travel-tab-btn" data-travel-cat="train">
+                        <i class="ri-train-line"></i>
+                        <span>Kereta Api KAI</span>
+                    </button>
+                    <button class="travel-tab-btn" data-travel-cat="bus">
+                        <i class="ri-bus-fill"></i>
+                        <span>Bus & Shuttle</span>
+                    </button>
+                    <button class="travel-tab-btn" data-travel-cat="hotel">
+                        <i class="ri-hotel-bed-line"></i>
+                        <span>Hotel & Resort</span>
+                    </button>
+                </div>
+
+                <!-- Search & Filter Card -->
+                <div class="travel-search-card">
+                    <form id="travelSearchForm" class="travel-form">
+                        <!-- Transport Fields (Flight, Train, Bus) -->
+                        <div class="travel-fields-row" id="transportFields">
+                            <div class="travel-input-group">
+                                <label for="travelOriginInput"><i class="ri-map-pin-2-line"></i> <span id="labelOrigin">Kota / Bandara Asal</span></label>
+                                <select id="travelOriginInput" class="custom-select travel-select">
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+
+                            <button type="button" class="btn-swap-route" id="btnSwapRoute" title="Tukar Rute">
+                                <i class="ri-arrow-left-right-line"></i>
+                            </button>
+
+                            <div class="travel-input-group">
+                                <label for="travelDestInput"><i class="ri-map-pin-range-line"></i> <span id="labelDest">Kota / Bandara Tujuan</span></label>
+                                <select id="travelDestInput" class="custom-select travel-select">
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Hotel Specific Fields -->
+                        <div class="travel-fields-row hidden" id="hotelFields">
+                            <div class="travel-input-group full-width">
+                                <label for="hotelLocationInput"><i class="ri-hotel-line"></i> Kota Tujuan / Nama Destinasi Hotel</label>
+                                <select id="hotelLocationInput" class="custom-select travel-select">
+                                    <option value="all">Semua Kota & Destinasi Favorit</option>
+                                    <option value="Bali">Bali (Kuta, Seminyak, Nusa Dua, Ubud)</option>
+                                    <option value="Jakarta">Jakarta (Pusat, Selatan, Barat)</option>
+                                    <option value="Yogyakarta">Yogyakarta (Malioboro, Sleman)</option>
+                                    <option value="Bandung">Bandung (Dago, Lembang, Riau)</option>
+                                    <option value="Surabaya">Surabaya (Pusat, Gubeng, Tunjungan)</option>
+                                    <option value="Lombok">Lombok & Gili Trawangan</option>
+                                    <option value="Labuan Bajo">Labuan Bajo (Komodo)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Date, Class, and Passengers / Guests -->
+                        <div class="travel-meta-row">
+                            <div class="travel-input-group">
+                                <label for="travelDateInput"><i class="ri-calendar-event-line"></i> <span id="labelDate">Tanggal Berangkat / Check-in</span></label>
+                                <input type="date" id="travelDateInput" class="travel-input" value="2026-09-05">
+                            </div>
+
+                            <div class="travel-input-group" id="groupTravelClass">
+                                <label for="travelClassInput"><i class="ri-vip-crown-line"></i> <span id="labelClass">Kelas Perjalanan</span></label>
+                                <select id="travelClassInput" class="custom-select travel-select">
+                                    <option value="all">Semua Kelas</option>
+                                    <option value="Ekonomi">Ekonomi</option>
+                                    <option value="Bisnis">Bisnis</option>
+                                    <option value="Eksekutif">Eksekutif / Suite</option>
+                                </select>
+                            </div>
+
+                            <div class="travel-input-group">
+                                <label for="travelPassengerCount"><i class="ri-user-follow-line"></i> <span id="labelPassengerCount">Jumlah Penumpang</span></label>
+                                <select id="travelPassengerCount" class="custom-select travel-select">
+                                    <option value="1">1 Orang / Tamu</option>
+                                    <option value="2">2 Orang / Tamu</option>
+                                    <option value="3">3 Orang / Tamu</option>
+                                    <option value="4">4 Orang / Tamu</option>
+                                </select>
+                            </div>
+
+                            <div class="travel-submit-group">
+                                <button type="submit" class="btn-primary btn-search-travel" id="btnSearchTravel">
+                                    <i class="ri-search-2-line"></i> Cari Tiket
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Results & Filter Header -->
+                <div class="travel-results-section">
+                    <div class="results-header-bar">
+                        <div class="results-count-meta">
+                            <h3 id="resultsTitle">Pilihan Tiket Pesawat Tersedia</h3>
+                            <span class="results-badge" id="resultsCountBadge">Pilihan Terbaik</span>
+                        </div>
+                        <div class="results-sort-bar">
+                            <label for="travelSortSelect"><i class="ri-sort-desc"></i> Urutkan:</label>
+                            <select id="travelSortSelect" class="custom-select-sm">
+                                <option value="cheapest">Harga Termurah</option>
+                                <option value="fastest">Durasi Tercepat</option>
+                                <option value="earliest">Waktu Paling Pagi</option>
+                                <option value="rating">Rating Tertinggi</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Card Grid -->
+                    <div class="travel-cards-grid" id="travelCardsContainer">
+                        <!-- Rendered by JS -->
                     </div>
                 </div>
             </div>
@@ -1079,6 +1233,246 @@
             <div class="modal-footer">
                 <button class="btn-ghost" data-close="modalReceiveQR">Tutup</button>
                 <button class="btn-primary" id="btnDownloadQR"><i class="ri-download-2-line"></i> Unduh Gambar QR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 12: Pemesanan & Peta Kursi (Seat Map & Guest Form) -->
+    <div class="modal-overlay" id="modalTravelBooking">
+        <div class="modal-box modal-travel-box">
+            <div class="modal-header">
+                <h3 id="bookingModalTitle"><i class="ri-flight-takeoff-line"></i> Konfirmasi Pemesanan & Pilih Kursi</h3>
+                <button class="modal-close" data-close="modalTravelBooking">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Selected Travel Summary Card -->
+                <div class="travel-summary-card" id="bookingSummaryCard">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Seat Map Matrix (Transport only) -->
+                <div class="seat-selection-wrapper" id="seatSelectionWrapper">
+                    <div class="seat-selection-header">
+                        <h4><i class="ri-armchair-line"></i> Pilih Kursi Tempat Duduk Anda</h4>
+                        <div class="seat-legend">
+                            <span class="legend-item"><span class="seat-sample available"></span> Tersedia</span>
+                            <span class="legend-item"><span class="seat-sample selected"></span> Dipilih</span>
+                            <span class="legend-item"><span class="seat-sample occupied"></span> Terisi</span>
+                        </div>
+                    </div>
+                    <div class="vehicle-cabin-container">
+                        <div class="vehicle-front-badge" id="vehicleFrontLabel"><i class="ri-arrow-up-s-line"></i> BAGIAN DEPAN (KOKPIT/KABIN DEPAN)</div>
+                        <div class="seat-grid-matrix" id="seatGridMatrix">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                    <div class="selected-seat-badge" id="selectedSeatAlert">
+                        <i class="ri-checkbox-circle-fill"></i> Kursi Terpilih: <strong id="selectedSeatNumber">2A</strong> (<span id="selectedSeatClass">Ekonomi</span>)
+                    </div>
+                </div>
+
+                <!-- Hotel Room Options (Hotel only) -->
+                <div class="hotel-room-selection-wrapper hidden" id="hotelRoomSelectionWrapper">
+                    <h4><i class="ri-hotel-bed-line"></i> Tipe Kamar & Pilihan Fasilitas</h4>
+                    <div class="room-options-grid" id="roomOptionsGrid">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Passenger / Guest Details Form -->
+                <div class="passenger-form-card">
+                    <h4><i class="ri-user-3-line"></i> Data Penumpang / Tamu Utama</h4>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="travelGuestTitle">Gelar</label>
+                            <select id="travelGuestTitle" class="custom-select">
+                                <option value="Tuan">Tuan (Mr.)</option>
+                                <option value="Nyonya">Nyonya (Mrs.)</option>
+                                <option value="Nona">Nona (Ms.)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="travelGuestName">Nama Lengkap Sesuai KTP / Paspor</label>
+                            <input type="text" id="travelGuestName" value="M Ikhsan Anggara" placeholder="Nama lengkap">
+                        </div>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="travelGuestId">No. KTP / NIK / Paspor</label>
+                            <input type="text" id="travelGuestId" value="3276011209950001" placeholder="16 digit NIK">
+                        </div>
+                        <div class="form-group">
+                            <label for="travelGuestPhone">Nomor WhatsApp / HP</label>
+                            <input type="text" id="travelGuestPhone" value="0812-9887-3411" placeholder="08xx-xxxx-xxxx">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Promo Voucher & Price Calculation -->
+                <div class="travel-pricing-card">
+                    <div class="promo-input-row">
+                        <input type="text" id="travelPromoCode" placeholder="Masukkan Kode Promo (contoh: KLEPEHTRAVEL)">
+                        <button type="button" class="btn-outline-primary" id="btnApplyTravelPromo">Terapkan</button>
+                    </div>
+                    <div class="promo-tag-applied hidden" id="promoAppliedAlert">
+                        <i class="ri-discount-percent-fill"></i> Promo <strong id="appliedPromoName">KLEPEHTRAVEL</strong> aktif: Diskon <span id="appliedPromoDiscount">Rp 50.000</span>
+                    </div>
+
+                    <div class="price-breakdown-list">
+                        <div class="price-row">
+                            <span id="priceLabelBase">Harga Tiket / Kamar (1 Orang)</span>
+                            <span id="priceValBase">Rp 850.000</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Biaya Layanan & Asuransi Perjalanan</span>
+                            <span class="text-success">GRATIS</span>
+                        </div>
+                        <div class="price-row text-success hidden" id="priceRowDiscount">
+                            <span>Diskon Voucher E-Wallet</span>
+                            <span id="priceValDiscount">- Rp 50.000</span>
+                        </div>
+                        <div class="price-divider"></div>
+                        <div class="price-row total-row">
+                            <span>Total Pembayaran</span>
+                            <strong class="total-amount text-primary" id="priceValTotal">Rp 850.000</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" data-close="modalTravelBooking">Batal</button>
+                <button class="btn-primary" id="btnConfirmPayTravel">
+                    <i class="ri-shield-check-line"></i> Bayar Sekarang (Saldo Klepeh)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 13: Digital E-Ticket & Boarding Pass Generator -->
+    <div class="modal-overlay" id="modalETicket">
+        <div class="modal-box modal-eticket-box">
+            <div class="modal-header">
+                <h3><i class="ri-ticket-2-line"></i> E-Ticket & Boarding Pass Resmi</h3>
+                <button class="modal-close" data-close="modalETicket">&times;</button>
+            </div>
+            <div class="modal-body" id="eticketPrintArea">
+                <!-- Boarding Pass Card Visual -->
+                <div class="boarding-pass-card" id="boardingPassVisual">
+                    <!-- Top Airline / Operator Branding Header -->
+                    <div class="bp-header">
+                        <div class="bp-brand">
+                            <div class="bp-logo-box" id="bpLogoBox">
+                                <i class="ri-flight-takeoff-line"></i>
+                            </div>
+                            <div>
+                                <h4 id="bpOperatorName">Garuda Indonesia</h4>
+                                <span class="bp-sub" id="bpSubCategory">Penerbangan Domestik • GA-402</span>
+                            </div>
+                        </div>
+                        <div class="bp-badge-status">
+                            <i class="ri-checkbox-circle-fill"></i> CONFIRMED
+                        </div>
+                    </div>
+
+                    <!-- Route Big Display -->
+                    <div class="bp-route-hero">
+                        <div class="route-point">
+                            <h2 id="bpOriginCode">CGK</h2>
+                            <span id="bpOriginCity">Jakarta (Soekarno-Hatta)</span>
+                            <strong id="bpDepartTime">08:30 WIB</strong>
+                        </div>
+                        <div class="route-flight-decor">
+                            <span class="route-duration" id="bpDuration">1j 50m</span>
+                            <div class="flight-line-dots">
+                                <span class="dot"></span>
+                                <span class="dashed-line"></span>
+                                <i class="ri-flight-takeoff-fill flight-plane-icon" id="bpRouteIcon"></i>
+                                <span class="dashed-line"></span>
+                                <span class="dot"></span>
+                            </div>
+                            <span class="direct-badge">Langsung (Direct)</span>
+                        </div>
+                        <div class="route-point text-right">
+                            <h2 id="bpDestCode">DPS</h2>
+                            <span id="bpDestCity">Bali (Ngurah Rai)</span>
+                            <strong id="bpArrivalTime">11:20 WITA</strong>
+                        </div>
+                    </div>
+
+                    <!-- Perforated Cutout Divider Line -->
+                    <div class="bp-perforated-divider">
+                        <div class="notch notch-left"></div>
+                        <div class="dashed-strip"></div>
+                        <div class="notch notch-right"></div>
+                    </div>
+
+                    <!-- Ticket Details Grid -->
+                    <div class="bp-details-grid">
+                        <div class="bp-field">
+                            <span class="lbl">NAMA PENUMPANG</span>
+                            <strong class="val" id="bpPassengerName">M IKHSAN ANGGARA</strong>
+                        </div>
+                        <div class="bp-field">
+                            <span class="lbl">KODE BOOKING (PNR)</span>
+                            <strong class="val highlight-pnr" id="bpBookingCode">KLP-8942</strong>
+                        </div>
+                        <div class="bp-field">
+                            <span class="lbl">TANGGAL PERJALANAN</span>
+                            <strong class="val" id="bpTravelDate">05 September 2026</strong>
+                        </div>
+                        <div class="bp-field">
+                            <span class="lbl">KELAS / TIPE</span>
+                            <strong class="val" id="bpTravelClass">Ekonomi (Seat 2A)</strong>
+                        </div>
+                        <div class="bp-field">
+                            <span class="lbl">PINTU / GATE</span>
+                            <strong class="val text-primary" id="bpGateNumber">GATE 4B</strong>
+                        </div>
+                        <div class="bp-field">
+                            <span class="lbl">STATUS PEMBAYARAN</span>
+                            <strong class="val text-success">LUNAS (Klepeh Pay)</strong>
+                        </div>
+                    </div>
+
+                    <!-- Barcode & QR Digital Verification -->
+                    <div class="bp-barcode-section">
+                        <div class="bp-qr-box">
+                            <svg viewBox="0 0 100 100" width="80" height="80">
+                                <rect width="100" height="100" fill="#ffffff"/>
+                                <rect x="5" y="5" width="25" height="25" fill="#0284c7"/>
+                                <rect x="10" y="10" width="15" height="15" fill="#ffffff"/>
+                                <rect x="13" y="13" width="9" height="9" fill="#0284c7"/>
+                                <rect x="70" y="5" width="25" height="25" fill="#0284c7"/>
+                                <rect x="75" y="10" width="15" height="15" fill="#ffffff"/>
+                                <rect x="78" y="13" width="9" height="9" fill="#0284c7"/>
+                                <rect x="5" y="70" width="25" height="25" fill="#0284c7"/>
+                                <rect x="10" y="75" width="15" height="15" fill="#ffffff"/>
+                                <rect x="13" y="78" width="9" height="9" fill="#0284c7"/>
+                                <rect x="35" y="10" width="10" height="10" fill="#0f172a"/>
+                                <rect x="50" y="25" width="15" height="8" fill="#0f172a"/>
+                                <rect x="35" y="45" width="30" height="10" fill="#0f172a"/>
+                                <rect x="40" y="65" width="20" height="12" fill="#0f172a"/>
+                                <rect x="70" y="50" width="25" height="10" fill="#0f172a"/>
+                                <rect x="70" y="70" width="25" height="25" fill="#0f172a"/>
+                            </svg>
+                        </div>
+                        <div class="bp-barcode-lines">
+                            <div class="barcode-lines bp-bars">
+                                <div class="b-line w-2"></div><div class="b-line w-1"></div><div class="b-line w-3"></div><div class="b-line w-2"></div>
+                                <div class="b-line w-4"></div><div class="b-line w-1"></div><div class="b-line w-2"></div><div class="b-line w-3"></div>
+                                <div class="b-line w-1"></div><div class="b-line w-4"></div><div class="b-line w-2"></div><div class="b-line w-1"></div>
+                                <div class="b-line w-3"></div><div class="b-line w-2"></div><div class="b-line w-4"></div><div class="b-line w-2"></div>
+                            </div>
+                            <span class="bp-barcode-code" id="bpBarcodeNumeric">9823 4581 8942 0019</span>
+                            <small class="bp-scan-note">Tunjukkan e-ticket ini saat Check-In / Boarding di Gate</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" data-close="modalETicket"><i class="ri-close-line"></i> Tutup</button>
+                <button class="btn-outline-primary" id="btnShareETicket"><i class="ri-share-line"></i> Bagikan</button>
+                <button class="btn-primary" id="btnPrintETicket"><i class="ri-printer-line"></i> Cetak / Simpan PDF</button>
             </div>
         </div>
     </div>
