@@ -332,9 +332,121 @@
                                     class="ri-whatsapp-line"></i></div>
                             <span>Bantuan CS</span>
                         </div>
+                        <div class="service-item" id="serviceItemKurs" title="Kurs Dollar USD / IDR Real-Time">
+                            <div class="service-icon bg-emerald"
+                                style="background: linear-gradient(135deg, #059669, #10b981); color: #fff;"><i
+                                    class="ri-money-dollar-circle-fill"></i></div>
+                            <span>Kurs USD</span>
+                        </div>
                         <div class="service-item" data-service="more">
                             <div class="service-icon bg-slate"><i class="ri-more-fill"></i></div>
                             <span>Lainnya</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Live USD / IDR Exchange Rate & Converter Widget -->
+                <section class="section-container currency-widget-section" id="sectionCurrencyExchange">
+                    <div class="section-header">
+                        <div class="currency-header-title">
+                            <h3><i class="ri-money-dollar-circle-fill text-warning"></i> Kurs Real-Time Dollar ke Rupiah (USD/IDR)</h3>
+                            <span class="live-pulse-badge"><span class="pulse-dot-green"></span> Live Otomatis</span>
+                        </div>
+                        <div class="currency-header-actions">
+                            <span class="rate-refresh-time" id="rateLastUpdatedText"><i class="ri-time-line"></i> Memuat kurs...</span>
+                            <button class="btn-refresh-kurs" id="btnRefreshExchangeRate" title="Segarkan Kurs Sekarang">
+                                <i class="ri-refresh-line" id="iconRefreshRate"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="currency-dashboard-grid">
+                        <!-- Card 1: Live Rate Ticker & Stats -->
+                        <div class="rate-ticker-card">
+                            <div class="rate-ticker-top">
+                                <div class="pair-flag-badge">
+                                    <span class="flag-icon">🇺🇸</span>
+                                    <span class="pair-code">USD / IDR</span>
+                                    <span class="flag-icon">🇮🇩</span>
+                                </div>
+                                <span class="badge-rate-trend rate-trend-up" id="rateTrendBadge">
+                                    <i class="ri-arrow-up-line" id="rateTrendIcon"></i> <span id="rateTrendVal">+0.15%</span>
+                                </span>
+                            </div>
+                            
+                            <div class="rate-main-value">
+                                <span class="rate-symbol">1 USD =</span>
+                                <h2 class="rate-big-number" id="rateUsdIdrDisplay">Rp 17.654</h2>
+                            </div>
+
+                            <div class="rate-mini-stats-grid">
+                                <div class="rate-mini-item">
+                                    <span class="mini-lbl">Kurs Beli (Beli USD)</span>
+                                    <strong class="mini-val" id="rateBuyVal">Rp 17.565</strong>
+                                </div>
+                                <div class="rate-mini-item">
+                                    <span class="mini-lbl">Kurs Jual (Jual USD)</span>
+                                    <strong class="mini-val" id="rateSellVal">Rp 17.742</strong>
+                                </div>
+                                <div class="rate-mini-item">
+                                    <span class="mini-lbl">Tertinggi 24j</span>
+                                    <strong class="mini-val text-success" id="rateHighVal">Rp 17.690</strong>
+                                </div>
+                                <div class="rate-mini-item">
+                                    <span class="mini-lbl">Terendah 24j</span>
+                                    <strong class="mini-val text-danger" id="rateLowVal">Rp 17.580</strong>
+                                </div>
+                            </div>
+                            <div class="rate-note-footer">
+                                <small><i class="ri-shield-check-line text-success"></i> Data kurs pasar global terverifikasi • Auto-update berkala</small>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Interactive Instant Converter Calculator -->
+                        <div class="rate-converter-card">
+                            <div class="converter-card-header">
+                                <h4><i class="ri-calculator-line"></i> Kalkulator Konversi Instan</h4>
+                                <small class="text-muted">Kalkulasi dua arah otomatis</small>
+                            </div>
+
+                            <div class="converter-inputs-box">
+                                <div class="converter-input-group">
+                                    <label for="inputConvertUsd">Nominal Dollar (USD)</label>
+                                    <div class="currency-input-wrapper">
+                                        <span class="input-curr-prefix">$</span>
+                                        <input type="number" id="inputConvertUsd" value="10" min="0" step="any" class="currency-input">
+                                        <span class="input-curr-suffix">USD</span>
+                                    </div>
+                                </div>
+
+                                <div class="converter-swap-indicator">
+                                    <button type="button" class="btn-swap-curr" id="btnSwapCurrency" title="Tukar Mata Uang">
+                                        <i class="ri-arrow-up-down-line"></i>
+                                    </button>
+                                </div>
+
+                                <div class="converter-input-group">
+                                    <label for="inputConvertIdr">Setara Rupiah (IDR)</label>
+                                    <div class="currency-input-wrapper">
+                                        <span class="input-curr-prefix">Rp</span>
+                                        <input type="text" id="inputConvertIdr" value="176.540" class="currency-input">
+                                        <span class="input-curr-suffix">IDR</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Preset Chips -->
+                            <div class="converter-chips-row">
+                                <span class="chips-lbl">Cepat:</span>
+                                <button type="button" class="btn-quick-usd" data-usd="5">$5</button>
+                                <button type="button" class="btn-quick-usd active" data-usd="10">$10</button>
+                                <button type="button" class="btn-quick-usd" data-usd="50">$50</button>
+                                <button type="button" class="btn-quick-usd" data-usd="100">$100</button>
+                                <button type="button" class="btn-quick-usd" data-usd="500">$500</button>
+                                <button type="button" class="btn-copy-result" id="btnCopyConvertResult" title="Salin Hasil Konversi">
+                                    <i class="ri-file-copy-line"></i> Salin
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </section>
