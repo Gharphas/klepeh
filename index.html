@@ -338,6 +338,12 @@
                                     class="ri-money-dollar-circle-fill"></i></div>
                             <span>Kurs USD</span>
                         </div>
+                        <div class="service-item" id="serviceItemIhsg" title="Pantau Pergerakan IHSG (Bursa Efek Indonesia)">
+                            <div class="service-icon bg-indigo"
+                                style="background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff;"><i
+                                    class="ri-line-chart-line"></i></div>
+                            <span>IHSG Saham</span>
+                        </div>
                         <div class="service-item" data-service="more">
                             <div class="service-icon bg-slate"><i class="ri-more-fill"></i></div>
                             <span>Lainnya</span>
@@ -445,6 +451,120 @@
                                 <button type="button" class="btn-quick-usd" data-usd="500">$500</button>
                                 <button type="button" class="btn-copy-result" id="btnCopyConvertResult" title="Salin Hasil Konversi">
                                     <i class="ri-file-copy-line"></i> Salin
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Live IHSG & Pasar Modal Indonesia (IDX Composite) Widget -->
+                <section class="section-container ihsg-widget-section" id="sectionIhsgMarket">
+                    <div class="section-header">
+                        <div class="ihsg-header-title">
+                            <h3><i class="ri-line-chart-fill text-primary-cyan"></i> Indeks Harga Saham Gabungan (IHSG / IDX)</h3>
+                            <span class="market-status-pill" id="idxMarketStatusBadge">
+                                <span class="pulse-dot-green" id="idxStatusDot"></span> <span id="idxMarketStatusText">Pasar Buka (Sesi II)</span>
+                            </span>
+                        </div>
+                        <div class="currency-header-actions">
+                            <span class="rate-refresh-time" id="ihsgLastUpdatedText"><i class="ri-time-line"></i> BEI • Bursa Efek Indonesia</span>
+                            <button class="btn-refresh-kurs" id="btnRefreshIhsg" title="Segarkan Data IHSG">
+                                <i class="ri-refresh-line" id="iconRefreshIhsg"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="ihsg-dashboard-grid">
+                        <!-- Left Column: IHSG Score, Change & Intraday Sparkline SVG -->
+                        <div class="ihsg-main-card">
+                            <div class="ihsg-top-row">
+                                <div class="idx-badge">
+                                    <span class="idx-logo-badge">IDX</span>
+                                    <span class="idx-name">COMPOSITE / IHSG</span>
+                                    <span class="idx-tag-session" id="idxSessionTag">Sesi II</span>
+                                </div>
+                                <div class="ihsg-change-box text-success" id="ihsgChangeBox">
+                                    <i class="ri-arrow-up-line" id="ihsgArrowIcon"></i>
+                                    <strong id="ihsgPointChange">+48.25</strong>
+                                    <span id="ihsgPctChange">(+0.62%)</span>
+                                </div>
+                            </div>
+
+                            <div class="ihsg-big-score-row">
+                                <h2 class="ihsg-score-display" id="ihsgScoreDisplay">7.798,40</h2>
+                                <div class="ihsg-prev-close-box">
+                                    <span>Penutupan Sebelumnya:</span>
+                                    <strong id="ihsgPrevClose">7.750,15</strong>
+                                </div>
+                            </div>
+
+                            <!-- Interactive SVG Mini Chart (Intraday Curve) -->
+                            <div class="ihsg-chart-container">
+                                <div class="chart-header-lbl">
+                                    <span><i class="ri-pulse-line"></i> Grafik Intraday Hari Ini</span>
+                                    <span class="text-success" id="chartRangeLbl">Rentang: 7.742,10 - 7.815,60</span>
+                                </div>
+                                <div class="svg-chart-box">
+                                    <svg viewBox="0 0 420 90" class="ihsg-svg-chart" id="ihsgSvgChart" preserveAspectRatio="none">
+                                        <defs>
+                                            <linearGradient id="ihsgGradUp" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" stop-color="#10b981" stop-opacity="0.35"/>
+                                                <stop offset="100%" stop-color="#10b981" stop-opacity="0.0"/>
+                                            </linearGradient>
+                                            <linearGradient id="ihsgGradDown" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.35"/>
+                                                <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.0"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <path id="ihsgAreaPath" d="M 0,75 Q 80,70 140,50 T 260,35 T 350,22 T 420,15 L 420,90 L 0,90 Z" fill="url(#ihsgGradUp)"/>
+                                        <path id="ihsgLinePath" d="M 0,75 Q 80,70 140,50 T 260,35 T 350,22 T 420,15" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+                                        <circle id="ihsgChartDot" cx="420" cy="15" r="4.5" fill="#10b981"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Market Summary Stats 4-cols -->
+                            <div class="ihsg-stats-grid">
+                                <div class="ihsg-stat-col">
+                                    <span class="lbl"><i class="ri-stack-line"></i> Volume</span>
+                                    <strong id="ihsgStatVol">18.42 Miliar</strong>
+                                </div>
+                                <div class="ihsg-stat-col">
+                                    <span class="lbl"><i class="ri-exchange-dollar-line"></i> Nilai Transaksi</span>
+                                    <strong id="ihsgStatTurnover">Rp 12.85 Triliun</strong>
+                                </div>
+                                <div class="ihsg-stat-col">
+                                    <span class="lbl"><i class="ri-repeat-line"></i> Frekuensi</span>
+                                    <strong id="ihsgStatFreq">1.240.000x</strong>
+                                </div>
+                                <div class="ihsg-stat-col">
+                                    <span class="lbl"><i class="ri-global-line"></i> Asing (Net Buy)</span>
+                                    <strong class="text-success" id="ihsgStatForeign">+Rp 642 Miliar</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Top Saham Penggerak IHSG & Market Breadth -->
+                        <div class="ihsg-movers-card">
+                            <div class="movers-card-header">
+                                <div>
+                                    <h4><i class="ri-fire-fill text-warning"></i> Saham Teraktif & Penggerak IHSG</h4>
+                                    <small class="text-muted">Top Movers Indeks BEI Hari Ini</small>
+                                </div>
+                                <div class="market-breadth-summary" id="marketBreadthSummary" title="Market Breadth: Saham Naik, Turun, Stagnan">
+                                    <span class="breadth-up"><i class="ri-arrow-up-s-fill"></i> 312</span>
+                                    <span class="breadth-down"><i class="ri-arrow-down-s-fill"></i> 204</span>
+                                    <span class="breadth-flat"><i class="ri-subtract-line"></i> 185</span>
+                                </div>
+                            </div>
+
+                            <div class="top-movers-list" id="topMoversList">
+                                <!-- Populated dynamically by JS with interactive Buy button -->
+                            </div>
+
+                            <div class="ihsg-action-bar">
+                                <button class="btn-outline-primary w-100" id="btnGoToStocksPage">
+                                    <i class="ri-funds-box-line"></i> Buka Portofolio & Semua Saham IDX
                                 </button>
                             </div>
                         </div>

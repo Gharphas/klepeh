@@ -6761,6 +6761,379 @@ button:active,
     }
 }
 
+/* ==========================================================================
+   LIVE IHSG (INDONESIA COMPOSITE INDEX) & IDX MARKET WIDGET
+   ========================================================================== */
+.ihsg-widget-section {
+    margin-bottom: 2rem;
+}
+
+.ihsg-header-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.ihsg-header-title h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.market-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--primary-emerald);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.market-status-pill.status-break {
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--primary-amber);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.market-status-pill.status-closed {
+    background: rgba(100, 116, 139, 0.15);
+    color: var(--text-muted);
+    border-color: rgba(100, 116, 139, 0.3);
+}
+
+.ihsg-dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+/* IHSG Main Card */
+.ihsg-main-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+    backdrop-filter: var(--glass-blur);
+    transition: var(--transition);
+}
+
+.ihsg-main-card:hover {
+    border-color: var(--border-highlight);
+    box-shadow: var(--shadow-lg);
+}
+
+.ihsg-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.idx-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.idx-logo-badge {
+    background: linear-gradient(135deg, #0284c7, #2563eb);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.5px;
+}
+
+.idx-name {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.idx-tag-session {
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+}
+
+.ihsg-change-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.ihsg-big-score-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.ihsg-score-display {
+    font-size: 2.3rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.ihsg-score-display.score-down {
+    background: linear-gradient(135deg, #f43f5e 0%, #e11d48 50%, #fb7185 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.ihsg-prev-close-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.ihsg-prev-close-box strong {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+
+/* Intraday SVG Chart */
+.ihsg-chart-container {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+[data-theme="light"] .ihsg-chart-container {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.chart-header-lbl {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.svg-chart-box {
+    width: 100%;
+    height: 85px;
+}
+
+.ihsg-svg-chart {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.ihsg-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.65rem;
+}
+
+.ihsg-stat-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.ihsg-stat-col .lbl {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.ihsg-stat-col strong {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+/* IHSG Top Movers Card */
+.ihsg-movers-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    backdrop-filter: var(--glass-blur);
+    transition: var(--transition);
+}
+
+.ihsg-movers-card:hover {
+    border-color: var(--border-highlight);
+    box-shadow: var(--shadow-lg);
+}
+
+.movers-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.movers-card-header h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.market-breadth-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-color);
+}
+
+.market-breadth-summary .breadth-up { color: var(--primary-emerald); }
+.market-breadth-summary .breadth-down { color: var(--primary-rose); }
+.market-breadth-summary .breadth-flat { color: var(--text-muted); }
+
+.top-movers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.top-mover-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.85rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+}
+
+.top-mover-row:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--border-highlight);
+}
+
+.mover-stock-info {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.mover-icon-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: #fff;
+}
+
+.mover-text h5 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.mover-text small {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.mover-stock-price-box {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.mover-price-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.mover-price-info .stock-curr-price {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.mover-price-info .stock-diff-val {
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.btn-mini-buy-stock {
+    padding: 0.35rem 0.65rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: transparent;
+    border: 1px solid var(--primary-cyan);
+    color: var(--primary-cyan);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-mini-buy-stock:hover {
+    background: var(--primary-cyan);
+    color: #fff;
+}
+
+@media (max-width: 992px) {
+    .ihsg-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    .ihsg-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
 
 
 

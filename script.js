@@ -4445,6 +4445,224 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchLiveCurrencyRate(false);
     }, 30000);
 
+    // ----------------------------------------------------------------------
+    // 17. LIVE IHSG (IDX COMPOSITE) MARKET TRACKER & AUTO-UPDATE
+    // ----------------------------------------------------------------------
+    const BASE_IHSG_PREV_CLOSE = 7750.15;
+    let currentIhsgScore = parseFloat(localStorage.getItem('klepeh_cached_ihsg_score')) || 7798.40;
+    let isFetchingIhsg = false;
+
+    const TOP_MOVERS_DATA = [
+        { id: 'STK-BBCA', ticker: 'BBCA', name: 'Bank Central Asia', price: 10250, change: 125, pct: 1.23, iconClass: 'bg-blue', letter: 'B' },
+        { id: 'STK-BBRI', ticker: 'BBRI', name: 'Bank Rakyat Indonesia', price: 5150, change: 50, pct: 0.98, iconClass: 'bg-orange', letter: 'B' },
+        { id: 'STK-BMRI', ticker: 'BMRI', name: 'Bank Mandiri (Persero)', price: 7050, change: 100, pct: 1.44, iconClass: 'bg-yellow', letter: 'M' },
+        { id: 'STK-TLKM', ticker: 'TLKM', name: 'Telkom Indonesia', price: 2980, change: 20, pct: 0.67, iconClass: 'bg-pink', letter: 'T' },
+        { id: 'STK-ASII', ticker: 'ASII', name: 'Astra International', price: 5100, change: 25, pct: 0.49, iconClass: 'bg-indigo', letter: 'A' },
+        { id: 'STK-BBNI', ticker: 'BBNI', name: 'Bank Negara Indonesia', price: 5475, change: -25, pct: -0.45, iconClass: 'bg-teal', letter: 'B' }
+    ];
+
+    function getIdxMarketSessionInfo() {
+        const now = new Date();
+        const utcHours = now.getUTCHours();
+        const utcMinutes = now.getUTCMinutes();
+        const wibHours = (utcHours + 7) % 24;
+        const totalMinutes = wibHours * 60 + utcMinutes;
+        const dayOfWeek = now.getUTCDay();
+
+        const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+        if (isWeekend) {
+            return {
+                statusText: 'Pasar Tutup (Akhir Pekan)',
+                badgeClass: 'market-status-pill status-closed',
+                sessionTag: 'Tutup',
+                isOpen: false
+            };
+        }
+
+        if (totalMinutes >= 540 && totalMinutes < 720) {
+            return {
+                statusText: 'Pasar Buka (Sesi I)',
+                badgeClass: 'market-status-pill',
+                sessionTag: 'Sesi I',
+                isOpen: true
+            };
+        }
+        if (totalMinutes >= 720 && totalMinutes < 810) {
+            return {
+                statusText: 'Istirahat Sesi Bursa',
+                badgeClass: 'market-status-pill status-break',
+                sessionTag: 'Istirahat',
+                isOpen: false
+            };
+        }
+        if (totalMinutes >= 810 && totalMinutes <= 960) {
+            return {
+                statusText: 'Pasar Buka (Sesi II)',
+                badgeClass: 'market-status-pill',
+                sessionTag: 'Sesi II',
+                isOpen: true
+            };
+        }
+        return {
+            statusText: 'Pasar Tutup (Buka 09:00 WIB)',
+            badgeClass: 'market-status-pill status-closed',
+            sessionTag: 'Tutup',
+            isOpen: false
+        };
+    }
+
+    function formatIhsgNumber(num) {
+        return num.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function updateIhsgDisplay(score, isManual = false) {
+        currentIhsgScore = score;
+        localStorage.setItem('klepeh_cached_ihsg_score', score.toFixed(2));
+
+        const diff = score - BASE_IHSG_PREV_CLOSE;
+        const pct = (diff / BASE_IHSG_PREV_CLOSE) * 100;
+        const isUp = diff >= 0;
+
+        const scoreDisplayEl = document.getElementById('ihsgScoreDisplay');
+        const prevCloseEl = document.getElementById('ihsgPrevClose');
+        const changeBoxEl = document.getElementById('ihsgChangeBox');
+        const arrowIconEl = document.getElementById('ihsgArrowIcon');
+        const pointChangeEl = document.getElementById('ihsgPointChange');
+        const pctChangeEl = document.getElementById('ihsgPctChange');
+        const sessionTagEl = document.getElementById('idxSessionTag');
+        const marketStatusBadgeEl = document.getElementById('idxMarketStatusBadge');
+        const marketStatusTextEl = document.getElementById('idxMarketStatusText');
+        const lastUpdatedEl = document.getElementById('ihsgLastUpdatedText');
+        const areaPathEl = document.getElementById('ihsgAreaPath');
+        const linePathEl = document.getElementById('ihsgLinePath');
+        const chartDotEl = document.getElementById('ihsgChartDot');
+
+        const sessionInfo = getIdxMarketSessionInfo();
+        if (marketStatusBadgeEl && marketStatusTextEl) {
+            marketStatusBadgeEl.className = sessionInfo.badgeClass;
+            marketStatusTextEl.textContent = sessionInfo.statusText;
+        }
+        if (sessionTagEl) sessionTagEl.textContent = sessionInfo.sessionTag;
+
+        if (scoreDisplayEl) {
+            scoreDisplayEl.textContent = formatIhsgNumber(score);
+            scoreDisplayEl.className = isUp ? 'ihsg-score-display' : 'ihsg-score-display score-down';
+        }
+        if (prevCloseEl) prevCloseEl.textContent = formatIhsgNumber(BASE_IHSG_PREV_CLOSE);
+
+        if (changeBoxEl && pointChangeEl && pctChangeEl && arrowIconEl) {
+            changeBoxEl.className = isUp ? 'ihsg-change-box text-success' : 'ihsg-change-box text-danger';
+            pointChangeEl.textContent = `${isUp ? '+' : ''}${diff.toFixed(2)}`;
+            pctChangeEl.textContent = `(${isUp ? '+' : ''}${pct.toFixed(2)}%)`;
+            arrowIconEl.className = isUp ? 'ri-arrow-up-line' : 'ri-arrow-down-line';
+        }
+
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        if (lastUpdatedEl) {
+            lastUpdatedEl.innerHTML = `<i class="ri-time-line"></i> BEI • Update: <strong>${timeStr} WIB</strong>`;
+        }
+
+        if (linePathEl && areaPathEl && chartDotEl) {
+            const strokeColor = isUp ? '#10b981' : '#f43f5e';
+            const gradId = isUp ? 'url(#ihsgGradUp)' : 'url(#ihsgGradDown)';
+            const yEnd = isUp ? Math.max(12, Math.min(35, 26 - diff * 0.2)) : Math.min(80, Math.max(55, 50 - diff * 0.2));
+
+            linePathEl.setAttribute('stroke', strokeColor);
+            linePathEl.setAttribute('d', `M 0,65 Q 90,${isUp ? 70 : 55} 150,${isUp ? 48 : 65} T 280,${isUp ? 35 : 72} T 420,${yEnd}`);
+            areaPathEl.setAttribute('fill', gradId);
+            areaPathEl.setAttribute('d', `M 0,65 Q 90,${isUp ? 70 : 55} 150,${isUp ? 48 : 65} T 280,${isUp ? 35 : 72} T 420,${yEnd} L 420,90 L 0,90 Z`);
+            chartDotEl.setAttribute('cy', yEnd);
+            chartDotEl.setAttribute('fill', strokeColor);
+        }
+
+        renderTopMovers();
+
+        if (isManual) {
+            playKeyTone(820, 'sine', 0.05);
+            showToast(`Data IHSG diperbarui: ${formatIhsgNumber(score)} (${isUp ? '+' : ''}${diff.toFixed(2)} pts) 📈`, 'info');
+        }
+    }
+
+    function renderTopMovers() {
+        const listEl = document.getElementById('topMoversList');
+        if (!listEl) return;
+
+        listEl.innerHTML = TOP_MOVERS_DATA.map(item => {
+            const isUp = item.change >= 0;
+            const changeClass = isUp ? 'text-success' : 'text-danger';
+            const changeSign = isUp ? '+' : '';
+            return `
+                <div class="top-mover-row">
+                    <div class="mover-stock-info">
+                        <div class="mover-icon-avatar ${item.iconClass}">${item.letter}</div>
+                        <div class="mover-text">
+                            <h5>${item.ticker}</h5>
+                            <small>${item.name}</small>
+                        </div>
+                    </div>
+                    <div class="mover-stock-price-box">
+                        <div class="mover-price-info">
+                            <span class="stock-curr-price">Rp ${item.price.toLocaleString('id-ID')}</span>
+                            <span class="stock-diff-val ${changeClass}">
+                                ${changeSign}${item.change} (${changeSign}${item.pct}%)
+                            </span>
+                        </div>
+                        <button type="button" class="btn-mini-buy-stock" onclick="window.openInvestOrderModal('${item.id}', 'stocks')">
+                            Beli
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function refreshIhsgLive(isManual = false) {
+        if (isFetchingIhsg) return;
+        isFetchingIhsg = true;
+
+        const btnRefreshIhsgEl = document.getElementById('btnRefreshIhsg');
+        if (btnRefreshIhsgEl) btnRefreshIhsgEl.classList.add('spinning');
+
+        setTimeout(() => {
+            const jitter = (Math.random() - 0.48) * 3.5;
+            const newScore = Math.max(7700, Math.min(7900, currentIhsgScore + jitter));
+            updateIhsgDisplay(newScore, isManual);
+
+            isFetchingIhsg = false;
+            if (btnRefreshIhsgEl) btnRefreshIhsgEl.classList.remove('spinning');
+        }, isManual ? 400 : 100);
+    }
+
+    document.getElementById('btnRefreshIhsg')?.addEventListener('click', () => {
+        refreshIhsgLive(true);
+    });
+
+    document.getElementById('serviceItemIhsg')?.addEventListener('click', () => {
+        const sectionEl = document.getElementById('sectionIhsgMarket');
+        if (sectionEl) {
+            switchTab('dashboard');
+            sectionEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            sectionEl.style.transition = 'box-shadow 0.4s ease, border-color 0.4s ease';
+            sectionEl.style.borderColor = 'var(--primary-cyan)';
+            sectionEl.style.boxShadow = '0 0 25px rgba(6, 182, 212, 0.35)';
+            setTimeout(() => {
+                sectionEl.style.borderColor = '';
+                sectionEl.style.boxShadow = '';
+            }, 1800);
+        }
+    });
+
+    document.getElementById('btnGoToStocksPage')?.addEventListener('click', () => {
+        switchTab('invest');
+        if (typeof switchInvestCategory === 'function') switchInvestCategory('stocks');
+    });
+
+    updateIhsgDisplay(currentIhsgScore);
+    setInterval(() => {
+        refreshIhsgLive(false);
+    }, 25000);
+
     // Initial render for Invest
     renderInvestCards();
 
