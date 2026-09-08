@@ -1187,7 +1187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             subtitle: 'Bayar tagihan IndiHome, Biznet, First Media, & MyRepublic',
             inputLabel: 'Nomor Pelanggan / ID Billing Internet',
             inputPlaceholder: 'Contoh: 12209384711',
-            inputIcon: 'ri-router-line',
+            inputIcon: '',
             hasSubtabs: false,
             providers: [
                 { id: 'indihome', name: 'IndiHome Telkom Fiber' },

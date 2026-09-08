@@ -2860,6 +2860,14 @@ button:active,
     color: var(--primary-cyan);
 }
 
+#ppobNumberInput {
+    padding: 0.85rem 1rem !important;
+}
+
+.form-group .input-icon-wrapper input {
+    padding-left: 2.8rem !important;
+}
+
 .toggle-password-btn {
     position: absolute;
     right: 0.85rem;
