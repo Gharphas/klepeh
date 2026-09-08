@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="id" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#0369a1">
     <title>My Klepeh - E-Wallet Digital Modern</title>
-    <meta name="description" content="Aplikasi E-Wallet Digital Modern - Kelola Saldo, Transfer, Top Up, dan Tagihan PPOB secara cepat dan aman.">
+    <meta name="description"
+        content="Aplikasi E-Wallet Digital Modern - Kelola Saldo, Transfer, Top Up, dan Tagihan PPOB secara cepat dan aman.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <!-- RemixIcon for rich UI icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="app-container">
         <!-- Sidebar Navigation (Desktop) / Bottom Nav (Mobile) -->
@@ -72,7 +77,8 @@
                         <i class="ri-sun-line light-icon"></i>
                         <i class="ri-moon-line dark-icon"></i>
                     </button>
-                    <button class="btn-icon logout-trigger" id="logoutBtn" title="Keluar dari Akun" style="background: rgba(244, 63, 94, 0.15); color: var(--primary-rose); border: 1px solid rgba(244, 63, 94, 0.3);">
+                    <button class="btn-icon logout-trigger" id="logoutBtn" title="Keluar dari Akun"
+                        style="background: rgba(244, 63, 94, 0.15); color: var(--primary-rose); border: 1px solid rgba(244, 63, 94, 0.3);">
                         <i class="ri-logout-box-r-line"></i>
                     </button>
                 </div>
@@ -93,18 +99,21 @@
                         <i class="ri-sun-line light-icon"></i>
                         <i class="ri-moon-line dark-icon"></i>
                     </button>
-                    <button class="btn-icon support-header-btn" id="btnHeaderSupport" title="Pusat Bantuan & Chat Admin">
+                    <button class="btn-icon support-header-btn" id="btnHeaderSupport"
+                        title="Pusat Bantuan & Chat Admin">
                         <i class="ri-customer-service-2-line"></i>
                     </button>
                     <button class="btn-icon notification-btn" id="notifBtn" title="Notifikasi">
                         <i class="ri-notification-3-line"></i>
                         <span class="badge-dot" id="notifBadge"></span>
                     </button>
-                    <button class="btn-icon logout-trigger" id="headerLogoutBtn" title="Keluar dari Akun" style="background: rgba(244, 63, 94, 0.15); color: var(--primary-rose); border: 1px solid rgba(244, 63, 94, 0.3);">
+                    <button class="btn-icon logout-trigger" id="headerLogoutBtn" title="Keluar dari Akun"
+                        style="background: rgba(244, 63, 94, 0.15); color: var(--primary-rose); border: 1px solid rgba(244, 63, 94, 0.3);">
                         <i class="ri-logout-box-r-line"></i>
                     </button>
                     <div class="profile-dropdown-wrapper">
-                        <div class="quick-profile" id="quickProfileBtn" role="button" tabindex="0" title="Menu Profil & Akun">
+                        <div class="quick-profile" id="quickProfileBtn" role="button" tabindex="0"
+                            title="Menu Profil & Akun">
                             <img src="sasuke.jpg" alt="Profile" class="avatar-img-sm" id="headerAvatar">
                             <span class="profile-name">M Ikhsan Anggara</span>
                             <i class="ri-arrow-down-s-line profile-chevron"></i>
@@ -117,7 +126,8 @@
                                 <div class="dropdown-user-info">
                                     <h4 id="dropdownUserName">M Ikhsan Anggara</h4>
                                     <span class="dropdown-phone" id="dropdownUserPhone">0812-9887-3411</span>
-                                    <span class="user-status"><i class="ri-checkbox-circle-fill"></i> Verified Premier</span>
+                                    <span class="user-status"><i class="ri-checkbox-circle-fill"></i> Verified
+                                        Premier</span>
                                 </div>
                             </div>
                             <div class="dropdown-divider"></div>
@@ -172,7 +182,8 @@
                                 <span class="label">Total Saldo Aktif</span>
                                 <div class="balance-amount-wrapper">
                                     <h2 class="balance-amount" id="userBalance">Rp 12.850.000</h2>
-                                    <button class="btn-icon-ghost toggle-balance-btn" id="toggleBalanceBtn" title="Sembunyikan Saldo">
+                                    <button class="btn-icon-ghost toggle-balance-btn" id="toggleBalanceBtn"
+                                        title="Sembunyikan Saldo">
                                         <i class="ri-eye-line" id="eyeIcon"></i>
                                     </button>
                                 </div>
@@ -186,7 +197,8 @@
                         <div class="card-details-row">
                             <div class="detail-item">
                                 <span class="sub-label">Nomor Akun E-Wallet</span>
-                                <span class="val-text" id="userAccountNum">0831-1210-0096 <i class="ri-file-copy-line copy-icon" id="copyAccBtn"></i></span>
+                                <span class="val-text" id="userAccountNum">0831-1210-0096 <i
+                                        class="ri-file-copy-line copy-icon" id="copyAccBtn"></i></span>
                             </div>
                             <div class="detail-item">
                                 <span class="sub-label">Batas Transaksi Harian</span>
@@ -315,7 +327,9 @@
                             <span>Kripto Pintu</span>
                         </div>
                         <div class="service-item" data-service="support">
-                            <div class="service-icon bg-green" style="background: linear-gradient(135deg, #25d366, #128c7e); color: #fff;"><i class="ri-whatsapp-line"></i></div>
+                            <div class="service-icon bg-green"
+                                style="background: linear-gradient(135deg, #25d366, #128c7e); color: #fff;"><i
+                                    class="ri-whatsapp-line"></i></div>
                             <span>Bantuan CS</span>
                         </div>
                         <div class="service-item" data-service="more">
@@ -391,7 +405,8 @@
                 <div class="tx-filter-bar">
                     <div class="search-input-wrapper">
                         <i class="ri-search-line"></i>
-                        <input type="text" id="txSearchInput" placeholder="Cari berdasarkan nama, merchant, atau nominal...">
+                        <input type="text" id="txSearchInput"
+                            placeholder="Cari berdasarkan nama, merchant, atau nominal...">
                     </div>
                     <div class="filter-pills" id="txCategoryPills">
                         <button class="pill-btn active" data-category="all">Semua</button>
@@ -462,7 +477,8 @@
                         <div class="card-icon bg-purple"><i class="ri-gamepad-line"></i></div>
                         <h4>Voucher Game</h4>
                         <p>Topup Diamond Mobile Legends, Valorant, Free Fire.</p>
-                        <button class="btn-outline-primary btn-ppob-action" data-type="Voucher Game">Top Up Game</button>
+                        <button class="btn-outline-primary btn-ppob-action" data-type="Voucher Game">Top Up
+                            Game</button>
                     </div>
 
                     <div class="ppob-card" id="cardEMoney">
@@ -482,14 +498,16 @@
                         <div class="card-icon bg-teal"><i class="ri-graduation-cap-line"></i></div>
                         <h4>Tagihan Pendidikan</h4>
                         <p>Bayar SPP, UKT, & Biaya Kuliah/Sekolah seluruh Indonesia.</p>
-                        <button class="btn-outline-primary btn-ppob-action" data-type="Education">Bayar Pendidikan</button>
+                        <button class="btn-outline-primary btn-ppob-action" data-type="Education">Bayar
+                            Pendidikan</button>
                     </div>
 
                     <div class="ppob-card" id="cardInstallment">
                         <div class="card-icon bg-pink"><i class="ri-hand-coin-line"></i></div>
                         <h4>Tagihan Cicilan & Kredit</h4>
                         <p>Bayar angsuran FIF, Adira, BAF, WOM, HCI, & Paylater.</p>
-                        <button class="btn-outline-primary btn-ppob-action" data-type="Installment">Bayar Cicilan</button>
+                        <button class="btn-outline-primary btn-ppob-action" data-type="Installment">Bayar
+                            Cicilan</button>
                     </div>
                 </div>
             </div>
@@ -502,7 +520,8 @@
                             <i class="ri-sparkling-fill"></i> Diskon s/d 45% Liburan & Tiket Perjalanan
                         </div>
                         <h2>Pesan Tiket & Reservasi Hotel</h2>
-                        <p>Beli tiket pesawat, kereta api KAI, bus antar kota, dan booking hotel berbintang dengan pembayaran instan Saldo Klepeh.</p>
+                        <p>Beli tiket pesawat, kereta api KAI, bus antar kota, dan booking hotel berbintang dengan
+                            pembayaran instan Saldo Klepeh.</p>
                     </div>
                 </div>
 
@@ -532,7 +551,8 @@
                         <!-- Transport Fields (Flight, Train, Bus) -->
                         <div class="travel-fields-row" id="transportFields">
                             <div class="travel-input-group">
-                                <label for="travelOriginInput"><i class="ri-map-pin-2-line"></i> <span id="labelOrigin">Kota / Bandara Asal</span></label>
+                                <label for="travelOriginInput"><i class="ri-map-pin-2-line"></i> <span
+                                        id="labelOrigin">Kota / Bandara Asal</span></label>
                                 <select id="travelOriginInput" class="custom-select travel-select">
                                     <!-- Populated dynamically -->
                                 </select>
@@ -543,7 +563,8 @@
                             </button>
 
                             <div class="travel-input-group">
-                                <label for="travelDestInput"><i class="ri-map-pin-range-line"></i> <span id="labelDest">Kota / Bandara Tujuan</span></label>
+                                <label for="travelDestInput"><i class="ri-map-pin-range-line"></i> <span
+                                        id="labelDest">Kota / Bandara Tujuan</span></label>
                                 <select id="travelDestInput" class="custom-select travel-select">
                                     <!-- Populated dynamically -->
                                 </select>
@@ -553,7 +574,8 @@
                         <!-- Hotel Specific Fields -->
                         <div class="travel-fields-row hidden" id="hotelFields">
                             <div class="travel-input-group full-width">
-                                <label for="hotelLocationInput"><i class="ri-hotel-line"></i> Kota Tujuan / Nama Destinasi Hotel</label>
+                                <label for="hotelLocationInput"><i class="ri-hotel-line"></i> Kota Tujuan / Nama
+                                    Destinasi Hotel</label>
                                 <select id="hotelLocationInput" class="custom-select travel-select">
                                     <option value="all">Semua Kota & Destinasi Favorit</option>
                                     <option value="Bali">Bali (Kuta, Seminyak, Nusa Dua, Ubud)</option>
@@ -570,12 +592,14 @@
                         <!-- Date, Class, and Passengers / Guests -->
                         <div class="travel-meta-row">
                             <div class="travel-input-group">
-                                <label for="travelDateInput"><i class="ri-calendar-event-line"></i> <span id="labelDate">Tanggal Berangkat / Check-in</span></label>
+                                <label for="travelDateInput"><i class="ri-calendar-event-line"></i> <span
+                                        id="labelDate">Tanggal Berangkat / Check-in</span></label>
                                 <input type="date" id="travelDateInput" class="travel-input" value="2026-09-05">
                             </div>
 
                             <div class="travel-input-group" id="groupTravelClass">
-                                <label for="travelClassInput"><i class="ri-vip-crown-line"></i> <span id="labelClass">Kelas Perjalanan</span></label>
+                                <label for="travelClassInput"><i class="ri-vip-crown-line"></i> <span
+                                        id="labelClass">Kelas Perjalanan</span></label>
                                 <select id="travelClassInput" class="custom-select travel-select">
                                     <option value="all">Semua Kelas</option>
                                     <option value="Ekonomi">Ekonomi</option>
@@ -585,7 +609,8 @@
                             </div>
 
                             <div class="travel-input-group">
-                                <label for="travelPassengerCount"><i class="ri-user-follow-line"></i> <span id="labelPassengerCount">Jumlah Penumpang</span></label>
+                                <label for="travelPassengerCount"><i class="ri-user-follow-line"></i> <span
+                                        id="labelPassengerCount">Jumlah Penumpang</span></label>
                                 <select id="travelPassengerCount" class="custom-select travel-select">
                                     <option value="1">1 Orang / Tamu</option>
                                     <option value="2">2 Orang / Tamu</option>
@@ -634,15 +659,21 @@
                 <div class="invest-hero-banner">
                     <div class="invest-hero-content">
                         <div class="invest-partner-badges-row">
-                            <span class="invest-partner-badge"><i class="ri-leaf-line"></i> Mitra Resmi Bibit (OJK & KSEI)</span>
-                            <span class="invest-partner-badge badge-pintu"><i class="ri-door-lock-line"></i> Mitra Resmi PINTU (Bappebti & CFX)</span>
+                            <span class="invest-partner-badge"><i class="ri-leaf-line"></i> Mitra Resmi Bibit (OJK &
+                                KSEI)</span>
+                            <span class="invest-partner-badge badge-pintu"><i class="ri-door-lock-line"></i> Mitra Resmi
+                                PINTU (Bappebti & CFX)</span>
                         </div>
                         <h2>Investasi Saham, Reksa Dana & Bitcoin</h2>
-                        <p>Kelola portofolio investasi terlengkap! Beli Saham IDX, Reksa Dana Bibit, dan Aset Kripto Bitcoin (BTC) via Pintu langsung menggunakan Saldo My Klepeh.</p>
+                        <p>Kelola portofolio investasi terlengkap! Beli Saham IDX, Reksa Dana Bibit, dan Aset Kripto
+                            Bitcoin (BTC) via Pintu langsung menggunakan Saldo My Klepeh.</p>
                         <div class="invest-hero-actions">
-                            <button class="btn-primary" id="btnOpenBibitApp"><i class="ri-external-link-line"></i> Buka Aplikasi Bibit</button>
-                            <button class="btn-pintu" id="btnOpenPintuApp"><i class="ri-door-open-line"></i> Buka Aplikasi Pintu</button>
-                            <button class="btn-secondary-sm" id="btnSyncBibitPorto"><i class="ri-refresh-line"></i> Sinkronkan Portofolio</button>
+                            <button class="btn-primary" id="btnOpenBibitApp"><i class="ri-external-link-line"></i> Buka
+                                Aplikasi Bibit</button>
+                            <button class="btn-pintu" id="btnOpenPintuApp"><i class="ri-door-open-line"></i> Buka
+                                Aplikasi Pintu</button>
+                            <button class="btn-secondary-sm" id="btnSyncBibitPorto"><i class="ri-refresh-line"></i>
+                                Sinkronkan Portofolio</button>
                         </div>
                     </div>
                 </div>
@@ -654,7 +685,8 @@
                             <span class="porto-label">Total Nilai Portofolio Investasi & Kripto</span>
                             <div class="porto-amount-row">
                                 <h2 class="porto-amount" id="investTotalVal">Rp 12.850.000</h2>
-                                <span class="porto-gain-badge text-success" id="investGainBadge"><i class="ri-arrow-up-line"></i> +Rp 1.480.000 (+13.02%)</span>
+                                <span class="porto-gain-badge text-success" id="investGainBadge"><i
+                                        class="ri-arrow-up-line"></i> +Rp 1.480.000 (+13.02%)</span>
                             </div>
                         </div>
                         <div class="invest-partner-dual-badge">
@@ -729,7 +761,8 @@
                             <h2><i class="ri-safe-2-line"></i> Kantong Impian (Savings Vaults)</h2>
                             <p>Pisahkan saldo dompetmu untuk berbagai impian dan target keuangan masa depan.</p>
                         </div>
-                        <button class="btn-primary" id="btnCreateVaultMain"><i class="ri-add-line"></i> Buat Kantong Baru</button>
+                        <button class="btn-primary" id="btnCreateVaultMain"><i class="ri-add-line"></i> Buat Kantong
+                            Baru</button>
                     </div>
                 </div>
 
@@ -833,15 +866,18 @@
                     <label>Kontak Sering Dihubungi</label>
                     <div class="recent-contacts-row">
                         <div class="contact-pill" data-phone="081299887766" data-name="Budi Santoso">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=80" alt="Budi">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=80"
+                                alt="Budi">
                             <span>Budi</span>
                         </div>
                         <div class="contact-pill" data-phone="085711223344" data-name="Siti Rahma">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=80" alt="Siti">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=80"
+                                alt="Siti">
                             <span>Siti</span>
                         </div>
                         <div class="contact-pill" data-phone="081344556677" data-name="Dewi Lestari">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=80" alt="Dewi">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=80"
+                                alt="Dewi">
                             <span>Dewi</span>
                         </div>
                     </div>
@@ -888,9 +924,10 @@
                 </div>
 
                 <!-- Live Camera Viewfinder -->
-                <div class="qris-viewfinder" id="qrisViewfinder" title="Arahkan ke QR Code atau Ketuk untuk Simulasi Pindai">
+                <div class="qris-viewfinder" id="qrisViewfinder"
+                    title="Arahkan ke QR Code atau Ketuk untuk Simulasi Pindai">
                     <video id="qrisVideoFeed" class="qris-video-feed hidden" autoplay playsinline muted></video>
-                    
+
                     <div class="qris-scanner-overlay">
                         <div class="laser-line"></div>
                         <div class="corner top-left"></div>
@@ -912,7 +949,8 @@
                         <i class="ri-flashlight-line"></i>
                         <span>Senter</span>
                     </button>
-                    <button class="btn-cam-tool" id="btnSwitchCamera" type="button" title="Ganti Kamera Depan / Belakang">
+                    <button class="btn-cam-tool" id="btnSwitchCamera" type="button"
+                        title="Ganti Kamera Depan / Belakang">
                         <i class="ri-camera-switch-line"></i>
                         <span>Ganti Kamera</span>
                     </button>
@@ -924,9 +962,10 @@
                 </div>
 
                 <p class="qris-hint">Arahkan kamera ke Kode QRIS Merchant (Resto, Toko UMKM, Minimarket, dll.)</p>
-                
+
                 <div class="qris-sim-actions">
-                    <button class="btn-secondary-sm" id="btnSimulateScan"><i class="ri-scan-2-line"></i> Simulasi Scan QR Resto (Rp 75.000)</button>
+                    <button class="btn-secondary-sm" id="btnSimulateScan"><i class="ri-scan-2-line"></i> Simulasi Scan
+                        QR Resto (Rp 75.000)</button>
                 </div>
 
                 <div class="qris-checkout-form hidden" id="qrisCheckoutForm">
@@ -942,7 +981,8 @@
                         <label for="qrisAmountInput">Total Pembayaran (Rp)</label>
                         <input type="number" id="qrisAmountInput" value="75000">
                     </div>
-                    <button class="btn-primary w-100" id="btnPayQRIS"><i class="ri-shield-check-line"></i> Lanjutkan Pembayaran (PIN)</button>
+                    <button class="btn-primary w-100" id="btnPayQRIS"><i class="ri-shield-check-line"></i> Lanjutkan
+                        Pembayaran (PIN)</button>
                 </div>
             </div>
         </div>
@@ -996,7 +1036,8 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-ghost" data-close="modalReceipt">Tutup</button>
-                <button class="btn-primary" id="btnPrintReceipt"><i class="ri-download-line"></i> Cetak / Unduh Struk</button>
+                <button class="btn-primary" id="btnPrintReceipt"><i class="ri-download-line"></i> Cetak / Unduh
+                    Struk</button>
             </div>
         </div>
     </div>
@@ -1011,7 +1052,8 @@
                     </div>
                     <div>
                         <h3 id="ppobModalTitle">Pembayaran Layanan PPOB</h3>
-                        <span class="ppob-subtitle" id="ppobModalSubtitle">Proses instan & verifikasi otomatis 24 Jam</span>
+                        <span class="ppob-subtitle" id="ppobModalSubtitle">Proses instan & verifikasi otomatis 24
+                            Jam</span>
                     </div>
                 </div>
                 <button class="modal-close" data-close="modalPpobCheckout">&times;</button>
@@ -1038,7 +1080,8 @@
                 <!-- Number Input / Customer ID / Game ID -->
                 <div class="form-group">
                     <label for="ppobNumberInput" id="ppobNumLabel">Nomor HP / ID Pelanggan</label>
-                    <input type="text" id="ppobNumberInput" placeholder="Contoh: 081298873411 atau No. Meter" class="auth-input">
+                    <input type="text" id="ppobNumberInput" placeholder="Contoh: 081298873411 atau No. Meter"
+                        class="auth-input">
                 </div>
 
                 <!-- Optional Game Zone/Server ID (for Games) -->
@@ -1050,7 +1093,8 @@
                 <!-- Bill Inquiry / Tagihan Preview Card (For Postpaid PLN, PDAM, BPJS, Internet) -->
                 <div class="ppob-inquiry-card hidden" id="ppobInquiryCard">
                     <div class="inquiry-header">
-                        <span class="badge-status badge-success"><i class="ri-checkbox-circle-fill"></i> Data Tagihan Ditemukan</span>
+                        <span class="badge-status badge-success"><i class="ri-checkbox-circle-fill"></i> Data Tagihan
+                            Ditemukan</span>
                         <strong class="inquiry-period" id="inquiryPeriod">Bulan Berjalan (2026)</strong>
                     </div>
                     <div class="inquiry-details-grid">
@@ -1100,7 +1144,8 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-ghost" data-close="modalPpobCheckout">Batal</button>
-                <button class="btn-primary" id="btnSubmitPpob"><i class="ri-shield-check-line"></i> Bayar Sekarang (PIN)</button>
+                <button class="btn-primary" id="btnSubmitPpob"><i class="ri-shield-check-line"></i> Bayar Sekarang
+                    (PIN)</button>
             </div>
         </div>
     </div>
@@ -1164,7 +1209,8 @@
             <div class="modal-body text-center">
                 <h3 class="logout-modal-title">Keluar dari Akun?</h3>
                 <p class="logout-modal-desc">
-                    Apakah Anda yakin ingin keluar dari akun <strong id="logoutUserNameModal">M Ikhsan Anggara</strong>? Anda dapat masuk kembali kapan saja menggunakan nomor ponsel atau biometrik.
+                    Apakah Anda yakin ingin keluar dari akun <strong id="logoutUserNameModal">M Ikhsan Anggara</strong>?
+                    Anda dapat masuk kembali kapan saja menggunakan nomor ponsel atau biometrik.
                 </p>
                 <div class="logout-user-preview">
                     <img src="sasuke.jpg" alt="Avatar" class="avatar-img-sm" id="logoutAvatarModal">
@@ -1176,7 +1222,8 @@
             </div>
             <div class="modal-footer logout-modal-footer">
                 <button class="btn-ghost" data-close="modalLogoutConfirm">Batal</button>
-                <button class="btn-primary" id="btnConfirmLogout" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); border: 1px solid rgba(244, 63, 94, 0.4); box-shadow: 0 4px 15px rgba(244, 63, 94, 0.35);">
+                <button class="btn-primary" id="btnConfirmLogout"
+                    style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); border: 1px solid rgba(244, 63, 94, 0.4); box-shadow: 0 4px 15px rgba(244, 63, 94, 0.35);">
                     <i class="ri-logout-box-r-line"></i> Ya, Keluar Akun
                 </button>
             </div>
@@ -1196,7 +1243,8 @@
                     <div class="vault-icon-box" id="withdrawVaultIconBox"><i class="ri-safe-2-line"></i></div>
                     <div>
                         <h4 id="withdrawVaultName">Liburan ke Japan 2026</h4>
-                        <span class="text-muted">Saldo Tersimpan: <strong id="withdrawVaultAvailable" class="text-success">Rp 13.000.000</strong></span>
+                        <span class="text-muted">Saldo Tersimpan: <strong id="withdrawVaultAvailable"
+                                class="text-success">Rp 13.000.000</strong></span>
                     </div>
                 </div>
 
@@ -1213,7 +1261,8 @@
 
                 <div class="form-group">
                     <label for="withdrawVaultAmountInput">Atau Masukkan Nominal Kustom (Rp)</label>
-                    <input type="number" id="withdrawVaultAmountInput" placeholder="Contoh: 100000" min="10000" value="100000">
+                    <input type="number" id="withdrawVaultAmountInput" placeholder="Contoh: 100000" min="10000"
+                        value="100000">
                 </div>
 
                 <div class="form-group">
@@ -1229,7 +1278,8 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-ghost" data-close="modalWithdrawVault">Batal</button>
-                <button class="btn-primary" id="btnSubmitWithdrawVault"><i class="ri-check-line"></i> Cairkan ke Saldo Utama</button>
+                <button class="btn-primary" id="btnSubmitWithdrawVault"><i class="ri-check-line"></i> Cairkan ke Saldo
+                    Utama</button>
             </div>
         </div>
     </div>
@@ -1241,7 +1291,7 @@
                 <h3><i class="ri-bank-card-line"></i> Tarik Tunai (Cash Out)</h3>
                 <button class="modal-close" data-close="modalCashOut">&times;</button>
             </div>
-            
+
             <!-- Step 1: Form Pembuatan Token -->
             <div class="modal-body" id="cashOutFormStep">
                 <div class="form-group">
@@ -1296,9 +1346,10 @@
 
                 <div class="fee-summary-row">
                     <span>Biaya Admin</span>
-                    <strong class="text-success"><i class="ri-shield-check-line"></i> GRATIS (Promo Bebas Biaya)</strong>
+                    <strong class="text-success"><i class="ri-shield-check-line"></i> GRATIS (Promo Bebas
+                        Biaya)</strong>
                 </div>
-                
+
                 <div class="modal-footer" style="padding: 1.25rem 0 0 0; margin-top: 1rem;">
                     <button class="btn-ghost" data-close="modalCashOut">Batal</button>
                     <button class="btn-primary" id="btnProceedCashOut">Lanjutkan Ke PIN</button>
@@ -1312,7 +1363,7 @@
                         <span class="pulse-dot"></span> Token Penarikan Aktif
                     </div>
                     <div class="token-channel-info" id="activeTokenChannel">Indomaret</div>
-                    
+
                     <div class="token-code-display">
                         <span class="token-digits" id="activeTokenCode">849 201</span>
                         <button class="btn-copy-token" id="btnCopyCashOutToken" title="Salin Kode">
@@ -1328,10 +1379,22 @@
                     <!-- Barcode Visual Generator -->
                     <div class="barcode-container">
                         <div class="barcode-lines">
-                            <div class="b-line w-2"></div><div class="b-line w-1"></div><div class="b-line w-3"></div><div class="b-line w-1"></div>
-                            <div class="b-line w-2"></div><div class="b-line w-4"></div><div class="b-line w-2"></div><div class="b-line w-1"></div>
-                            <div class="b-line w-3"></div><div class="b-line w-2"></div><div class="b-line w-1"></div><div class="b-line w-4"></div>
-                            <div class="b-line w-2"></div><div class="b-line w-1"></div><div class="b-line w-3"></div><div class="b-line w-2"></div>
+                            <div class="b-line w-2"></div>
+                            <div class="b-line w-1"></div>
+                            <div class="b-line w-3"></div>
+                            <div class="b-line w-1"></div>
+                            <div class="b-line w-2"></div>
+                            <div class="b-line w-4"></div>
+                            <div class="b-line w-2"></div>
+                            <div class="b-line w-1"></div>
+                            <div class="b-line w-3"></div>
+                            <div class="b-line w-2"></div>
+                            <div class="b-line w-1"></div>
+                            <div class="b-line w-4"></div>
+                            <div class="b-line w-2"></div>
+                            <div class="b-line w-1"></div>
+                            <div class="b-line w-3"></div>
+                            <div class="b-line w-2"></div>
                         </div>
                         <small class="barcode-sub">Tunjukkan barcode ini kepada kasir</small>
                     </div>
@@ -1340,15 +1403,18 @@
                         <h5><i class="ri-information-line"></i> Petunjuk Penarikan:</h5>
                         <ol>
                             <li>Kunjungi gerai mitra atau ATM terdekat.</li>
-                            <li>Tunjukkan <strong>Kode Token 6-digit</strong> atau scan barcode ke kasir / pilih menu Tarik Tunai Tanpa Kartu di ATM.</li>
+                            <li>Tunjukkan <strong>Kode Token 6-digit</strong> atau scan barcode ke kasir / pilih menu
+                                Tarik Tunai Tanpa Kartu di ATM.</li>
                             <li>Terima uang tunai Anda sebesar <strong id="tokenAmountDisplay">Rp 100.000</strong>.</li>
                         </ol>
                     </div>
                 </div>
 
                 <div class="modal-footer" style="padding: 1rem 0 0 0; margin-top: 1rem; display: flex; gap: 0.75rem;">
-                    <button class="btn-ghost text-danger" id="btnCancelCashOutToken" style="flex: 1;"><i class="ri-close-circle-line"></i> Batalkan Token</button>
-                    <button class="btn-primary" id="btnCompleteCashOut" style="flex: 1;"><i class="ri-checkbox-circle-line"></i> Selesai Ambil Uang</button>
+                    <button class="btn-ghost text-danger" id="btnCancelCashOutToken" style="flex: 1;"><i
+                            class="ri-close-circle-line"></i> Batalkan Token</button>
+                    <button class="btn-primary" id="btnCompleteCashOut" style="flex: 1;"><i
+                            class="ri-checkbox-circle-line"></i> Selesai Ambil Uang</button>
                 </div>
             </div>
         </div>
@@ -1367,7 +1433,7 @@
                     <img src="sasuke.jpg" alt="Avatar" class="avatar-img-sm" id="receiveAvatar">
                     <div class="receive-user-meta">
                         <h4 id="receiveUserName">M Ikhsan Anggara</h4>
-                        <span id="receiveUserPhone">0812-9887-3411</span>
+                        <span id="receiveUserPhone">0895-3254-80299</span>
                     </div>
                     <span class="user-status"><i class="ri-checkbox-circle-fill"></i> Premier</span>
                 </div>
@@ -1378,43 +1444,43 @@
                         <!-- High Quality SVG QR Code Simulation with Center Badge -->
                         <div class="qr-code-art">
                             <svg viewBox="0 0 200 200" width="180" height="180" class="qr-svg">
-                                <rect width="200" height="200" fill="#ffffff" rx="12"/>
+                                <rect width="200" height="200" fill="#ffffff" rx="12" />
                                 <!-- Top-Left Target -->
-                                <rect x="15" y="15" width="45" height="45" rx="6" fill="#0369a1"/>
-                                <rect x="23" y="23" width="29" height="29" rx="3" fill="#ffffff"/>
-                                <rect x="29" y="29" width="17" height="17" rx="2" fill="#0369a1"/>
+                                <rect x="15" y="15" width="45" height="45" rx="6" fill="#0369a1" />
+                                <rect x="23" y="23" width="29" height="29" rx="3" fill="#ffffff" />
+                                <rect x="29" y="29" width="17" height="17" rx="2" fill="#0369a1" />
                                 <!-- Top-Right Target -->
-                                <rect x="140" y="15" width="45" height="45" rx="6" fill="#0369a1"/>
-                                <rect x="148" y="23" width="29" height="29" rx="3" fill="#ffffff"/>
-                                <rect x="154" y="29" width="17" height="17" rx="2" fill="#0369a1"/>
+                                <rect x="140" y="15" width="45" height="45" rx="6" fill="#0369a1" />
+                                <rect x="148" y="23" width="29" height="29" rx="3" fill="#ffffff" />
+                                <rect x="154" y="29" width="17" height="17" rx="2" fill="#0369a1" />
                                 <!-- Bottom-Left Target -->
-                                <rect x="15" y="140" width="45" height="45" rx="6" fill="#0369a1"/>
-                                <rect x="23" y="148" width="29" height="29" rx="3" fill="#ffffff"/>
-                                <rect x="29" y="154" width="17" height="17" rx="2" fill="#0369a1"/>
+                                <rect x="15" y="140" width="45" height="45" rx="6" fill="#0369a1" />
+                                <rect x="23" y="148" width="29" height="29" rx="3" fill="#ffffff" />
+                                <rect x="29" y="154" width="17" height="17" rx="2" fill="#0369a1" />
                                 <!-- Random decorative QR pattern squares -->
-                                <rect x="70" y="20" width="12" height="12" fill="#0f172a"/>
-                                <rect x="90" y="20" width="12" height="12" fill="#0f172a"/>
-                                <rect x="110" y="20" width="12" height="12" fill="#0f172a"/>
-                                <rect x="70" y="40" width="12" height="12" fill="#0f172a"/>
-                                <rect x="110" y="40" width="12" height="12" fill="#0f172a"/>
-                                <rect x="70" y="60" width="24" height="12" fill="#0f172a"/>
-                                <rect x="100" y="60" width="24" height="12" fill="#0f172a"/>
-                                <rect x="20" y="70" width="12" height="24" fill="#0f172a"/>
-                                <rect x="40" y="80" width="20" height="12" fill="#0f172a"/>
-                                <rect x="140" y="70" width="12" height="24" fill="#0f172a"/>
-                                <rect x="160" y="80" width="20" height="12" fill="#0f172a"/>
-                                <rect x="20" y="110" width="24" height="12" fill="#0f172a"/>
-                                <rect x="70" y="130" width="12" height="24" fill="#0f172a"/>
-                                <rect x="90" y="140" width="30" height="12" fill="#0f172a"/>
-                                <rect x="130" y="130" width="12" height="30" fill="#0f172a"/>
-                                <rect x="150" y="130" width="20" height="12" fill="#0f172a"/>
-                                <rect x="70" y="170" width="24" height="15" fill="#0f172a"/>
-                                <rect x="110" y="170" width="20" height="15" fill="#0f172a"/>
-                                <rect x="150" y="160" width="30" height="25" fill="#0f172a"/>
+                                <rect x="70" y="20" width="12" height="12" fill="#0f172a" />
+                                <rect x="90" y="20" width="12" height="12" fill="#0f172a" />
+                                <rect x="110" y="20" width="12" height="12" fill="#0f172a" />
+                                <rect x="70" y="40" width="12" height="12" fill="#0f172a" />
+                                <rect x="110" y="40" width="12" height="12" fill="#0f172a" />
+                                <rect x="70" y="60" width="24" height="12" fill="#0f172a" />
+                                <rect x="100" y="60" width="24" height="12" fill="#0f172a" />
+                                <rect x="20" y="70" width="12" height="24" fill="#0f172a" />
+                                <rect x="40" y="80" width="20" height="12" fill="#0f172a" />
+                                <rect x="140" y="70" width="12" height="24" fill="#0f172a" />
+                                <rect x="160" y="80" width="20" height="12" fill="#0f172a" />
+                                <rect x="20" y="110" width="24" height="12" fill="#0f172a" />
+                                <rect x="70" y="130" width="12" height="24" fill="#0f172a" />
+                                <rect x="90" y="140" width="30" height="12" fill="#0f172a" />
+                                <rect x="130" y="130" width="12" height="30" fill="#0f172a" />
+                                <rect x="150" y="130" width="20" height="12" fill="#0f172a" />
+                                <rect x="70" y="170" width="24" height="15" fill="#0f172a" />
+                                <rect x="110" y="170" width="20" height="15" fill="#0f172a" />
+                                <rect x="150" y="160" width="30" height="25" fill="#0f172a" />
                                 <!-- Center Klepeh Logo Overlay -->
-                                <circle cx="100" cy="100" r="22" fill="#ffffff" stroke="#0284c7" stroke-width="3"/>
-                                <circle cx="100" cy="100" r="16" fill="#0284c7"/>
-                                <path d="M93 95 H107 V105 H93 Z" fill="#ffffff"/>
+                                <circle cx="100" cy="100" r="22" fill="#ffffff" stroke="#0284c7" stroke-width="3" />
+                                <circle cx="100" cy="100" r="16" fill="#0284c7" />
+                                <path d="M93 95 H107 V105 H93 Z" fill="#ffffff" />
                             </svg>
                         </div>
                     </div>
@@ -1427,7 +1493,8 @@
                 <div class="form-group text-left mt-3">
                     <label for="receiveAmountInput">Atur Nominal yang Diminta (Opsional)</label>
                     <div class="input-icon-wrapper">
-                        <input type="number" id="receiveAmountInput" placeholder="Masukkan jumlah, contoh: 50000" class="auth-input">
+                        <input type="number" id="receiveAmountInput" placeholder="Masukkan jumlah, contoh: 50000"
+                            class="auth-input">
                         <i class="ri-money-dollar-circle-line left-icon"></i>
                     </div>
                 </div>
@@ -1450,7 +1517,8 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-ghost" data-close="modalReceiveQR">Tutup</button>
-                <button class="btn-primary" id="btnDownloadQR"><i class="ri-download-2-line"></i> Unduh Gambar QR</button>
+                <button class="btn-primary" id="btnDownloadQR"><i class="ri-download-2-line"></i> Unduh Gambar
+                    QR</button>
             </div>
         </div>
     </div>
@@ -1459,7 +1527,8 @@
     <div class="modal-overlay" id="modalTravelBooking">
         <div class="modal-box modal-travel-box">
             <div class="modal-header">
-                <h3 id="bookingModalTitle"><i class="ri-flight-takeoff-line"></i> Konfirmasi Pemesanan & Pilih Kursi</h3>
+                <h3 id="bookingModalTitle"><i class="ri-flight-takeoff-line"></i> Konfirmasi Pemesanan & Pilih Kursi
+                </h3>
                 <button class="modal-close" data-close="modalTravelBooking">&times;</button>
             </div>
             <div class="modal-body">
@@ -1479,13 +1548,15 @@
                         </div>
                     </div>
                     <div class="vehicle-cabin-container">
-                        <div class="vehicle-front-badge" id="vehicleFrontLabel"><i class="ri-arrow-up-s-line"></i> BAGIAN DEPAN (KOKPIT/KABIN DEPAN)</div>
+                        <div class="vehicle-front-badge" id="vehicleFrontLabel"><i class="ri-arrow-up-s-line"></i>
+                            BAGIAN DEPAN (KOKPIT/KABIN DEPAN)</div>
                         <div class="seat-grid-matrix" id="seatGridMatrix">
                             <!-- Populated dynamically -->
                         </div>
                     </div>
                     <div class="selected-seat-badge" id="selectedSeatAlert">
-                        <i class="ri-checkbox-circle-fill"></i> Kursi Terpilih: <strong id="selectedSeatNumber">2A</strong> (<span id="selectedSeatClass">Ekonomi</span>)
+                        <i class="ri-checkbox-circle-fill"></i> Kursi Terpilih: <strong
+                            id="selectedSeatNumber">2A</strong> (<span id="selectedSeatClass">Ekonomi</span>)
                     </div>
                 </div>
 
@@ -1521,7 +1592,8 @@
                         </div>
                         <div class="form-group">
                             <label for="travelGuestPhone">Nomor WhatsApp / HP</label>
-                            <input type="text" id="travelGuestPhone" value="0812-9887-3411" placeholder="08xx-xxxx-xxxx">
+                            <input type="text" id="travelGuestPhone" value="0812-9887-3411"
+                                placeholder="08xx-xxxx-xxxx">
                         </div>
                     </div>
                 </div>
@@ -1529,11 +1601,14 @@
                 <!-- Promo Voucher & Price Calculation -->
                 <div class="travel-pricing-card">
                     <div class="promo-input-row">
-                        <input type="text" id="travelPromoCode" placeholder="Masukkan Kode Promo (contoh: KLEPEHTRAVEL)">
+                        <input type="text" id="travelPromoCode"
+                            placeholder="Masukkan Kode Promo (contoh: KLEPEHTRAVEL)">
                         <button type="button" class="btn-outline-primary" id="btnApplyTravelPromo">Terapkan</button>
                     </div>
                     <div class="promo-tag-applied hidden" id="promoAppliedAlert">
-                        <i class="ri-discount-percent-fill"></i> Promo <strong id="appliedPromoName">KLEPEHTRAVEL</strong> aktif: Diskon <span id="appliedPromoDiscount">Rp 50.000</span>
+                        <i class="ri-discount-percent-fill"></i> Promo <strong
+                            id="appliedPromoName">KLEPEHTRAVEL</strong> aktif: Diskon <span id="appliedPromoDiscount">Rp
+                            50.000</span>
                     </div>
 
                     <div class="price-breakdown-list">
@@ -1656,30 +1731,42 @@
                     <div class="bp-barcode-section">
                         <div class="bp-qr-box">
                             <svg viewBox="0 0 100 100" width="80" height="80">
-                                <rect width="100" height="100" fill="#ffffff"/>
-                                <rect x="5" y="5" width="25" height="25" fill="#0284c7"/>
-                                <rect x="10" y="10" width="15" height="15" fill="#ffffff"/>
-                                <rect x="13" y="13" width="9" height="9" fill="#0284c7"/>
-                                <rect x="70" y="5" width="25" height="25" fill="#0284c7"/>
-                                <rect x="75" y="10" width="15" height="15" fill="#ffffff"/>
-                                <rect x="78" y="13" width="9" height="9" fill="#0284c7"/>
-                                <rect x="5" y="70" width="25" height="25" fill="#0284c7"/>
-                                <rect x="10" y="75" width="15" height="15" fill="#ffffff"/>
-                                <rect x="13" y="78" width="9" height="9" fill="#0284c7"/>
-                                <rect x="35" y="10" width="10" height="10" fill="#0f172a"/>
-                                <rect x="50" y="25" width="15" height="8" fill="#0f172a"/>
-                                <rect x="35" y="45" width="30" height="10" fill="#0f172a"/>
-                                <rect x="40" y="65" width="20" height="12" fill="#0f172a"/>
-                                <rect x="70" y="50" width="25" height="10" fill="#0f172a"/>
-                                <rect x="70" y="70" width="25" height="25" fill="#0f172a"/>
+                                <rect width="100" height="100" fill="#ffffff" />
+                                <rect x="5" y="5" width="25" height="25" fill="#0284c7" />
+                                <rect x="10" y="10" width="15" height="15" fill="#ffffff" />
+                                <rect x="13" y="13" width="9" height="9" fill="#0284c7" />
+                                <rect x="70" y="5" width="25" height="25" fill="#0284c7" />
+                                <rect x="75" y="10" width="15" height="15" fill="#ffffff" />
+                                <rect x="78" y="13" width="9" height="9" fill="#0284c7" />
+                                <rect x="5" y="70" width="25" height="25" fill="#0284c7" />
+                                <rect x="10" y="75" width="15" height="15" fill="#ffffff" />
+                                <rect x="13" y="78" width="9" height="9" fill="#0284c7" />
+                                <rect x="35" y="10" width="10" height="10" fill="#0f172a" />
+                                <rect x="50" y="25" width="15" height="8" fill="#0f172a" />
+                                <rect x="35" y="45" width="30" height="10" fill="#0f172a" />
+                                <rect x="40" y="65" width="20" height="12" fill="#0f172a" />
+                                <rect x="70" y="50" width="25" height="10" fill="#0f172a" />
+                                <rect x="70" y="70" width="25" height="25" fill="#0f172a" />
                             </svg>
                         </div>
                         <div class="bp-barcode-lines">
                             <div class="barcode-lines bp-bars">
-                                <div class="b-line w-2"></div><div class="b-line w-1"></div><div class="b-line w-3"></div><div class="b-line w-2"></div>
-                                <div class="b-line w-4"></div><div class="b-line w-1"></div><div class="b-line w-2"></div><div class="b-line w-3"></div>
-                                <div class="b-line w-1"></div><div class="b-line w-4"></div><div class="b-line w-2"></div><div class="b-line w-1"></div>
-                                <div class="b-line w-3"></div><div class="b-line w-2"></div><div class="b-line w-4"></div><div class="b-line w-2"></div>
+                                <div class="b-line w-2"></div>
+                                <div class="b-line w-1"></div>
+                                <div class="b-line w-3"></div>
+                                <div class="b-line w-2"></div>
+                                <div class="b-line w-4"></div>
+                                <div class="b-line w-1"></div>
+                                <div class="b-line w-2"></div>
+                                <div class="b-line w-3"></div>
+                                <div class="b-line w-1"></div>
+                                <div class="b-line w-4"></div>
+                                <div class="b-line w-2"></div>
+                                <div class="b-line w-1"></div>
+                                <div class="b-line w-3"></div>
+                                <div class="b-line w-2"></div>
+                                <div class="b-line w-4"></div>
+                                <div class="b-line w-2"></div>
                             </div>
                             <span class="bp-barcode-code" id="bpBarcodeNumeric">9823 4581 8942 0019</span>
                             <small class="bp-scan-note">Tunjukkan e-ticket ini saat Check-In / Boarding di Gate</small>
@@ -1690,7 +1777,8 @@
             <div class="modal-footer">
                 <button class="btn-ghost" data-close="modalETicket"><i class="ri-close-line"></i> Tutup</button>
                 <button class="btn-outline-primary" id="btnShareETicket"><i class="ri-share-line"></i> Bagikan</button>
-                <button class="btn-primary" id="btnPrintETicket"><i class="ri-printer-line"></i> Cetak / Simpan PDF</button>
+                <button class="btn-primary" id="btnPrintETicket"><i class="ri-printer-line"></i> Cetak / Simpan
+                    PDF</button>
             </div>
         </div>
     </div>
@@ -1705,7 +1793,8 @@
                     </div>
                     <div>
                         <h3 id="investOrderModalTitle">Beli Saham BBCA</h3>
-                        <span class="invest-subtitle" id="investOrderSubtitle">PT Bank Central Asia Tbk • IDX / LQ45</span>
+                        <span class="invest-subtitle" id="investOrderSubtitle">PT Bank Central Asia Tbk • IDX /
+                            LQ45</span>
                     </div>
                 </div>
                 <button class="modal-close" data-close="modalInvestOrder">&times;</button>
@@ -1736,12 +1825,14 @@
                 <div class="form-group mt-3 hidden" id="groupInvestNominal">
                     <label for="investNominalInput" id="investNominalLabel">Nominal Pembelian (Rp)</label>
                     <div class="input-icon-wrapper">
-                        <input type="number" id="investNominalInput" min="10000" step="10000" value="100000" class="auth-input">
+                        <input type="number" id="investNominalInput" min="10000" step="10000" value="100000"
+                            class="auth-input">
                         <i class="ri-money-dollar-circle-line left-icon"></i>
                     </div>
                     <!-- Crypto Coin Estimate Badge -->
                     <div class="crypto-est-badge hidden mt-2" id="cryptoEstBadge">
-                        <i class="ri-bit-coin-line"></i> Estimasi Koin Didapat: <strong id="cryptoEstCoinVal">0.0000952 BTC</strong>
+                        <i class="ri-bit-coin-line"></i> Estimasi Koin Didapat: <strong id="cryptoEstCoinVal">0.0000952
+                            BTC</strong>
                     </div>
                 </div>
 
@@ -1749,9 +1840,11 @@
                 <div class="auto-invest-toggle-card">
                     <div>
                         <strong id="autoInvestTitle">Nabung Rutin Tiap Bulan (Auto-Invest)</strong>
-                        <div><small class="text-secondary" id="autoInvestSub">Otomatis alokasikan dari saldo My Klepeh tiap tanggal 25</small></div>
+                        <div><small class="text-secondary" id="autoInvestSub">Otomatis alokasikan dari saldo My Klepeh
+                                tiap tanggal 25</small></div>
                     </div>
-                    <input type="checkbox" id="checkAutoInvest" style="width: 20px; height: 20px; accent-color: var(--primary-cyan); cursor: pointer;">
+                    <input type="checkbox" id="checkAutoInvest"
+                        style="width: 20px; height: 20px; accent-color: var(--primary-cyan); cursor: pointer;">
                 </div>
 
                 <!-- Pintu Earn APY Card (Visible for Crypto) -->
@@ -1782,13 +1875,15 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-ghost" data-close="modalInvestOrder">Batal</button>
-                <button class="btn-primary" id="btnConfirmBuyInvest"><i class="ri-shield-check-line"></i> Konfirmasi Beli (PIN)</button>
+                <button class="btn-primary" id="btnConfirmBuyInvest"><i class="ri-shield-check-line"></i> Konfirmasi
+                    Beli (PIN)</button>
             </div>
         </div>
     </div>
 
     <!-- Floating Support Chat WhatsApp Button -->
-    <div class="floating-support-wrapper" id="fabSupportChat" role="button" tabindex="0" title="Hubungi Admin WhatsApp (0887437995615)">
+    <div class="floating-support-wrapper" id="fabSupportChat" role="button" tabindex="0"
+        title="Hubungi Admin WhatsApp (0887437995616)">
         <div class="support-pulse"></div>
         <div class="floating-support-btn">
             <i class="ri-whatsapp-fill fab-wa-icon"></i>
@@ -1808,7 +1903,8 @@
                     </div>
                     <div>
                         <h3>Layanan Bantuan & CS My Klepeh</h3>
-                        <span class="support-sub"><i class="ri-whatsapp-fill text-success"></i> WhatsApp Resmi: <strong>0887437995615</strong></span>
+                        <span class="support-sub"><i class="ri-whatsapp-fill text-success"></i> WhatsApp Resmi:
+                            <strong>0887437995616</strong></span>
                     </div>
                 </div>
                 <button class="modal-close" data-close="modalSupportChat">&times;</button>
@@ -1817,9 +1913,11 @@
                 <!-- CS Welcome Card -->
                 <div class="support-welcome-card">
                     <div class="support-welcome-text">
-                        <div class="agent-name-tag"><i class="ri-shield-check-fill"></i> Customer Support Resmi (24/7)</div>
+                        <div class="agent-name-tag"><i class="ri-shield-check-fill"></i> Customer Support Resmi (24/7)
+                        </div>
                         <h4>Ada kendala dengan transaksi Anda?</h4>
-                        <p>Tim admin kami siap membantu menyelesaikan segala kendala top up, transfer, QRIS, tagihan, hingga investasi secara cepat dan aman via WhatsApp.</p>
+                        <p>Tim admin kami siap membantu menyelesaikan segala kendala top up, transfer, QRIS, tagihan,
+                            hingga investasi secara cepat dan aman via WhatsApp.</p>
                     </div>
                 </div>
 
@@ -1857,7 +1955,8 @@
                 <!-- Detail / Custom Message Input -->
                 <div class="form-group mt-3">
                     <label for="supportMessageDetail"><i class="ri-edit-line"></i> Deskripsi Kendala (Opsional):</label>
-                    <textarea id="supportMessageDetail" rows="3" class="auth-input" placeholder="Jelaskan detail kendala atau ID transaksi jika ada (contoh: ID Transaksi KLP-8841)..."></textarea>
+                    <textarea id="supportMessageDetail" rows="3" class="auth-input"
+                        placeholder="Jelaskan detail kendala atau ID transaksi jika ada (contoh: ID Transaksi KLP-8841)..."></textarea>
                 </div>
 
                 <!-- WhatsApp Admin Number Display & Fast Copy -->
@@ -1888,4 +1987,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
