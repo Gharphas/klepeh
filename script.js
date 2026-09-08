@@ -4118,10 +4118,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ----------------------------------------------------------------------
-    // 15. CUSTOMER SUPPORT & CHAT ADMIN WHATSAPP (0887437995615)
+    // 15. CUSTOMER SUPPORT & CHAT ADMIN WHATSAPP (0887437995616)
     // ----------------------------------------------------------------------
-    const ADMIN_WA_RAW = '0887437995615';
-    const ADMIN_WA_INTL = '62887437995615';
+    const ADMIN_WA_RAW = '0887437995616';
+    const ADMIN_WA_INTL = '62887437995616';
     let currentSelectedSupportTopic = 'Top Up Saldo Belum Masuk';
 
     window.openSupportChatModal = function() {
@@ -4156,7 +4156,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const waMeUrl = `https://wa.me/${ADMIN_WA_INTL}?text=${encoded}`;
 
         playSuccessSound();
-        showToast('Membuka WhatsApp Admin My Klepeh (0887-4379-95615)... 💬', 'success');
+        showToast('Membuka WhatsApp Admin My Klepeh (0887-4379-95616)... 💬', 'success');
 
         closeModal('modalSupportChat');
 
