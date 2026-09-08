@@ -344,6 +344,12 @@
                                     class="ri-line-chart-line"></i></div>
                             <span>IHSG Saham</span>
                         </div>
+                        <div class="service-item" id="serviceItemShopee" title="Belanja Online Shopee Langsung Terhubung ke Aplikasi">
+                            <div class="service-icon"
+                                style="background: linear-gradient(135deg, #ee4d2d, #ff6433); color: #fff; box-shadow: 0 4px 12px rgba(238, 77, 45, 0.35);"><i
+                                    class="ri-shopping-bag-3-fill"></i></div>
+                            <span>Belanja Shopee</span>
+                        </div>
                         <div class="service-item" data-service="more">
                             <div class="service-icon bg-slate"><i class="ri-more-fill"></i></div>
                             <span>Lainnya</span>
@@ -568,6 +574,274 @@
                                 </button>
                             </div>
                         </div>
+                    </div>
+                </section>
+
+                <!-- Fitur Belanja Online Langsung Terhubung ke Aplikasi Shopee -->
+                <section class="section-container shopee-widget-section" id="sectionShopeeShopping">
+                    <div class="section-header">
+                        <div class="shopee-header-title">
+                            <div class="shopee-brand-badge">
+                                <i class="ri-shopping-bag-3-fill"></i>
+                                <span>Shopee Mall</span>
+                            </div>
+                            <h3>Belanja Online Terhubung ke Shopee</h3>
+                            <span class="shopee-partner-pill">
+                                <i class="ri-verified-badge-fill"></i> Resmi Terhubung
+                            </span>
+                        </div>
+                        <div class="shopee-header-actions">
+                            <div class="shopee-flash-timer-pill" title="Flash Sale Shopee">
+                                <i class="ri-flashlight-fill"></i>
+                                <span>Flash Sale:</span>
+                                <strong id="shopeeCountdownTimer">02:45:18</strong>
+                            </div>
+                            <button type="button" class="btn-shopee-native-header" id="btnHeaderOpenShopee" title="Buka Aplikasi Shopee di HP / Komputer">
+                                <i class="ri-external-link-line"></i> Buka Shopee App
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Shopee Search Bar & Fast Query Box -->
+                    <div class="shopee-search-wrapper">
+                        <div class="shopee-search-bar">
+                            <i class="ri-search-2-line shopee-search-icon"></i>
+                            <input type="text" id="shopeeSearchInput" class="shopee-search-input" 
+                                placeholder="Cari produk apa saja di Shopee (contoh: Sepatu Pria, iPhone 15, Kemeja, Skincare, Tas)..." 
+                                autocomplete="off" />
+                            <button type="button" class="btn-shopee-search" id="btnShopeeSearch">
+                                <i class="ri-search-line"></i> Cari di Shopee
+                            </button>
+                            <button type="button" class="btn-shopee-app-launch" id="btnDirectShopeeApp" title="Langsung Membuka Aplikasi Shopee di HP Anda">
+                                <i class="ri-smartphone-line"></i> Buka Aplikasi Shopee
+                            </button>
+                        </div>
+
+                        <!-- Shopee Quick Category Chips -->
+                        <div class="shopee-chips-scroll" id="shopeeCategoryChips">
+                            <button type="button" class="shopee-chip active" data-query="flash sale">
+                                <i class="ri-flashlight-line"></i> Flash Sale
+                            </button>
+                            <button type="button" class="shopee-chip" data-query="elektronik gadget">
+                                <i class="ri-smartphone-line"></i> Gadget & HP
+                            </button>
+                            <button type="button" class="shopee-chip" data-query="fashion pakaian">
+                                <i class="ri-t-shirt-line"></i> Fashion
+                            </button>
+                            <button type="button" class="shopee-chip" data-query="skincare kecantikan">
+                                <i class="ri-sparkling-line"></i> Skincare
+                            </button>
+                            <button type="button" class="shopee-chip" data-query="sepatu sneakers pria wanita">
+                                <i class="ri-footprint-line"></i> Sepatu
+                            </button>
+                            <button type="button" class="shopee-chip" data-query="gaming aksesoris pc">
+                                <i class="ri-gamepad-line"></i> Gaming
+                            </button>
+                            <button type="button" class="shopee-chip" data-query="makanan kuliner snack">
+                                <i class="ri-restaurant-line"></i> Makanan
+                            </button>
+                            <button type="button" class="shopee-chip" data-query="peralatan rumah tangga">
+                                <i class="ri-home-4-line"></i> Rumah Tangga
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Promo & Voucher Diskon Banner -->
+                    <div class="shopee-promo-banner">
+                        <div class="shopee-banner-content">
+                            <div class="shopee-banner-tag">
+                                <i class="ri-coupon-3-fill"></i> PROMO EKSKLUSIF MY KLEPEH x SHOPEE
+                            </div>
+                            <h4>Voucher Cashback 50% + Gratis Ongkir Xtra Rp0</h4>
+                            <p>Nikmati kemudahan belanja ribuan barang impian langsung terkoneksi ke aplikasi Shopee Anda dengan proteksi garansi 100% original.</p>
+                        </div>
+                        <div class="shopee-banner-cta">
+                            <button type="button" class="btn-claim-shopee-voucher" id="btnClaimShopeePromo">
+                                <i class="ri-ticket-2-fill"></i> Klaim Voucher di Shopee
+                            </button>
+                            <span class="shopee-device-hint"><i class="ri-smartphone-line"></i> Otomatis buka Shopee App di Android/iOS</span>
+                        </div>
+                    </div>
+
+                    <!-- Flash Sale & Top Trending Products Grid -->
+                    <div class="shopee-products-header">
+                        <div class="sph-title">
+                            <h4><i class="ri-fire-fill text-warning"></i> Rekomendasi Flash Sale Hari Ini</h4>
+                            <span class="sph-sub">Klik produk untuk langsung membuka dan checkout di aplikasi Shopee</span>
+                        </div>
+                        <button type="button" class="btn-view-all-shopee" id="btnBrowseAllShopee">
+                            Lihat Semua di Shopee <i class="ri-arrow-right-s-line"></i>
+                        </button>
+                    </div>
+
+                    <div class="shopee-products-grid" id="shopeeProductsGrid">
+                        <!-- Product Card 1 -->
+                        <div class="shopee-product-card" data-keyword="Earphone TWS Bluetooth 5.3 Stereo Bass">
+                            <div class="product-badge-mall">MALL</div>
+                            <div class="product-disc-badge">-70%</div>
+                            <div class="product-thumb-box thumb-bg-1">
+                                <i class="ri-headphone-fill"></i>
+                            </div>
+                            <div class="product-info-box">
+                                <span class="product-free-shipping"><i class="ri-truck-line"></i> Gratis Ongkir Xtra</span>
+                                <h5 class="product-title">Earphone TWS Bluetooth 5.3 Stereo Bass IPX5 Waterproof</h5>
+                                <div class="product-pricing">
+                                    <span class="product-price">Rp 49.000</span>
+                                    <span class="product-slash-price">Rp 165.000</span>
+                                </div>
+                                <div class="product-meta">
+                                    <span class="product-rating"><i class="ri-star-fill"></i> 4.9</span>
+                                    <span class="product-sold">Terjual 15,2rb+</span>
+                                </div>
+                                <button type="button" class="btn-buy-shopee" data-query="Earphone TWS Bluetooth 5.3 Stereo Bass">
+                                    <i class="ri-shopping-bag-3-fill"></i> Beli di Shopee
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Product Card 2 -->
+                        <div class="shopee-product-card" data-keyword="Smartwatch AMOLED Display Full Touch Waterproof">
+                            <div class="product-badge-mall">STAR+</div>
+                            <div class="product-disc-badge">-55%</div>
+                            <div class="product-thumb-box thumb-bg-2">
+                                <i class="ri-time-fill"></i>
+                            </div>
+                            <div class="product-info-box">
+                                <span class="product-free-shipping"><i class="ri-truck-line"></i> Gratis Ongkir Xtra</span>
+                                <h5 class="product-title">Smartwatch AMOLED Display Full Touch Sport & Heart Rate</h5>
+                                <div class="product-pricing">
+                                    <span class="product-price">Rp 179.000</span>
+                                    <span class="product-slash-price">Rp 399.000</span>
+                                </div>
+                                <div class="product-meta">
+                                    <span class="product-rating"><i class="ri-star-fill"></i> 4.8</span>
+                                    <span class="product-sold">Terjual 6,8rb+</span>
+                                </div>
+                                <button type="button" class="btn-buy-shopee" data-query="Smartwatch AMOLED Display Full Touch Waterproof">
+                                    <i class="ri-shopping-bag-3-fill"></i> Beli di Shopee
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Product Card 3 -->
+                        <div class="shopee-product-card" data-keyword="Sepatu Sneakers Pria Breathable Casual Sporty">
+                            <div class="product-badge-mall">MALL</div>
+                            <div class="product-disc-badge">-60%</div>
+                            <div class="product-thumb-box thumb-bg-3">
+                                <i class="ri-footprint-fill"></i>
+                            </div>
+                            <div class="product-info-box">
+                                <span class="product-free-shipping"><i class="ri-truck-line"></i> Gratis Ongkir Xtra</span>
+                                <h5 class="product-title">Sepatu Sneakers Pria Breathable Casual Sporty Trendy</h5>
+                                <div class="product-pricing">
+                                    <span class="product-price">Rp 89.000</span>
+                                    <span class="product-slash-price">Rp 225.000</span>
+                                </div>
+                                <div class="product-meta">
+                                    <span class="product-rating"><i class="ri-star-fill"></i> 4.9</span>
+                                    <span class="product-sold">Terjual 11,4rb+</span>
+                                </div>
+                                <button type="button" class="btn-buy-shopee" data-query="Sepatu Sneakers Pria Breathable Casual Sporty">
+                                    <i class="ri-shopping-bag-3-fill"></i> Beli di Shopee
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Product Card 4 -->
+                        <div class="shopee-product-card" data-keyword="Powerbank 20000mAh Fast Charging Dual Output">
+                            <div class="product-badge-mall">MALL</div>
+                            <div class="product-disc-badge">-50%</div>
+                            <div class="product-thumb-box thumb-bg-4">
+                                <i class="ri-battery-charge-fill"></i>
+                            </div>
+                            <div class="product-info-box">
+                                <span class="product-free-shipping"><i class="ri-truck-line"></i> Gratis Ongkir Xtra</span>
+                                <h5 class="product-title">Powerbank 20.000mAh Fast Charging Type-C Dual USB Output</h5>
+                                <div class="product-pricing">
+                                    <span class="product-price">Rp 125.000</span>
+                                    <span class="product-slash-price">Rp 250.000</span>
+                                </div>
+                                <div class="product-meta">
+                                    <span class="product-rating"><i class="ri-star-fill"></i> 4.9</span>
+                                    <span class="product-sold">Terjual 21,3rb+</span>
+                                </div>
+                                <button type="button" class="btn-buy-shopee" data-query="Powerbank 20000mAh Fast Charging Dual Output">
+                                    <i class="ri-shopping-bag-3-fill"></i> Beli di Shopee
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Product Card 5 -->
+                        <div class="shopee-product-card" data-keyword="Kemeja Pria Polos Katun Premium Lengan Panjang">
+                            <div class="product-badge-mall">STAR+</div>
+                            <div class="product-disc-badge">-45%</div>
+                            <div class="product-thumb-box thumb-bg-5">
+                                <i class="ri-t-shirt-2-fill"></i>
+                            </div>
+                            <div class="product-info-box">
+                                <span class="product-free-shipping"><i class="ri-truck-line"></i> Gratis Ongkir Xtra</span>
+                                <h5 class="product-title">Kemeja Pria Polos Katun Premium Slim Fit Formal & Casual</h5>
+                                <div class="product-pricing">
+                                    <span class="product-price">Rp 68.000</span>
+                                    <span class="product-slash-price">Rp 125.000</span>
+                                </div>
+                                <div class="product-meta">
+                                    <span class="product-rating"><i class="ri-star-fill"></i> 4.8</span>
+                                    <span class="product-sold">Terjual 8,9rb+</span>
+                                </div>
+                                <button type="button" class="btn-buy-shopee" data-query="Kemeja Pria Polos Katun Premium Lengan Panjang">
+                                    <i class="ri-shopping-bag-3-fill"></i> Beli di Shopee
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Product Card 6 -->
+                        <div class="shopee-product-card" data-keyword="Mechanical Gaming Keyboard RGB Backlight Blue Switch">
+                            <div class="product-badge-mall">MALL</div>
+                            <div class="product-disc-badge">-40%</div>
+                            <div class="product-thumb-box thumb-bg-6">
+                                <i class="ri-keyboard-box-fill"></i>
+                            </div>
+                            <div class="product-info-box">
+                                <span class="product-free-shipping"><i class="ri-truck-line"></i> Gratis Ongkir Xtra</span>
+                                <h5 class="product-title">Mechanical Gaming Keyboard RGB Backlit Blue Switch 87 Keys</h5>
+                                <div class="product-pricing">
+                                    <span class="product-price">Rp 245.000</span>
+                                    <span class="product-slash-price">Rp 410.000</span>
+                                </div>
+                                <div class="product-meta">
+                                    <span class="product-rating"><i class="ri-star-fill"></i> 4.9</span>
+                                    <span class="product-sold">Terjual 4,1rb+</span>
+                                </div>
+                                <button type="button" class="btn-buy-shopee" data-query="Mechanical Gaming Keyboard RGB Backlight Blue Switch">
+                                    <i class="ri-shopping-bag-3-fill"></i> Beli di Shopee
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shopee Quick Hub Shortcuts -->
+                    <div class="shopee-hub-shortcuts">
+                        <button type="button" class="btn-shopee-shortcut" data-target="mall">
+                            <i class="ri-shield-check-fill text-warning"></i>
+                            <span>Shopee Mall (100% Ori)</span>
+                        </button>
+                        <button type="button" class="btn-shopee-shortcut" data-target="live">
+                            <i class="ri-live-fill text-danger"></i>
+                            <span>Shopee Live Diskon 50%</span>
+                        </button>
+                        <button type="button" class="btn-shopee-shortcut" data-target="video">
+                            <i class="ri-video-fill text-primary-cyan"></i>
+                            <span>Shopee Video Voucher</span>
+                        </button>
+                        <button type="button" class="btn-shopee-shortcut" data-target="cart">
+                            <i class="ri-shopping-cart-2-fill text-success"></i>
+                            <span>Buka Keranjang Shopee</span>
+                        </button>
+                        <button type="button" class="btn-shopee-shortcut" data-target="home">
+                            <i class="ri-smartphone-line" style="color: #ee4d2d;"></i>
+                            <strong>Buka Aplikasi Shopee</strong>
+                        </button>
                     </div>
                 </section>
 
@@ -2209,6 +2483,104 @@
                 <button class="btn-ghost" data-close="modalSupportChat">Tutup</button>
                 <button class="btn-whatsapp-cs" id="btnLaunchWhatsAppChat">
                     <i class="ri-whatsapp-fill"></i> Beralih ke WhatsApp Admin
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 16: Belanja Online Shopee Mall Terhubung Langsung -->
+    <div class="modal-overlay" id="modalShopeeShopping">
+        <div class="modal-box modal-shopee-box">
+            <div class="modal-header modal-header-shopee">
+                <div class="shopee-modal-brand">
+                    <div class="shopee-modal-icon">
+                        <i class="ri-shopping-bag-3-fill"></i>
+                    </div>
+                    <div>
+                        <h3>Shopee Mall Online Shopping</h3>
+                        <span class="shopee-modal-sub"><i class="ri-checkbox-circle-fill text-success"></i> Terhubung Langsung ke Aplikasi Shopee</span>
+                    </div>
+                </div>
+                <button class="modal-close" data-close="modalShopeeShopping">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Direct Connection Banner -->
+                <div class="shopee-conn-banner">
+                    <div class="conn-icon-box">
+                        <i class="ri-smartphone-line"></i>
+                    </div>
+                    <div class="conn-info-text">
+                        <h5>Koneksi Langsung ke Aplikasi Shopee</h5>
+                        <p>Setiap pencarian dan pembelian akan otomatis diarahkan ke <strong>Aplikasi Shopee di Smartphone</strong> Anda (atau Shopee Web jika di browser komputer) dengan promo voucher dan gratis ongkir aktif.</p>
+                    </div>
+                </div>
+
+                <!-- Modal Search Form -->
+                <div class="shopee-modal-search-box">
+                    <div class="modal-search-field">
+                        <i class="ri-search-2-line"></i>
+                        <input type="text" id="modalShopeeSearchInput" placeholder="Cari apapun di Shopee: baju, tas, hp, sepatu, kosmetik..." />
+                        <button type="button" id="btnModalShopeeSearch" class="btn-modal-shopee-search">
+                            <i class="ri-search-line"></i> Cari
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Category Buttons -->
+                <div class="form-group mt-2">
+                    <label><i class="ri-apps-2-line"></i> Kategori Populer Shopee:</label>
+                    <div class="shopee-modal-categories">
+                        <button type="button" class="btn-cat-shopee active" data-shopee-cat="flash sale">⚡ Flash Sale</button>
+                        <button type="button" class="btn-cat-shopee" data-shopee-cat="elektronik">📱 Handphone & Gadget</button>
+                        <button type="button" class="btn-cat-shopee" data-shopee-cat="fashion">👗 Pakaian Pria & Wanita</button>
+                        <button type="button" class="btn-cat-shopee" data-shopee-cat="kecantikan">💄 Skincare & Make Up</button>
+                        <button type="button" class="btn-cat-shopee" data-shopee-cat="sepatu">👟 Sepatu & Sandal</button>
+                        <button type="button" class="btn-cat-shopee" data-shopee-cat="gaming">🎮 Gaming & Laptop</button>
+                        <button type="button" class="btn-cat-shopee" data-shopee-cat="makanan">🍲 Makanan & Minuman</button>
+                        <button type="button" class="btn-cat-shopee" data-shopee-cat="rumah tangga">🏠 Rumah Tangga</button>
+                    </div>
+                </div>
+
+                <!-- Shopee Hub Action Grid -->
+                <div class="shopee-modal-hub-grid mt-3">
+                    <div class="shopee-hub-card" id="hubShopeeApp">
+                        <div class="hub-icon bg-shopee-red"><i class="ri-shopping-bag-3-fill"></i></div>
+                        <div class="hub-text">
+                            <strong>Beranda Aplikasi Shopee</strong>
+                            <small>Buka aplikasi Shopee langsung</small>
+                        </div>
+                        <i class="ri-arrow-right-line hub-arrow"></i>
+                    </div>
+                    <div class="shopee-hub-card" id="hubShopeeFlash">
+                        <div class="hub-icon bg-shopee-orange"><i class="ri-flashlight-fill"></i></div>
+                        <div class="hub-text">
+                            <strong>Flash Sale Hari Ini</strong>
+                            <small>Diskon s/d 90% serba murah</small>
+                        </div>
+                        <i class="ri-arrow-right-line hub-arrow"></i>
+                    </div>
+                    <div class="shopee-hub-card" id="hubShopeeMall">
+                        <div class="hub-icon bg-shopee-amber"><i class="ri-shield-check-fill"></i></div>
+                        <div class="hub-text">
+                            <strong>Shopee Mall 100% Ori</strong>
+                            <small>Garansi resmi produk original</small>
+                        </div>
+                        <i class="ri-arrow-right-line hub-arrow"></i>
+                    </div>
+                    <div class="shopee-hub-card" id="hubShopeeLive">
+                        <div class="hub-icon bg-shopee-purple"><i class="ri-live-fill"></i></div>
+                        <div class="hub-text">
+                            <strong>Shopee Live Diskon 50%</strong>
+                            <small>Streaming langsung & kupon live</small>
+                        </div>
+                        <i class="ri-arrow-right-line hub-arrow"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ghost" data-close="modalShopeeShopping">Tutup</button>
+                <button class="btn-launch-shopee-full" id="btnModalLaunchFullShopee">
+                    <i class="ri-shopping-bag-3-fill"></i> Buka Aplikasi Shopee Sekarang
                 </button>
             </div>
         </div>

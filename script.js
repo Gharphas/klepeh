@@ -4663,6 +4663,231 @@ document.addEventListener('DOMContentLoaded', () => {
         refreshIhsgLive(false);
     }, 25000);
 
+    // ----------------------------------------------------------------------
+    // 18. FITUR BELANJA ONLINE & KONEKSI APLIKASI SHOPEE
+    // ----------------------------------------------------------------------
+    function openShopeeApp(query = '', target = 'home') {
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        let webUrl = 'https://shopee.co.id/';
+        let appSchemeUrl = 'shopee://';
+
+        if (query && query.trim() !== '') {
+            const cleanQuery = encodeURIComponent(query.trim());
+            webUrl = `https://shopee.co.id/search?keyword=${cleanQuery}`;
+            appSchemeUrl = `shopee://search?keyword=${cleanQuery}`;
+        } else {
+            switch (target) {
+                case 'mall':
+                    webUrl = 'https://shopee.co.id/mall';
+                    appSchemeUrl = 'shopee://mall';
+                    break;
+                case 'live':
+                    webUrl = 'https://shopee.co.id/live';
+                    appSchemeUrl = 'shopee://live';
+                    break;
+                case 'video':
+                    webUrl = 'https://shopee.co.id/shopee-video';
+                    appSchemeUrl = 'shopee://video';
+                    break;
+                case 'cart':
+                    webUrl = 'https://shopee.co.id/cart';
+                    appSchemeUrl = 'shopee://cart';
+                    break;
+                case 'flash':
+                    webUrl = 'https://shopee.co.id/flash_sale';
+                    appSchemeUrl = 'shopee://flash_sale';
+                    break;
+                case 'home':
+                default:
+                    webUrl = 'https://shopee.co.id/';
+                    appSchemeUrl = 'shopee://home';
+                    break;
+            }
+        }
+
+        const notifyLabel = query ? `"${query}"` : (target === 'cart' ? 'Keranjang Shopee' : (target === 'mall' ? 'Shopee Mall' : 'Aplikasi Shopee'));
+        showToast(`Membuka Shopee: ${notifyLabel}... 🛍️`, 'info');
+        if (typeof playKeyTone === 'function') playKeyTone(680, 'sine', 0.06);
+
+        if (isMobile) {
+            // Attempt to open native Shopee app first
+            const startRedirect = Date.now();
+            window.location.href = appSchemeUrl;
+
+            // Fallback to official web if native app is not installed
+            setTimeout(() => {
+                if (Date.now() - startRedirect < 2000) {
+                    window.open(webUrl, '_blank');
+                }
+            }, 1200);
+        } else {
+            // For desktop / web browser, directly open official Shopee web
+            window.open(webUrl, '_blank');
+        }
+    }
+
+    // Flash sale countdown timer logic (counts down to the next 3-hour block)
+    function initShopeeFlashSaleTimer() {
+        const timerEl = document.getElementById('shopeeCountdownTimer');
+        if (!timerEl) return;
+
+        function updateTimer() {
+            const now = new Date();
+            const hours = now.getHours();
+            const nextSlotHour = (Math.floor(hours / 3) + 1) * 3;
+            const targetTime = new Date(now);
+            targetTime.setHours(nextSlotHour, 0, 0, 0);
+
+            const diff = targetTime.getTime() - now.getTime();
+            if (diff <= 0) {
+                timerEl.textContent = '02:59:59';
+                return;
+            }
+
+            const h = Math.floor(diff / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const pad = (n) => String(n).padStart(2, '0');
+            timerEl.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    }
+
+    initShopeeFlashSaleTimer();
+
+    // Wire quick service icon
+    document.getElementById('serviceItemShopee')?.addEventListener('click', () => {
+        const sectionEl = document.getElementById('sectionShopeeShopping');
+        if (sectionEl) {
+            switchTab('dashboard');
+            sectionEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            sectionEl.style.transition = 'box-shadow 0.4s ease, border-color 0.4s ease';
+            sectionEl.style.borderColor = '#ee4d2d';
+            sectionEl.style.boxShadow = '0 0 25px rgba(238, 77, 45, 0.45)';
+            setTimeout(() => {
+                sectionEl.style.borderColor = '';
+                sectionEl.style.boxShadow = '';
+            }, 1800);
+        } else {
+            openModal('modalShopeeShopping');
+        }
+    });
+
+    // Wire serviceItemKurs smooth scroll
+    document.getElementById('serviceItemKurs')?.addEventListener('click', () => {
+        const sectionEl = document.getElementById('sectionCurrencyExchange');
+        if (sectionEl) {
+            switchTab('dashboard');
+            sectionEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            sectionEl.style.transition = 'box-shadow 0.4s ease, border-color 0.4s ease';
+            sectionEl.style.borderColor = '#059669';
+            sectionEl.style.boxShadow = '0 0 25px rgba(5, 150, 105, 0.35)';
+            setTimeout(() => {
+                sectionEl.style.borderColor = '';
+                sectionEl.style.boxShadow = '';
+            }, 1800);
+        }
+    });
+
+    // Shopee Search Buttons & Inputs
+    const shopeeSearchInput = document.getElementById('shopeeSearchInput');
+    const btnShopeeSearch = document.getElementById('btnShopeeSearch');
+
+    function triggerShopeeSearch() {
+        const query = shopeeSearchInput?.value?.trim() || '';
+        openShopeeApp(query, 'search');
+    }
+
+    btnShopeeSearch?.addEventListener('click', triggerShopeeSearch);
+    shopeeSearchInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            triggerShopeeSearch();
+        }
+    });
+
+    // Direct open app buttons
+    document.getElementById('btnDirectShopeeApp')?.addEventListener('click', () => {
+        openShopeeApp('', 'home');
+    });
+
+    document.getElementById('btnHeaderOpenShopee')?.addEventListener('click', () => {
+        openShopeeApp('', 'home');
+    });
+
+    // Claim promo voucher button
+    document.getElementById('btnClaimShopeePromo')?.addEventListener('click', () => {
+        openShopeeApp('voucher cashback gratis ongkir', 'search');
+    });
+
+    // Category chips
+    document.querySelectorAll('#shopeeCategoryChips .shopee-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('#shopeeCategoryChips .shopee-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            const q = chip.getAttribute('data-query');
+            if (shopeeSearchInput) shopeeSearchInput.value = q;
+            openShopeeApp(q, 'search');
+        });
+    });
+
+    // Product cards and direct buy buttons
+    document.querySelectorAll('.shopee-product-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-buy-shopee');
+            const keyword = btn ? btn.getAttribute('data-query') : card.getAttribute('data-keyword');
+            openShopeeApp(keyword || 'flash sale shopee', 'search');
+        });
+    });
+
+    document.getElementById('btnBrowseAllShopee')?.addEventListener('click', () => {
+        openModal('modalShopeeShopping');
+    });
+
+    // Hub Shortcuts
+    document.querySelectorAll('.btn-shopee-shortcut').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-target') || 'home';
+            openShopeeApp('', target);
+        });
+    });
+
+    // Modal Shopee Events
+    const modalShopeeInput = document.getElementById('modalShopeeSearchInput');
+    const btnModalShopeeSearch = document.getElementById('btnModalShopeeSearch');
+
+    function triggerModalShopeeSearch() {
+        const q = modalShopeeInput?.value?.trim() || '';
+        openShopeeApp(q, 'search');
+    }
+
+    btnModalShopeeSearch?.addEventListener('click', triggerModalShopeeSearch);
+    modalShopeeInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            triggerModalShopeeSearch();
+        }
+    });
+
+    document.querySelectorAll('.btn-cat-shopee').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.btn-cat-shopee').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const cat = btn.getAttribute('data-shopee-cat');
+            if (modalShopeeInput) modalShopeeInput.value = cat;
+            openShopeeApp(cat, 'search');
+        });
+    });
+
+    document.getElementById('hubShopeeApp')?.addEventListener('click', () => openShopeeApp('', 'home'));
+    document.getElementById('hubShopeeFlash')?.addEventListener('click', () => openShopeeApp('flash sale', 'flash'));
+    document.getElementById('hubShopeeMall')?.addEventListener('click', () => openShopeeApp('', 'mall'));
+    document.getElementById('hubShopeeLive')?.addEventListener('click', () => openShopeeApp('', 'live'));
+    document.getElementById('btnModalLaunchFullShopee')?.addEventListener('click', () => openShopeeApp('', 'home'));
+
     // Initial render for Invest
     renderInvestCards();
 
